@@ -23,6 +23,8 @@
         @include('layouts.nav')
         <main>
             @yield('content')
+            <signin :login="control.login" @hide="hide"></signin>
+            <register :register="control.register" @hide="hide"></register>
         </main>
     </div>
     <!-- Scripts -->

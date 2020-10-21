@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ChannelController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 
 
@@ -17,5 +19,12 @@ use App\Http\Controllers\ThreadsController;
 
 Auth::routes();
 
-Route::get('/', [ThreadsController::class, 'index'])->name('threads.index');
-Route::get('/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
+Route::get('/channels', [ChannelController::class, 'index']);
+
+Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
+Route::resource('threads',  ThreadsController::class)->except([
+    'show'
+]);
+
+Route::get('/threads/{channel}', [ThreadsController::class, 'index'])->name('channel.index');
+Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])->name('reply.store');
