@@ -68,5 +68,24 @@ class ThreadsBrowseTest extends TestCase
             ->assertSee($threadByUser->title)
             ->assertDontSee($threadNotByUser->title);
     }
+    
+    public function test_filter_threads_by_popularity()
+    {
+        $twoCommentsThread = Thread::factory()->create();
+        Reply::factory(2)->create([
+            'thread_id' => $twoCommentsThread->id
+        ]);
+
+        $threeCommentsThread = Thread::factory()->create();
+        Reply::factory(3)->create([
+            'thread_id' => $threeCommentsThread->id
+        ]);
+
+        $threadNoComment = Thread::factory()->create();
+
+        $response = $this->getJson('/threads?popular=1')->json();
+
+        $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+    } 
 
 }

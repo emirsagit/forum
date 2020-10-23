@@ -14,7 +14,8 @@
             <div class="flex flex-col">
                <div class="flex items-center mb-2">
                   <a href="#">
-                     <a class="font-bold text-l hover:underline" href="/threads/?by={{ $thread->owner->name }}">{{ $thread->owner->name }}</a>
+                     <a class="font-bold text-l hover:underline"
+                        href="/threads/?by={{ $thread->owner->name }}">{{ $thread->owner->name }}</a>
                   </a>
                   <p class="text-xs text-gray-500 ml-2">{{ $thread->created_at->diffForHumans() }}<span
                         class="font-semi-bold text-xs text-gray-500 ml-2">Oluşturuldu</span></p>
@@ -24,8 +25,11 @@
          </div>
       </div>
       <hr>
-      @foreach($thread->replies as $reply)
+      @foreach($replies as $reply)
       @include('threads.partials.reply')
+      <div class="mt-2 ml-2">
+         {{ $replies->links() }}
+      </div>
       @endforeach
       <div class="flex my-2 pl-2">
          <div class="flex flex-1 mr-2">
@@ -51,8 +55,8 @@
          class="flex bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mb-2 mt-2 lg:mt-0 lg:justify-center md:hover:bg-gray-100">
          Paylaş
       </a>
-      <div class="invisible lg:visible">
-         Bir şeyler
+      <div class="invisible lg:visible text-gray-700">
+        Toplam {{ $thread->replies_count }} yorum
       </div>
    </div>
 </div>

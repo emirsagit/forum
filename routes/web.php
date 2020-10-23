@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ChannelController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
+use App\Http\Controllers\FavouritesController;
 
 
 /*
@@ -28,3 +29,4 @@ Route::resource('threads',  ThreadsController::class)->except([
 
 Route::get('/threads/{channel}', [ThreadsController::class, 'index'])->name('channel.index');
 Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])->name('reply.store');
+Route::post('/threads/{reply}/favourites', [FavouritesController::class, 'store'])->name('favourite.store');

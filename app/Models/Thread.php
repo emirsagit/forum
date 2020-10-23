@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Channel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +17,13 @@ class Thread extends Model
         'user_id', 'title', 'body', 'channel_id'
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope('replyCount', function (Builder $builder) {
+            $builder->withCount('replies');
+        });
+    }
+
     public function path()
     {
         return '/threads/' . $this->channel->slug . '/' . $this->id;
@@ -26,6 +34,11 @@ class Thread extends Model
         $this->replies()->create($reply);
     } 
 
+    public function ScopeFilter($query ,$filters)
+    {
+        return $filters->apply($query);
+    } 
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -33,7 +46,9 @@ class Thread extends Model
 
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)
+            ->withCount('favourites')
+            ->with('owner');
     } 
 
     public function channel()

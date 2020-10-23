@@ -26,13 +26,11 @@ class ParticipateInForumTest extends TestCase
             ->assertSee($reply->body);
     }
 
-    public function test_an_unauth_user_can_not_add_threads()
+    public function test_a_guest_can_not_add_threads()
     {
         $this->expectException(AuthenticationException::class);
 
         $this->withoutExceptionHandling();
-        
-        $user = User::factory()->create();
 
         $thread = Thread::factory()->create();
 
