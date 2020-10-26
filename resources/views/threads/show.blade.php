@@ -11,14 +11,24 @@
       <div class="flex my-2 pl-2">
          <div class="flex mr-2">1</div>
          <div class="flex flex-1 mr-2">
-            <div class="flex flex-col">
-               <div class="flex items-center mb-2">
-                  <a href="#">
-                     <a class="font-bold text-l hover:underline"
-                        href="/threads/?by={{ $thread->owner->name }}">{{ $thread->owner->name }}</a>
-                  </a>
-                  <p class="text-xs text-gray-500 ml-2">{{ $thread->created_at->diffForHumans() }}<span
-                        class="font-semi-bold text-xs text-gray-500 ml-2">Oluşturuldu</span></p>
+            <div class="flex flex-col w-full">
+               <div class="flex flex-row mb-2">
+                  <div class="flex flex-1 items-center">
+                     <a href="#">
+                        <a class="font-bold text-l hover:underline"
+                           href="{{ route('profiles.show', ['user' => $thread->owner]) }}">{{ $thread->owner->name }}</a>
+                     </a>
+                     <p class="text-xs text-gray-500 ml-2">{{ $thread->created_at->diffForHumans() }}<span
+                           class="font-semi-bold text-xs text-gray-500 ml-2">Oluşturuldu</span></p>
+                  </div>
+                  @can('update', $thread)
+                  <form action="{{ route('threads.destroy', compact('thread')) }}" method="POST">
+                     @csrf
+                     @method('DELETE')
+                     <button class="flex px-2 py-1 bg-red-400 rounded text-white hover:bg-white hover:text-red-800"
+                        type="submit">Sil</button>
+                  </form>
+                  @endcan
                </div>
                <p class="text-sm text-gray-700">{{ $thread->body }}</p>
             </div>
@@ -27,10 +37,10 @@
       <hr>
       @foreach($replies as $reply)
       @include('threads.partials.reply')
+      @endforeach
       <div class="mt-2 ml-2">
          {{ $replies->links() }}
       </div>
-      @endforeach
       <div class="flex my-2 pl-2">
          <div class="flex flex-1 mr-2">
             @auth
@@ -56,7 +66,7 @@
          Paylaş
       </a>
       <div class="invisible lg:visible text-gray-700">
-        Toplam {{ $thread->replies_count }} yorum
+         Toplam {{ $thread->replies_count }} yorum
       </div>
    </div>
 </div>

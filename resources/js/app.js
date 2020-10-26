@@ -6,14 +6,16 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+
 import signin from  './components/auth/Signin.vue';
 import register from  './components/auth/Register.vue';
 import SigninButton from  './components/auth/SigninButton.vue';
 import RegisterButton from  './components/auth/RegisterButton.vue';
+import NavigationDropdown from  './components/auth/NavigationDropdown.vue';
 import ReplyForm from  './components/threads/ReplyForm.vue';
 import threads from  './components/threads/Threads.vue';
 import ThreadForm from  './components/threads/ThreadForm.vue';
+import Flash from  './components/Flash.vue';
 
 // Vue.component('signin', require('./components/Signin.vue'));
 // Vue.component('threads', require('./components/Threads.vue').default);
@@ -27,7 +29,9 @@ const app = new Vue({
         SigninButton,
         RegisterButton,
         ReplyForm,
-        ThreadForm
+        ThreadForm,
+        NavigationDropdown,
+        Flash
     },
     data: {
         control: {

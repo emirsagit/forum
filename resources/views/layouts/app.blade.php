@@ -26,6 +26,7 @@
             <signin :login="control.login" @hide="hide"></signin>
             <register :register="control.register" @hide="hide"></register>
         </main>
+        <flash flashing="{{ session('message') }}"></flash>
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

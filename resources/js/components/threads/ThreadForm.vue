@@ -102,7 +102,7 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/threads")
-        .then((data) => console.log(data))
+        .then((data) => flash('Konu kaydedildi.'))
         .catch((error) => console.log(error));
     },
   },

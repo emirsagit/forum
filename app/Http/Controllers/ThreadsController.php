@@ -61,7 +61,7 @@ class ThreadsController extends Controller
             'body' => $request->body
         ]);
 
-        return back();
+        return back()->with('message', 'Başarıyla kaydedildi');
     }
 
     /**
@@ -74,7 +74,7 @@ class ThreadsController extends Controller
     {
         return view('threads.show', [
             'thread' => $thread,
-            'replies' => $thread->replies()->paginate(10),
+            'replies' => $thread->replies()->with(['owner', 'favourites'])->withOut('thread')->paginate(10),
         ]);
     }
 
@@ -109,7 +109,11 @@ class ThreadsController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $thread->delete();
+
+        return redirect('/threads')->with('message', 'Konu başarıyla silindi');
     }
 
 
@@ -121,6 +125,6 @@ class ThreadsController extends Controller
             $threads = $threads->where('channel_id', $channel->id);
         }
 
-        return $threads->with('channel')->latest()->get();
+        return $threads->latest()->get();
     } 
 }

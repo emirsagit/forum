@@ -35,18 +35,8 @@
             <register-button v-on:show="show">
             </register-button>
             @else
-            <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-                href="#">
-                {{ Auth::user()->name }}
-            </a>
-            <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-                href="{{ route('logout') }}" onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
+            <navigation-dropdown :user="{{ auth()->user() }}">
+            </navigation-dropdown>
             @endguest
         </div>
     </div>

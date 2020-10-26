@@ -1,4 +1,4 @@
-<div class="flex my-2 pl-2">
+<div id="reply-{{ $reply->id }}" class="flex my-2 pl-2">
    <div class="flex mr-2">1</div>
    <div class="flex flex-1 mr-2">
       <div class="flex flex-col w-full ">
@@ -7,6 +7,7 @@
                <h4 class="font-bold text-l cursor-pointer hover:underline">{{ $reply->owner->name }}</h4>
             </a>
             <p class="text-xs text-gray-500 ml-2 flex-1">{{ $reply->created_at->diffForHumans() }}</p>
+            @auth
             @if(! $reply->isFavourited()) 
             <form action="{{ route('favourite.store', compact('reply')) }}" method="POST">
                @csrf
@@ -15,8 +16,10 @@
                   >Beğen</button>
             </form>
             @endif
+            @endauth
          </div>
          <p class="text-sm text-gray-700 mb-2">{{ $reply->body }}</p>
+
          @if($reply->favourites_count > 0)
          <div class="text-blue-500 flex flex-row items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -29,6 +32,7 @@
             </p>
          </div>
          @endif
+         
       </div>
    </div>
 </div>

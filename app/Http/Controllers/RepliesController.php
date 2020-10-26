@@ -22,6 +22,6 @@ class RepliesController extends Controller
             'user_id' => auth()->user()->id
         ]);
 
-        return back();
+        return back()->with('success', 'Yorumunuz Kaydedildi');
     } 
 }

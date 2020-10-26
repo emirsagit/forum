@@ -57,7 +57,7 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/threads/" + this.thread.id + "/replies")
-        .then((data) => console.log(data))
+        .then((data) => flash('Yorumunuz Kaydedildi'))
         .catch((error) => console.log(error));
     },
   },

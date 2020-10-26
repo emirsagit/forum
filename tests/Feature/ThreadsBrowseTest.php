@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Models\Activity;
+use Illuminate\Auth\AuthenticationException;
 
 class ThreadsBrowseTest extends TestCase
 {
@@ -86,6 +88,32 @@ class ThreadsBrowseTest extends TestCase
         $response = $this->getJson('/threads?popular=1')->json();
 
         $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+    } 
+
+    public function test_authorized_user_who_has_permission_can_delete_threads()
+    {
+        $this->be($user = User::factory()->create());
+
+        $thread = Thread::factory()->create(['user_id' => $user->id]);
+        $reply = Reply::factory()->create(['thread_id' => $thread->id ]);
+
+        $this->delete(route('threads.destroy', compact('thread')))
+            ->assertRedirect('/threads'); 
+
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->assertCount(0, Activity::get());
+    } 
+
+    public function test_unauthorized_users_can_not_delete_threads()
+    {
+        $this->be(User::factory()->create());
+
+        $user=User::factory()->create();
+        
+        $thread = Thread::factory()->create(['user_id' => $user->id]);
+
+        $this->delete(route('threads.destroy', compact('thread')))->assertStatus(403);
     } 
 
 }
