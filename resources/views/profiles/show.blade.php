@@ -9,7 +9,7 @@
 </div>
 <div class="flex flex-row mt-2 flex-wrap-reverse lg:m-auto lg:mt-8">
     <div class="flex flex-col px-4 lg:w-3/4 m-auto">
-        @foreach ($activities as $date => $data)
+        @forelse ($activities as $date => $data)
         <div class="flex flex-col shadow-lg">
             <div class="flex flex-col items-center">
                 <h2 class="text-xl text-teal-700 mt-4">{{ $date }}</h2>
@@ -20,5 +20,11 @@
             </div>
             @endforeach
         </div>
-        @endforeach
+        @empty
+        <div class="flex flex-col shadow-lg">
+            <div class="flex flex-col items-center">
+                <h2 class="text-xl text-teal-700 mt-4">Henüz kullanıcıya ait aktivite bulunmamaktadır.</h2>
+            </div>
+        </div>
+        @endforelse
         @endsection

@@ -22,6 +22,7 @@ class Activity extends Model
     {
         return static::where('user_id', $user->id)
         ->with('subject')
+        ->latest()
         ->take($take)
         ->get()
         ->groupBy(function ($activity) {

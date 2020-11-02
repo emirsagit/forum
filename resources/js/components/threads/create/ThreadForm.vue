@@ -6,7 +6,7 @@
         @submit.prevent="onSubmit()"
         @keydown="form.errors.clear($event.target.name)"
       >
-      <h2 class="text-lg mb-2 text-indigo-500 ">Yeni Konu Oluştur</h2>
+        <h2 class="text-lg mb-2 text-indigo-500">Yeni Konu Oluştur</h2>
         <div class="mb-2">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -22,7 +22,7 @@
             v-model="form.channel_id"
             @change="form.errors.clear($event.target.name)"
           >
-            <option value="" selected="true" >Seçiniz</option>
+            <option value="" selected="true">Seçiniz</option>
             <option
               v-for="channel in channels"
               :value="channel.id"
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import Form from "../dependencies/form.js";
+import Form from "../../dependencies/form.js";
 export default {
   data() {
     return {
@@ -102,8 +102,10 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/threads")
-        .then((data) => flash('Konu kaydedildi.'))
-        .catch((error) => console.log(error));
+        .then((data) => flash("Konu kaydedildi."))
+        .catch((error) => {
+          flash(error.message, "error");
+        });
     },
   },
   mounted() {

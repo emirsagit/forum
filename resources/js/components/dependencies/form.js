@@ -39,14 +39,13 @@ class Form {
     }
 
     onSuccess(data) {
-     
       this.errors.clear();
-
-      this.empty();
     }
 
     onFail(data) {
-      this.errors.record(data.errors)
+      if(data.errors) {
+        this.errors.record(data.errors)
+      }
     }
 
     empty() {

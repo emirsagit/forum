@@ -13,7 +13,7 @@
             id="body"
             type="text"
             placeholder="Mesajı Yaz"
-            body="body"
+            name="body"
             v-model="form.body"
           />
           <p
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import Form from "../dependencies/form.js";
+import Form from "../../../dependencies/form.js";
 export default {
   props: {
     thread: {
@@ -57,8 +57,14 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/threads/" + this.thread.id + "/replies")
-        .then((data) => flash('Yorumunuz Kaydedildi'))
-        .catch((error) => console.log(error));
+        .then((response) => {
+          flash('Yorumunuz Kaydedildi');
+          this.$emit('created', response);
+          this.form.empty();
+        })
+        .catch((error) => {
+           flash(error.message, "error");
+        });
     },
   },
 };

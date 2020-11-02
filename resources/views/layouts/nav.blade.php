@@ -18,23 +18,24 @@
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                Docs
+            <a href="{{ route('threads.index') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                Forum
             </a>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                Examples
+            <a href="{{ route('threads.create') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                Yeni Konu
             </a>
             <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                Blog
+                Etiketler
             </a>
         </div>
-        <div>
+        <div class="flex flex-col lg:flex-row">
             @guest
-            <signin-button v-on:show="show">
+            <signin-button>
             </signin-button>
-            <register-button v-on:show="show">
+            <register-button>
             </register-button>
             @else
+            <notification-dropdown></notification-dropdown>
             <navigation-dropdown :user="{{ auth()->user() }}">
             </navigation-dropdown>
             @endguest

@@ -1,14 +1,15 @@
 <template>
   <div class="flex flex-row flex-wrap mb-2">
-    <div class="flex">
+    <div class="flex flex-row content-center">
       <select
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 pl-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 p-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
         id="grid-state"
         @change="onChange($event)"
       >
         <option value="#" selected>Sırala</option>
         <option value="last">En Son</option>
         <option value="popular">Populer</option>
+        <option value="unanswered">Yanıtlanmamış</option>
       </select>
     </div>
     <a

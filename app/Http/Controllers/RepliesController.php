@@ -2,26 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Reply;
 use App\Models\Thread;
-use Illuminate\Http\Request;
+use App\Rules\SpamFree;
+use App\Http\Requests\ReplyFormRequest;
+use App\Notifications\YouWereMentioned;
 
 class RepliesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-    } 
+        $this->middleware('auth', ['except' => 'index']);
+    }
 
-    public function store(Thread $thread)
+    public function index($channelId, Thread $thread)
     {
-        $this->validate(request(), [
-            'body' => ['required', 'string', 'min:8'],
-        ]);
-        $thread->addReply([
-            'body' => request('body'),
+        return $thread->replies()->with(['owner', 'thread', 'favourites'])->paginate(20);
+    }
+
+    public function store(Thread $thread, ReplyFormRequest $request)
+    {
+        $reply = $thread->addReply([
+            'body' => $request->body,
             'user_id' => auth()->user()->id
         ]);
 
-        return back()->with('success', 'Yorumunuz Kaydedildi');
-    } 
+        return $reply->load('owner');
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->delete();
+    }
+
+    public function update(Reply $reply)
+    {
+        $this->validate(request(), [
+            'body' => ['required', 'string', 'min:8', new SpamFree],
+        ]);
+
+        $this->authorize('update', $reply);
+
+        $reply->update(['body' => request('body')]);
+    }
+
 }

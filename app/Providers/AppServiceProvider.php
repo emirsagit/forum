@@ -25,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Gate::before(function ($user) {
-            if ($user->name == "Emir Sağıt") {
-                return true;
-            }
-        });
+        // Gate::before(function ($user) {
+        //     if ($user->name == "Emir Sağıt") {
+        //         return true;
+        //     }
+        // });
     }
 }

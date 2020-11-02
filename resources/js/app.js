@@ -1,44 +1,40 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
-require('./bootstrap');
+require("./bootstrap");
 
+/* auth */
+import Signin from "./components/auth/Signin.vue";
+import Register from "./components/auth/Register.vue";
+import SigninButton from "./components/auth/SigninButton.vue";
+import RegisterButton from "./components/auth/RegisterButton.vue";
+import NavigationDropdown from "./components/auth/NavigationDropdown.vue";
+/* endauth */
 
-import signin from  './components/auth/Signin.vue';
-import register from  './components/auth/Register.vue';
-import SigninButton from  './components/auth/SigninButton.vue';
-import RegisterButton from  './components/auth/RegisterButton.vue';
-import NavigationDropdown from  './components/auth/NavigationDropdown.vue';
-import ReplyForm from  './components/threads/ReplyForm.vue';
-import threads from  './components/threads/Threads.vue';
-import ThreadForm from  './components/threads/ThreadForm.vue';
-import Flash from  './components/Flash.vue';
+import Threads from "./components/threads/index/Threads.vue"; //threads.index
 
-// Vue.component('signin', require('./components/Signin.vue'));
-// Vue.component('threads', require('./components/Threads.vue').default);
+import ThreadForm from "./components/threads/create/ThreadForm.vue"; //thread.create
+
+import Thread from "./components/threads/show/Thread.vue"; //thread.show
+
+/* shared */
+import Flash from "./components/shared/Flash.vue";
+import Paginator from "./components/shared/Paginator.vue";
+import NotificationDropdown from "./components/shared/NotificationDropdown.vue";
+/* endshared */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
-        signin,
-        threads,
-        register,
-        SigninButton,
-        RegisterButton,
-        ReplyForm,
-        ThreadForm,
-        NavigationDropdown,
-        Flash
+        Signin, Threads, Register, SigninButton, RegisterButton, ThreadForm, NavigationDropdown, Flash, Thread, Paginator, NotificationDropdown
     },
+
     data: {
         control: {
             login: false,
-            register:false
-        }    
+            register: false
+        }
     },
+
+//for showing and hide login and register page from anywhere in app
     methods: {
         show(field) {
             this.control[field] = true;
@@ -47,4 +43,10 @@ const app = new Vue({
             this.control[field] = false;
         }
     },
+
+    created() {
+        window.events.$on('show', field => {
+            this.show(field);
+        });
+    }
 });

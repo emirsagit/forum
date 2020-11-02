@@ -26,14 +26,20 @@ class User extends Authenticatable
         return 'name';
     } 
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    public function lastReply()
+    {
+        return $this->hasOne(Reply::class)->latest()->withOut('thread');
+    } 
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class)->latest();
+    } 
+
     protected $hidden = [
         'password',
         'remember_token',
+        'email'
     ];
 
     /**

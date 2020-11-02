@@ -15,7 +15,7 @@ class FavouriteTest extends TestCase
         //need reply
         $reply = Reply::factory()->create();
         //post a reply
-        $this->post('/threads/' . $reply->id . '/favourites', $reply->toArray());
+        $this->post('/threads/' . $reply->id . '/favourites');
         $this->assertCount(1 ,$reply->favourites);
         //insert database
     } 
@@ -28,7 +28,7 @@ class FavouriteTest extends TestCase
         
         $reply = Reply::factory()->create();
         //post a reply
-        $this->post('/threads/' . $reply->id . '/favourites', $reply->toArray());
+        $this->post('/threads/' . $reply->id . '/favourites');
     } 
 
     public function test_it_a_user_can_favorite_a_reply_only_once()
@@ -39,9 +39,23 @@ class FavouriteTest extends TestCase
 
         $reply = Reply::factory()->create();
 
-        $this->post('/threads/' . $reply->id . '/favourites', $reply->toArray());
-        $this->post('/threads/' . $reply->id . '/favourites', $reply->toArray());
+        $this->post('/threads/' . $reply->id . '/favourites');
+        $this->post('/threads/' . $reply->id . '/favourites');
         
         $this->assertCount(1 ,$reply->favourites);
+    } 
+
+    public function test_it_auth_user_can_unfavourite_reply()
+    {
+        $this->withoutExceptionHandling();
+        
+        $this->be(User::factory()->create());
+
+        $reply = Reply::factory()->create();
+
+        $this->post('/threads/' . $reply->id . '/favourites');
+        $this->delete('/threads/' . $reply->id . '/favourites');
+        
+        $this->assertCount(0 ,$reply->favourites);
     } 
 }

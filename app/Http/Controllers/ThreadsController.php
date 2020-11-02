@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Rules\SpamFree;
+use App\Inspections\Spam;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 
@@ -23,7 +25,7 @@ class ThreadsController extends Controller
     {
         $threads = $this->getThreads($channel, $filters);
 
-        if(request()->wantsJson()) {
+        if (request()->wantsJson()) {
             return $threads;
         }
 
@@ -48,9 +50,9 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'body' => ['required', 'string', 'min:8'],
-            'title' => ['required', 'string', 'min:8'],
+        $this->validate(request(), [
+            'body' => ['required', 'string', 'min:8',  new SpamFree],
+            'title' => ['required', 'string', 'min:8',  new SpamFree],
             'channel_id' => ['required', 'exists:channels,id'],
         ]);
 
@@ -72,10 +74,8 @@ class ThreadsController extends Controller
      */
     public function show($channel, Thread $thread)
     {
-        return view('threads.show', [
-            'thread' => $thread,
-            'replies' => $thread->replies()->with(['owner', 'favourites'])->withOut('thread')->paginate(10),
-        ]);
+        $thread->append('isSubscribed');
+        return view('threads.show', ['thread' => $thread]);
     }
 
     /**
@@ -119,12 +119,12 @@ class ThreadsController extends Controller
 
     protected function getThreads($channel, $filters)
     {
-        $threads= Thread::filter($filters);
+        $threads = Thread::filter($filters);
 
         if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);
         }
 
         return $threads->latest()->get();
-    } 
+    }
 }

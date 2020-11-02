@@ -17,6 +17,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('channel_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('replies_count')->default(0)->index();
             $table->string('title');
             $table->text('body');
             $table->timestamps();

@@ -8,7 +8,6 @@ use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\Channel;
 use App\Models\Activity;
-use Illuminate\Auth\AuthenticationException;
 
 class ThreadsBrowseTest extends TestCase
 {
@@ -28,19 +27,6 @@ class ThreadsBrowseTest extends TestCase
         $response = $this->get($thread->path());
 
         $response->assertSee($thread->title);
-    }
-
-    public function test_a_user_can_browse_a_reply()
-    {
-        $thread= Thread::factory()->create();
-
-        $reply = Reply::factory()->create([
-            'thread_id' => $thread->id
-        ]);
-
-        $response = $this->get($thread->path());
-
-        $response->assertSee($reply->body);
     }
 
     public function test_filter_threads_according_to_its_channel()
@@ -114,6 +100,38 @@ class ThreadsBrowseTest extends TestCase
         $thread = Thread::factory()->create(['user_id' => $user->id]);
 
         $this->delete(route('threads.destroy', compact('thread')))->assertStatus(403);
+    }
+    
+    public function test_filter_threads_by_unanswered_replies()
+    {
+        $this->be(User::factory()->create());
+        
+        $unansweredThread = Thread::factory()->create();
+        $thread = Thread::factory()->create();
+
+        Reply::factory()->create(['thread_id' => $thread->id]);
+
+        $this->get('/threads?unanswered=1')
+            ->assertSee($unansweredThread->title)
+            ->assertDontSee($thread->title);
+        
+    } 
+
+    public function test_when_creating_orDeleting_reply_increment_or_decrement_replies_count()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->be($user = User::factory()->create());
+
+        $thread = Thread::factory()->create();
+
+        $reply = Reply::factory()->create(['thread_id' => $thread->id, 'user_id' => $user->id]);
+
+        $this->assertEquals(1, $reply->thread->fresh()->replies_count);
+
+        $this->delete(route('reply.destroy', $reply));
+
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     } 
 
 }
