@@ -13,59 +13,35 @@
             {{ reply.created_at }}
           </p>
         </div>
-        <p class="text-sm text-gray-700 mb-2" v-html="form.body"></p>
-        <div class="flex flex-row">
-          <favourite :reply="reply" :display="displayTextarea"></favourite>
+        <p class="text-sm text-gray-700 mb-2" v-html="body"></p>
 
-          <div class="flex flex-1 justify-end" v-show="reply.can.update">
-            <!-- update -->
+        <div class="flex flex-row w-full" v-show="signedIn">
+          <favourite :reply="reply" v-show="!displayForms"> </favourite>
 
-            <div class="flex flex-1 flex-col">
-              <form @submit.prevent="changeBody()">
-                <textarea
-                  required
-                  class="resize-y w-full border rounded focus:outline-none focus:shadow-outline"
-                  v-bind:class="{ 'border-red-500': form.errors.has('body') }"
-                  name="body"
-                  v-text="form.body"
-                  v-show="displayTextarea"
-                  v-model="form.body"
-                ></textarea>
-                <div class="flex flex-row mt-2">
-                  <a
-                    class="flex px-2 py-1 bg-gray-400 rounded text-sm text-white hover:bg-gray-600 mr-1 cursor-pointer"
-                    v-show="displayTextarea"
-                    @click="reset()"
-                    >Geri</a
-                  >
-                  <button
-                    class="flex px-2 py-1 bg-blue-400 rounded text-sm text-white hover:bg-blue-600"
-                    v-show="displayTextarea"
-                    type="submit"
-                  >
-                    Kaydet
-                  </button>
-                </div>
-              </form>
-            </div>
-            <!-- endupdate -->
+          <button
+            class="text-gray-600 hover:bg-gray-100 mr-1 p-1"
+            @click.prevent="destroy()"
+            v-if="!displayForms"
+            v-show="usersOwnReply"
+          >
+            Sil
+          </button>
 
-            <button
-              class="flex px-2 py-1 bg-blue-400 rounded text-sm text-white hover:bg-white hover:text-blue-800 mr-1"
-              v-show="!displayTextarea"
-              @click="displayTextarea = true"
-            >
-              Düzenle
-            </button>
+          <reply-to-user-form
+            @created="created"
+            @changeDisplay="toggle()"
+            :reply="reply"
+            v-show="!usersOwnReply"
+            :displayForms="displayForms"
+          ></reply-to-user-form>
 
-            <button
-              class="flex px-2 py-1 bg-red-400 rounded text-sm text-white hover:bg-white hover:text-red-800"
-              v-show="!displayTextarea"
-              @click.prevent="destroy()"
-            >
-              Sil
-            </button>
-          </div>
+          <update-reply-form
+            @updated="updated"
+            @changeDisplay="toggle()"
+            :reply="reply"
+            :displayForms="displayForms"
+            v-show="usersOwnReply"
+          ></update-reply-form>
         </div>
       </div>
     </div>
@@ -74,37 +50,34 @@
 <script>
 import Form from "../../../dependencies/form.js";
 import Favourite from "./Favourite.vue";
+import ReplyToUserForm from "./ReplyToUserForm.vue";
+import UpdateReplyForm from "./UpdateReplyForm.vue";
 export default {
   props: ["reply"],
   components: {
     Favourite,
+    ReplyToUserForm,
+    UpdateReplyForm,
   },
   data() {
     return {
-      form: new Form({
-        body: this.reply.body,
-      }),
-      displayTextarea: false,
+      body: this.reply.body,
       originalReply: "",
+      displayForms: false,
+      usersOwnReply: false,
       id: this.reply.id,
     };
   },
+  computed: {
+    signedIn() {
+      return window.App.signedIn;
+    },
+  },
   created() {
     this.originalReply = this.reply;
+    this.usersOwnReply = window.App.user.name == this.reply.owner.name;
   },
   methods: {
-    changeBody() {
-      this.form
-        .submit("patch", "/replies/" + this.reply.id)
-        .then((data) => this.success())
-        .catch((error) => {
-          flash(error.errors.body[0] ? error.errors.body[0] : error.message, "error");
-        });
-    },
-    success() {
-      flash("Yorumunuz Kaydedildi");
-      this.displayTextarea = false;
-    },
     destroy() {
       axios
         .post("/replies/" + this.reply.id, { _method: "delete" })
@@ -116,9 +89,16 @@ export default {
         });
       this.$emit("deleted", this.id);
     },
-    reset() {
-      this.displayTextarea = false;
-      this.form.body = this.originalReply.body;
+    toggle() {
+      this.displayForms = !this.displayForms;
+    },
+    updated(body) {
+      this.body = body;
+      this.toggle();
+    },
+    created(response) {
+      this.$emit("created", response);
+      this.toggle();
     },
   },
 };

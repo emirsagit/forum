@@ -15,6 +15,8 @@ import ThreadForm from "./components/threads/create/ThreadForm.vue"; //thread.cr
 
 import Thread from "./components/threads/show/Thread.vue"; //thread.show
 
+import Profile from "./components/profiles/show/Profile.vue"; //profile.show
+
 /* shared */
 import Flash from "./components/shared/Flash.vue";
 import Paginator from "./components/shared/Paginator.vue";
@@ -24,7 +26,7 @@ import NotificationDropdown from "./components/shared/NotificationDropdown.vue";
 const app = new Vue({
     el: "#app",
     components: {
-        Signin, Threads, Register, SigninButton, RegisterButton, ThreadForm, NavigationDropdown, Flash, Thread, Paginator, NotificationDropdown
+        Signin, Threads, Register, SigninButton, RegisterButton, ThreadForm, NavigationDropdown, Flash, Thread, Paginator, NotificationDropdown, Profile
     },
 
     data: {

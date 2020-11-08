@@ -125,6 +125,6 @@ class ThreadsController extends Controller
             $threads = $threads->where('channel_id', $channel->id);
         }
 
-        return $threads->latest()->get();
+        return $threads->latest()->with('owner')->paginate(30);
     }
 }

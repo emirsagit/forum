@@ -6,6 +6,7 @@ use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\FavouritesController;
+use App\Http\Controllers\Api\UserAvatarsController;
 use App\Http\Controllers\UserNotificationsController;
 use App\Http\Controllers\ThreadSubscriptionsController;
 
@@ -45,3 +46,5 @@ Route::delete('/threads/{reply}/favourites', [FavouritesController::class, 'dest
 Route::get('/profiles/{user}', [ProfilesController::class, 'show'])->name('profiles.show');
 Route::delete('/profiles/{user}/notifications/{notification}', [UserNotificationsController::class, 'destroy'])->name('notification.destroy');
 Route::get('/profiles/{user}/notifications', [UserNotificationsController::class, 'index'])->name('notifications.index');
+
+Route::post('/api/profiles/{user}/avatar', [UserAvatarsController::class, 'store'])->name('avatar.store');

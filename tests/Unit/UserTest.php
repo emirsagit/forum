@@ -24,4 +24,15 @@ class UserTest extends TestCase
 
         $this->assertEquals($reply->id, $user->lastReply->id);
     } 
+
+    public function test_a_user_change_default_avatar()
+    {
+        $this->be($user = User::factory()->create());
+        
+        $this->assertEquals('/img/defaultavatar.svg' ,$user->avatar_path);
+
+        $user->update(['avatar_path' => 'avatars/image.jpg']);
+
+        $this->assertEquals('/storage/avatars/image.jpg' ,$user->avatar_path);
+    } 
 }

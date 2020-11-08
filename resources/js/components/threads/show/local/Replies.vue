@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(reply, index) in items" :key="reply.id">
-      <reply :reply="reply" @deleted="remove(index)"></reply>
+      <reply :reply="reply" @deleted="remove(index)" @created="addReply"></reply>
     </div>
     <paginator :initialDataSet="dataSet" @pageChanged="fetch"></paginator>
     <div class="flex my-2 pl-2">

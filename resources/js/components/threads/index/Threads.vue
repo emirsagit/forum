@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-row mt-2 flex-wrap-reverse lg:w-4/5 lg:m-auto lg:mt-8">
+  <div class="flex flex-row flex-wrap-reverse mt-4 lg:w-4/5 lg:m-auto lg:mt-8">
     <div
-      class="invisible lg:visible lg:flex flex-col lg:w-1/4 lg:h-screens p-2"
+      class="hidden lg:flex flex-col lg:w-1/4 lg:h-screens p-2"
     >
       <p class="mb-4 p-2 text-xl text-teal-600">Konular</p>
       <channel :channels="channels"></channel>
@@ -9,8 +9,7 @@
     <div class="flex flex-col px-4 lg:w-3/4">
       <threads-header :channels="channels"> </threads-header>
       <div
-        class="flex mb-2 md:hover:bg-gray-200 p-2 cursor-pointer"
-        @click.prevent="href(thread)"
+        class="flex mb-2 p-2"
         v-for="thread in threads"
         :key="thread.id"
       >
@@ -33,24 +32,15 @@ export default {
     Thread,
     ThreadsHeader,
   },
-  methods: {
-    href(thread) {
-      window.location.href =
-        "/threads/" + thread.channel.slug + "/" + thread.id;
-    },
-  },
   data() {
     return {
+      threads:this.data.data,
       channels: {},
       expandChannel: false,
       expandOrderBy: false,
     };
   },
-  props: {
-    threads: {
-      type: Array,
-    },
-  },
+  props:  ["data"],
   mounted() {
     axios
       .get("/channels")

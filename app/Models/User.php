@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar_path'
     ];
 
     public function getRouteKeyName()
@@ -50,6 +51,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAvatarPathAttribute($avatar)
+    {
+        return $avatar ? "/storage/" . $avatar : '/img/defaultavatar.svg';
+    } 
 
 
     public function threads()

@@ -14,7 +14,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reply extends Model
 {
-    use HasFactory, Favouriteable, RecordsActivity, WithPolicy;
+    
+    use HasFactory, Favouriteable, RecordsActivity;// withPolicy
 
     protected $casts = [
         'created_at'=> DateForHumansCast::class,
@@ -28,7 +29,7 @@ class Reply extends Model
         'thread', 
     ];
     //foru costum get to be shown attributes in json format 
-    protected $appends= ['favouritesCount', 'isFavourited', 'can'];
+    protected $appends= ['favouritesCount', 'isFavourited'];
 
     protected static function booted()
     {
