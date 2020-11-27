@@ -6,6 +6,9 @@ use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\FavouritesController;
+use App\Http\Controllers\BestRepliesController;
+use App\Http\Controllers\LockThreadsController;
+use App\Http\Controllers\ThreadImagesController;
 use App\Http\Controllers\Api\UserAvatarsController;
 use App\Http\Controllers\UserNotificationsController;
 use App\Http\Controllers\ThreadSubscriptionsController;
@@ -22,7 +25,10 @@ use App\Http\Controllers\ThreadSubscriptionsController;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+Route::resource('threads',  ThreadsController::class)->except([
+    'show'
+]);
 
 Route::get('/channels', [ChannelController::class, 'index']);
 
@@ -30,12 +36,17 @@ Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show'])->n
 Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'index'])->name('replies.index');
 Route::post('/threads/{channel}/{thread}/subscribe', [ThreadSubscriptionsController::class, 'store'])->name('subscribe.store');
 Route::delete('/threads/{channel}/{thread}/subscribe', [ThreadSubscriptionsController::class, 'destroy'])->name('subscribe.destroy');
-Route::resource('threads',  ThreadsController::class)->except([
-    'show'
-]);
+
+
 Route::get('/threads/{channel}', [ThreadsController::class, 'index'])->name('channel.index');
 
 Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])->name('reply.store');
+
+Route::post('/best-reply/{reply}', [BestRepliesController::class, 'store'])->name('best_reply.store');
+Route::delete('/best-reply/{reply}', [BestRepliesController::class, 'destroy'])->name('best_reply.destroy');
+
+Route::post('/thread-lock/{thread}', [LockThreadsController::class, 'store'])->name('thread_lock.store');
+Route::delete('/thread-lock/{thread}', [LockThreadsController::class, 'destroy'])->name('thread_lock.delete');
 
 Route::delete('/replies/{reply}', [RepliesController::class, 'destroy'])->name('reply.destroy');
 Route::patch('/replies/{reply}', [RepliesController::class, 'update'])->name('reply.update');
@@ -48,3 +59,4 @@ Route::delete('/profiles/{user}/notifications/{notification}', [UserNotification
 Route::get('/profiles/{user}/notifications', [UserNotificationsController::class, 'index'])->name('notifications.index');
 
 Route::post('/api/profiles/{user}/avatar', [UserAvatarsController::class, 'store'])->name('avatar.store');
+Route::post('/api/thread/upload/images', [ThreadImagesController::class, 'store'])->name('thread.image.store');

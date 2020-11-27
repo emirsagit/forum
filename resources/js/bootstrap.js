@@ -1,30 +1,43 @@
-window._ = require('lodash');
-window.Vue = require('vue');
 
-Vue.prototype.authorize = function (handler) {
-    //additional admin priviliges in here
-    let user = window.App.user;
-    return user ? handler(user) : false;
-}
+window.Vue = require("vue");
+
+window._ = require("lodash");
+
+let authorizations = require("./authorizations.js");
+
+Vue.prototype.$authorize = function(...params) {
+    if (!window.App.signedIn) {
+        return false;
+    }
+
+    if (typeof params[0] === "string") {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.App.user);
+};
+
+Vue.prototype.$signedIn = window.App.signedIn;
 
 window.events = new Vue();
 
-window.flash = function (message, type = "success") {
-    window.events.$emit('flash', {message, type})
-}
+window.flash = function(message, type = "success") {
+    window.events.$emit("flash", { message, type });
+};
 
-window.show = function ($field) {
-    window.events.$emit('show', $field)
-}
+window.show = function($field) {
+    window.events.$emit("show", $field);
+};
 
-window.axios = require('axios');
+window.markAsBest = function($field) {
+    window.events.$emit("markAsBest", $field);
+};
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// /**
-//  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
-//  * for JavaScript based Bootstrap features such as modals and tabs. This
-//  * code may be modified to fit the specific needs of your application.
-//  */
+window.deleteMarkAsBest = function($field) {
+    window.events.$emit("deleteMarkAsBest", $field);
+};
 
-// try { require('bootstrap');
-// } catch (e) {}
+window.axios = require("axios");
+
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+

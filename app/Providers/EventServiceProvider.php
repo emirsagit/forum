@@ -14,6 +14,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        'Illuminate\Auth\Events\Registered' => [
+            'Illuminate\Auth\Listeners\SendEmailVerificationNotification'
+        ],
         'App\Events\NewReplyCreated' => [
             'App\Listeners\MentionedUserNotification',
             'App\Listeners\SubscribersNotification',

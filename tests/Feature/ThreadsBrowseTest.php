@@ -24,9 +24,11 @@ class ThreadsBrowseTest extends TestCase
     {
         $thread= Thread::factory()->create();
 
-        $response = $this->get($thread->path());
+        $anotherThread= Thread::factory()->create();
 
-        $response->assertSee($thread->title);
+        $this->get($thread->path())
+                ->assertSee($thread->title)
+                ->assertDontSee($anotherThread->title);
     }
 
     public function test_filter_threads_according_to_its_channel()
@@ -134,4 +136,14 @@ class ThreadsBrowseTest extends TestCase
         $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     } 
 
+    public function test_it_records_visits()
+    {
+        $thread = Thread::factory()->create();
+
+        $this->assertEquals(0, $thread->fresh()->visits_count);
+
+        $this->call('GET', $thread->path());
+        
+        $this->assertEquals(1, $thread->fresh()->visits_count);
+    } 
 }

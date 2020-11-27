@@ -35,14 +35,16 @@
           <p class="text-gray-700 text-sm">{{ thread.replies_count }}</p>
         </div>
       </div>
-      <p class="text-sm text-gray-700">{{ thread.body }}</p>
-      <div class="flex flex-row mt-1 mb-2">
-        <a
-          :href="'/profiles/' + thread.owner.name"
-          v-text="thread.owner.name"
-          class="text-blue-400 text-sm hover:text-underline hover:text-blue-600"
-        ></a>
-        <p class="text-sm text-gray-500">&nbsp;tarafından oluşturuldu</p>
+      <div class="p-link text-sm text-gray-700" v-html="thread.body"></div>
+      <div class="mt-1 mb-2">
+        <p class="text-sm text-gray-500">
+          <a
+            :href="'/profiles/' + thread.owner.name"
+            class="text-blue-400 text-sm hover:text-underline hover:text-blue-600"
+            >{{ thread.owner.name }}</a
+          >&nbsp;tarafından oluşturuldu.&nbsp;{{ thread.visits_count }} kez
+          görüntülendi.
+        </p>
       </div>
     </div>
   </div>
@@ -58,7 +60,7 @@ export default {
   methods: {
     href(thread) {
       window.location.href =
-        "/threads/" + thread.channel.slug + "/" + thread.id;
+        "/threads/" + thread.channel.slug + "/" + thread.slug;
     },
   },
 };

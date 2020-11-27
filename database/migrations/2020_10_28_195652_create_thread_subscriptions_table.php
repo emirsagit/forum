@@ -17,8 +17,8 @@ class CreateThreadSubscriptionsTable extends Migration
     {
         Schema::create('thread_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->constrained('users')->onDelete('cascade');
-            $table->unsignedBigInteger('thread_id')->constrained('threads')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('thread_id')->constrained()->onDelete('cascade');
             $table->timestamps();
 
             $table->unique(['user_id', 'thread_id']);

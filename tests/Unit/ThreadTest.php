@@ -104,10 +104,9 @@ class ThreadTest extends TestCase
 
         $thread->subscribe();
 
-        $thread->addReply([
-            'user_id' => 999,
-            'body' => "something"
-        ]);
+        $reply = Reply::factory()->make();
+
+        $this->post(route('reply.store', ['thread' => $thread->slug]), $reply->toArray());
 
         Notification::assertSentTo($user, ThreadWasUpdated::class);
     }

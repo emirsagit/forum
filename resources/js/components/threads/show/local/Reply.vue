@@ -1,7 +1,7 @@
 <template>
   <div :id="'reply-' + id" class="flex my-2 pl-2">
-    <div class="flex mr-2">1</div>
-    <div class="flex flex-1 mr-2">
+    <div class="flex mr-2 p-2">1</div>
+    <div class="flex flex-1 mr-2 p-2">
       <div class="flex flex-col w-full">
         <div class="flex items-center mb-2">
           <a :href="'/profiles/' + reply.owner.name">
@@ -15,7 +15,7 @@
         </div>
         <p class="text-sm text-gray-700 mb-2" v-html="body"></p>
 
-        <div class="flex flex-row w-full" v-show="signedIn">
+        <div class="flex flex-row w-full" v-show="this.$signedIn">
           <favourite :reply="reply" v-show="!displayForms"> </favourite>
 
           <button
@@ -26,14 +26,29 @@
           >
             Sil
           </button>
-
-          <reply-to-user-form
-            @created="created"
-            @changeDisplay="toggle()"
-            :reply="reply"
-            v-show="!usersOwnReply"
-            :displayForms="displayForms"
-          ></reply-to-user-form>
+          <div
+            class="text-gray-600 flex flex-row hover:bg-gray-100 items-center mr-1 p-1 cursor-pointer"
+            v-show="!$parent.displayForm"
+            @click.prevent="$parent.displayForm = true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905a3.61 3.61 0 01-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+              />
+            </svg>
+            <p>
+              Yanıtla
+            </p>
+          </div>
 
           <update-reply-form
             @updated="updated"
@@ -42,6 +57,13 @@
             :displayForms="displayForms"
             v-show="usersOwnReply"
           ></update-reply-form>
+
+          <best-reply-button
+            :isBest="changeBest"
+            v-if="!displayForms"
+            @markAsBest="markAsBest"
+            v-show="this.$authorize('updateThread', reply.thread)"
+          ></best-reply-button>
         </div>
       </div>
     </div>
@@ -50,14 +72,14 @@
 <script>
 import Form from "../../../dependencies/form.js";
 import Favourite from "./Favourite.vue";
-import ReplyToUserForm from "./ReplyToUserForm.vue";
 import UpdateReplyForm from "./UpdateReplyForm.vue";
+import BestReplyButton from "./BestReplyButton.vue";
 export default {
-  props: ["reply"],
+  props: ["reply", "bestreply"],
   components: {
     Favourite,
-    ReplyToUserForm,
     UpdateReplyForm,
+    BestReplyButton,
   },
   data() {
     return {
@@ -69,13 +91,16 @@ export default {
     };
   },
   computed: {
-    signedIn() {
-      return window.App.signedIn;
+    changeBest() {
+      if (this.bestreply) {
+        return this.reply.id == this.bestreply.id;
+      }
+      return false;
     },
   },
   created() {
     this.originalReply = this.reply;
-    this.usersOwnReply = window.App.user.name == this.reply.owner.name;
+    this.usersOwnReply = this.$authorize("updateReply", this.reply);
   },
   methods: {
     destroy() {
@@ -96,9 +121,18 @@ export default {
       this.body = body;
       this.toggle();
     },
-    created(response) {
-      this.$emit("created", response);
-      this.toggle();
+    markAsBest() {
+      if (!this.changeBest) {
+        axios
+          .post("/best-reply/" + this.reply.id)
+          .then(flash("En iyi yanıt seçildi"));
+        window.markAsBest(this.reply);
+      } else {
+        axios
+          .delete("/best-reply/" + this.reply.id)
+          .then(flash("İşaret kaldırıldı", "error"));
+        window.deleteMarkAsBest(this.reply);
+      }
     },
   },
 };

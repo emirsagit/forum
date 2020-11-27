@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
+use App\Rules\Recaptcha;
 use Illuminate\Auth\AuthenticationException;
 
 class CreateThreadsTest extends TestCase
@@ -16,22 +17,62 @@ class CreateThreadsTest extends TestCase
 
         $this->withoutExceptionHandling();
         
-        $thread = Thread::factory()->make();
-
-        $this->post('/threads', $thread->toArray());
+        $this->post('/threads', [
+            'title' => 'some title some',
+            'body' => 'some body some',
+            'channel_id' => Channel::factory()->create()->id,
+            'recaptcha' => 'token'
+        ]);
     }
 
-    public function test_auth_user_can_create_thread()
+    public function test_authenticated_user_can_create_thread()
     {   
+        $this->mock(Recaptcha::class, function ($mock) {
+            $mock->shouldReceive('passes')->once()->andReturn(true);
+        });
+
         $this->actingAs(User::factory()->create());
 
-        $thread = Thread::factory()->make();
-
-        $this->post('/threads', $thread->toArray());
+        $this->post('/threads', [
+            'title' => 'some title some',
+            'body' => 'some body some',
+            'channel_id' => Channel::factory()->create()->id,
+            'recaptcha' => 'token'
+        ]);
 
         $this->get('threads')
-            ->assertSee($thread->title);
+            ->assertSee('some title');
     }
+
+    public function test_unique_slug_is_required()
+    {
+        $this->mock(Recaptcha::class, function ($mock) {
+            $mock->shouldReceive('passes')->andReturn(true);
+        });
+
+        $this->actingAs(User::factory()->create());
+
+        $this->post('/threads', [
+            'title' => 'this-title',
+            'body' => 'some body some',
+            'channel_id' => Channel::factory()->create()->id,
+            'recaptcha' => 'token'
+        ]);
+
+        $this->assertDatabaseHas('threads', ['slug' => 'this-title']);
+
+        $this->post('/threads', [
+            'title' => 'this-title',
+            'body' => 'some body some',
+            'channel_id' => Channel::factory()->create()->id,
+            'recaptcha' => 'token'
+        ]);
+
+        $query = Thread::get()->count();
+
+        $this->assertDatabaseHas('threads', ['slug' => 'this-title-' . $query]);
+    }
+
 
     public function test_guest_can_not_see_the_create_page()
     {
@@ -47,6 +88,11 @@ class CreateThreadsTest extends TestCase
     public function test_threads_body_attribute_is_required()
     {
         $this->threadRequiredValidation('body');
+    } 
+
+    public function test_recaptcha_is_required()
+    {
+        $this->threadRequiredValidation('recaptcha');
     } 
 
     public function test_threads_channel_id_attribute_is_required()

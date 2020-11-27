@@ -23,12 +23,18 @@ class RepliesController extends Controller
 
     public function store(Thread $thread, ReplyFormRequest $request)
     {
+        if ($thread->locked) {
+            return response('Yönetici bu konuya yorum yapmayı kapattı', 403);
+        }
+
         $reply = $thread->addReply([
             'body' => $request->body,
             'user_id' => auth()->user()->id
         ]);
 
-        return $reply->load('owner');
+        $reply = $reply->load('owner');
+        
+        return $reply;
     }
 
     public function destroy(Reply $reply)
@@ -47,5 +53,4 @@ class RepliesController extends Controller
 
         $reply->update(['body' => request('body')]);
     }
-
 }

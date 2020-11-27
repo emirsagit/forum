@@ -1,32 +1,46 @@
-<nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-    <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
-        </svg>
-        <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span>
+<nav class="lg:w-5/6 m-auto flex items-center justify-between flex-wrap p-6">
+    <div class="flex items-center flex-shrink-0 mr-6">
+        forum
     </div>
-    <div class="block lg:hidden">
+    <div class="block lg:hidden order-first">
         <button
-            class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            class="flex items-center px-3 py-2 border rounded border-teal-400 hover:text-teal-800 hover:border-teal-600 text-teal-600"
+            @click="expand = !expand">
+            <svg class="fill-current h-3 w-3" stroke="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
                 <title>Menu</title>
                 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
             </svg>
         </button>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="w-full block flex-grow text-teal-600 lg:flex lg:items-center lg:w-auto"
+        :class="expand ? 'flex flex-col' : 'hidden'">
         <div class="text-sm lg:flex-grow">
-            <a href="{{ route('threads.index') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            <a href="{{ route('threads.index') }}" class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800 ">
                 Forum
             </a>
-            <a href="{{ route('threads.create') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+            <a href="{{ route('threads.create') }}"
+                class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800 ">
                 Yeni Konu
             </a>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+            <a href="#responsive-header" class="block mt-4 mr-4 lg:inline-block lg:mt-0 hover:text-teal-800 ">
                 Etiketler
             </a>
+            <!-- component -->
+            <div class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-800 text-sm">
+                <div class="flex flex-row">
+                    <input type="search" class="bg-purple-white shadow rounded border-0 p-1 pl-2"
+                        placeholder="Ara...">
+                    <svg version="1.1" class="h-4 text-dark mt-2 -ml-4 cursor-pointer hover:text-teal-600" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52.966 52.966"
+                        style="enable-background:new 0 0 52.966 52.966;" xml:space="preserve">
+                        <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
+          c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
+          C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
+          S32.459,40,21.983,40z" />
+                    </svg>
+                </div>
+            </div>
         </div>
         <div class="flex flex-col lg:flex-row">
             @guest
@@ -35,9 +49,11 @@
             <register-button>
             </register-button>
             @else
+            <navigation-auth-dropdown :user="{{ auth()->user() }}" class="hidden lg:flex">
+            </navigation-auth-dropdown>
+            <navigation-auth :user="{{ auth()->user() }}" class="lg:hidden">
+            </navigation-auth>
             <notification-dropdown></notification-dropdown>
-            <navigation-dropdown :user="{{ auth()->user() }}">
-            </navigation-dropdown>
             @endguest
         </div>
     </div>

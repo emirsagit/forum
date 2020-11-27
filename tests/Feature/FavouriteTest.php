@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Reply;
+use Illuminate\Auth\AuthenticationException;
 
 
 class FavouriteTest extends TestCase
@@ -20,7 +21,7 @@ class FavouriteTest extends TestCase
         //insert database
     } 
 
-    public function guest_can_not_favourite_anything()
+    public function test_guest_can_not_favourite_anything()
     {
         $this->expectException(AuthenticationException::class);
 

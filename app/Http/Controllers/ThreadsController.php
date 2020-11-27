@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Trending;
 use App\Models\Thread;
 use App\Models\Channel;
 use App\Rules\SpamFree;
-use App\Inspections\Spam;
+use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
+use App\Rules\EditorJsValidationRules;
 
 class ThreadsController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware(['auth', 'verified'])->except(['index', 'show']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
     {
         $threads = $this->getThreads($channel, $filters);
 
@@ -29,7 +31,7 @@ class ThreadsController extends Controller
             return $threads;
         }
 
-        return view('threads.index', compact('threads'));
+        return view('threads.index', ['threads' => $threads, 'trendings' => $trending->get()]);
     }
 
     /**
@@ -48,19 +50,22 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request, Recaptcha $recaptcha)
+    {  
         $this->validate(request(), [
-            'body' => ['required', 'string', 'min:8',  new SpamFree],
             'title' => ['required', 'string', 'min:8',  new SpamFree],
             'channel_id' => ['required', 'exists:channels,id'],
-        ]);
-
-        $thread = Thread::create([
+            'recaptcha' => ['required', $recaptcha],
+            'body' => ['required', new EditorJsValidationRules]
+        ]);  
+        // $editorJsValidation = new EditorJsValidation($request->body);
+        // $body = $editorJsValidation->get();    
+        Thread::create([
             'user_id' => auth()->user()->id,
             'channel_id' => $request->channel_id,
             'title' => $request->title,
-            'body' => $request->body
+            'body' => $request->body,
+            'editors_data' => $request->body
         ]);
 
         return back()->with('message', 'Başarıyla kaydedildi');
@@ -72,9 +77,16 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channel, Thread $thread)
+    public function show($channel, Thread $thread, Trending $trending)
     {
         $thread->append('isSubscribed');
+
+        $trending->push($thread);
+
+        $thread->increment('visits_count', 1);
+
+        $thread->load('bestReply');
+
         return view('threads.show', ['thread' => $thread]);
     }
 
@@ -86,7 +98,7 @@ class ThreadsController extends Controller
      */
     public function edit(Thread $thread)
     {
-        //
+        return view('threads.edit', ['thread' => $thread]);
     }
 
     /**
@@ -96,9 +108,22 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Thread $thread, Request $request)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $request->validate([
+            'title' => ['required', 'string', 'min:8',  new SpamFree],
+            'body' => ['required', new EditorJsValidationRules],
+            'channel_id' => ['required', 'exists:channels,id'],
+        ]);
+        $thread->update([
+            'title' => $request->title,
+            'body' => $request->body,
+            'channel_id' => $request->channel_id,
+            'editors_data' => $request->body
+        ]);
+
     }
 
     /**

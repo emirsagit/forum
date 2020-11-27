@@ -67,7 +67,7 @@ export default {
   methods: {
     changeBody() {
       this.form
-        .submit("post", "/threads/" + this.reply.thread.id + "/replies")
+        .submit("post", "/threads/" + this.reply.thread.slug + "/replies")
         .then((response) => {
           flash("Yorumunuz Kaydedildi");
           this.$emit("created", response);

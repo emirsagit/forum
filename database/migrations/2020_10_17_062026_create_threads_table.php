@@ -15,11 +15,15 @@ class CreateThreadsTable extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('channel_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('replies_count')->default(0)->index();
+            $table->unsignedBigInteger('visits_count')->default(0);
             $table->string('title');
+            $table->string('slug')->unique()->nullable();
             $table->text('body');
+            $table->text('editors_data')->nullable();
+            $table->boolean('locked')->default(false);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('channel_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

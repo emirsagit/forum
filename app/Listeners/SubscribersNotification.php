@@ -20,9 +20,9 @@ class SubscribersNotification
         $thread =  $event->reply->thread;
 
         $thread->subscriptions
-        ->where('user_id', '=!', $event->reply->id)
-        ->each(function ($sub) use ($event, $thread) {
-            return $sub->user->notify(new ThreadWasUpdated ($thread, $event->reply));
-        });
+            ->where('user_id', '!=', $event->reply->user_id)
+            ->each(function ($sub) use ($event, $thread) {
+                return $sub->user->notify(new ThreadWasUpdated($thread, $event->reply));
+            });
     }
 }

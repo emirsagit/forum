@@ -15,7 +15,7 @@
             Konu
           </label>
           <select
-            class="select shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline leading-tight"
+            class="select shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline leading-tight"
             id="grid-state"
             name="channel_id"
             v-bind:class="{ 'border-red-500': form.errors.has('channel_id') }"
@@ -55,20 +55,24 @@
           <label class="block text-gray-700 text-sm font-bold mb-2" for="body">
             İçerik
           </label>
-          <textarea
+          <js-editor @onInitialized="onInitialized"></js-editor>
+          <!-- <VueTrix v-model="form.body" placeholder="İçerik" class="trix-content trix-editor "/> -->
+          <!-- <textarea
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             v-bind:class="{ 'border-red-500': form.errors.has('body') }"
             type="text"
             placeholder="İçerik"
             name="body"
             v-model="form.body"
-          />
+          /> -->
           <p
             class="text-red-500 text-xs italic"
             v-text="form.errors.get('body')"
             v-if="form.errors.has('body')"
           ></p>
         </div>
+        <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
+        <br />
         <div class="flex items-center justify-between">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
@@ -87,25 +91,66 @@
 
 <script>
 import Form from "../../dependencies/form.js";
+import Recaptcha from "../../shared/Recaptcha.vue";
+import VueTrix from "vue-trix";
+import JsEditor from "../../shared/JsEditor.vue";
+
 export default {
+  props: ["recapthcaSiteKey"],
+  components: {
+    Recaptcha,
+    VueTrix,
+    JsEditor,
+  },
   data() {
     return {
       form: new Form({
         title: "",
         body: "",
         channel_id: "",
+        recaptcha: "",
       }),
       channels: {},
+      editor: "",
     };
   },
   methods: {
-    onSubmit() {
+    onInitialized(editor) {
+      this.editor = editor;
+      console.log(this.editor);
+    },
+    async editorSave() {
+      await this.editor
+        .save()
+        .then((outputData) => {
+          this.form.body = outputData;
+          console.log(this.form.body);
+        })
+        .catch((error) => {
+          console.log("Saving failed: ", error);
+        });
+    },
+    async onSubmit() {
+      await this.editorSave();
       this.form
-        .submit("post", "/threads")
+        .submit("post", "/threads", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
         .then((data) => flash("Konu kaydedildi."))
         .catch((error) => {
-          flash(error.message, "error");
+          flash(
+            error.errors.recaptcha[0]
+              ? error.errors.recaptcha[0]
+              : error.message,
+            "error"
+          );
         });
+    },
+    change(response) {
+      this.form.recaptcha = response;
+      console.log(this.form.recaptcha);
     },
   },
   mounted() {

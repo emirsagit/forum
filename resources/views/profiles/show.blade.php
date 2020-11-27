@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<profile data="{{ asset($user->avatar_path) }}" inline-template>
+
+<profile data="{{ $user->avatar_path }}" inline-template>
     <div>
         <div class="flex w-full h-24 bg-blue-600 text-white">
             <div class="flex m-auto items-end">

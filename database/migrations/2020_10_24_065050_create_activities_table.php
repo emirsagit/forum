@@ -15,9 +15,9 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index()->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('type');
-            $table->unsignedBigInteger('subject_id')->index();
+            $table->foreignId('subject_id')->index();
             $table->string('subject_type');
             $table->timestamps();
         });

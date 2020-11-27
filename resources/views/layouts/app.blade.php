@@ -16,26 +16,25 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script>
+    <script type="application/javascript">
         window.App = {!! json_encode([
             'signedIn' => Auth::check(),
             'user' => Auth::user(),
       ]) !!}      
     </script>
+    @yield('head')
 </head>
 
 <body>
     <div id="app">
         @include('layouts.nav')
-        <main>
-            @yield('content')
-            <signin :login="control.login" @hide="hide"></signin>
-            <register :register="control.register" @hide="hide"></register>
-        </main>
+        @yield('content')
+        <signin :login="control.login" @hide="hide"></signin>
+        <register :register="control.register" @hide="hide"></register>
         <flash flashing="{{ session('message') }}"></flash>
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer type="application/javascript"></script>
 </body>
 
 </html>

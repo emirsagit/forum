@@ -21,6 +21,12 @@ class VerificationController extends Controller
 
     use VerifiesEmails;
 
+
+    public function redirectTo()
+    {
+        return session('url.intended', $this->redirectTo);
+    }
+
     /**
      * Where to redirect users after verification.
      *

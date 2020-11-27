@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use App\Models\Thread;
 use App\Models\Channel;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ThreadFactory extends Factory
@@ -26,8 +27,10 @@ class ThreadFactory extends Factory
         return [
             'user_id' => User::factory(),
             'channel_id' => Channel::factory(),
-            'title' => $this->faker->sentence,
+            'title' => $title = $this->faker->sentence,
             'body' => $this->faker->paragraph,
+            'slug' => Str::slug($title),
+            'locked' => false
         ];
     }
 }

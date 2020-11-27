@@ -21,13 +21,13 @@ class Form {
        return data;
     }
 
-    submit(requestType, url) {
+    submit(requestType, url, parameter = null) {
       return new Promise((resolve, reject) => {
         axios
-            [requestType](url, this.data())
+            [requestType](url, this.data(), parameter)
             .then((response) => {
               this.onSuccess(response.data);
-              
+                
               resolve(response.data);
             })
             .catch((error) => {

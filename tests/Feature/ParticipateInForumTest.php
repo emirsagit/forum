@@ -20,7 +20,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = Reply::factory()->make();
 
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $this->post('/threads/' . $thread->slug . '/replies', $reply->toArray());
 
         $this->assertDatabaseHas('replies', ['body' => $reply->body]);
     }
@@ -35,7 +35,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = Reply::factory()->make();
 
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $this->post('/threads/' . $thread->slug . '/replies', $reply->toArray());
     }
 
     public function test_body_attribute_is_required()
@@ -46,7 +46,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = Reply::factory()->make(['body' => null]);
 
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray())
+        $this->post('/threads/' . $thread->slug . '/replies', $reply->toArray())
             ->assertSessionHasErrors('body');
     }
 
@@ -135,7 +135,7 @@ class ParticipateInForumTest extends TestCase
             'body' => "@" . $user->name .  " write a reply"
         ]);
 
-        $this->json('POST', '/threads/' . $thread->id . '/replies', $reply->toArray());
+        $this->json('POST', '/threads/' . $thread->slug . '/replies', $reply->toArray());
 
         $this->assertCount(1, $user->notifications);
     }

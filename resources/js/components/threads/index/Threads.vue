@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-row flex-wrap-reverse mt-4 lg:w-4/5 lg:m-auto lg:mt-8">
     <div
-      class="hidden lg:flex flex-col lg:w-1/4 lg:h-screens p-2"
+      class="hidden lg:flex flex-col lg:w-1/4 lg:h-screens px-2"
     >
-      <p class="mb-4 p-2 text-xl text-teal-600">Konular</p>
+      <trending-threads :trendings="trendings"></trending-threads>
       <channel :channels="channels"></channel>
     </div>
     <div class="flex flex-col px-4 lg:w-3/4">
@@ -26,11 +26,13 @@
 import Channel from "./local/Channel.vue";
 import Thread from "./local/Thread.vue";
 import ThreadsHeader from "./local/ThreadsHeader.vue";
+import TrendingThreads from "./local/TrendingThreads.vue";
 export default {
   components: {
     Channel,
     Thread,
     ThreadsHeader,
+    TrendingThreads
   },
   data() {
     return {
@@ -40,7 +42,7 @@ export default {
       expandOrderBy: false,
     };
   },
-  props:  ["data"],
+  props:  ["data", 'trendings'],
   mounted() {
     axios
       .get("/channels")

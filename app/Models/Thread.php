@@ -5,24 +5,36 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Channel;
+use Illuminate\Support\Str;
 use App\Events\NewReplyCreated;
 use App\Traits\RecordsActivity;
 use App\Models\ThreadSubscription;
+use App\Traits\ConvertHtml;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Thread extends Model
 {
-    use HasFactory, RecordsActivity;
+    use HasFactory, RecordsActivity, ConvertHtml;
 
     protected $fillable = [
-        'user_id', 'title', 'body', 'channel_id', 'replies_count'
+        'user_id', 'title', 'body', 'channel_id', 'replies_count', 'visits_count', 'slug', 'best_reply_id', 'locked', 'editors_data'
     ];
 
     protected $with = [
         'channel'
     ];
+
+    protected $casts = [
+        'body' => 'array',
+        'editors_data' => 'array'
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     protected static function booted()
     {
@@ -32,17 +44,32 @@ class Thread extends Model
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
         });
+
+        static::created(function ($thread) {
+            $thread->update(['slug' => $thread->title]);
+        });
     }
 
     public function path()
     {
-        return '/threads/' . $this->channel->slug . '/' . $this->id;
+        return '/threads/' . $this->channel->slug . '/' . $this->slug;
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $slug = Str::slug($value);
+
+        if (static::where('slug', $slug)->exists()) {
+            $slug = $slug . '-' . $this->id;
+        }
+
+        return $this->attributes['slug'] = $slug;
     }
 
     public function addReply($reply)
     {
         $reply = $this->replies()->create($reply);
-
+        
         event(new NewReplyCreated($reply));
 
         return $reply;
@@ -75,6 +102,16 @@ class Thread extends Model
     {
         if (!Auth::check()) return;
         return $this->subscriptions->where('user_id', auth()->user()->id)->count();
+    }
+
+    public function getBodyAttribute($value)
+    {
+        return $this->getHtml($value);
+    }
+
+    public function bestReply()
+    {
+        return $this->belongsTo(Reply::class, 'best_reply_id')->with('owner');
     }
 
     public function owner()

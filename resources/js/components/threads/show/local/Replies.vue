@@ -1,16 +1,29 @@
 <template>
   <div>
     <div v-for="(reply, index) in items" :key="reply.id">
-      <reply :reply="reply" @deleted="remove(index)" @created="addReply"></reply>
+      <reply
+        :reply="reply"
+        :bestreply="bestreply"
+        @deleted="remove(index)"
+      ></reply>
     </div>
     <paginator :initialDataSet="dataSet" @pageChanged="fetch"></paginator>
-    <div class="flex my-2 pl-2">
+    <reply-form
+      :thread="thread"
+      @created="addReply"
+      v-if="this.$signedIn && !$parent.locked && displayForm"
+    >
+    </reply-form>
+    <div class="flex my-2 pl-2 h-32">
       <div class="flex flex-1 mr-2">
+        <div class="flex flex-col w-full h-full border-2 m-auto cursor-pointer" v-if="this.$signedIn && !$parent.locked" @click="displayForm = true">
+          <div class="flex w-full h-full flex-col items-center justify-center rounded-lg border-dashed m-auto">
+            <p class="text-gray-700 text-lg">Yanıtla</p>
+          </div>
+        </div>
         <!-- @auth -->
-        <reply-form :thread="thread" @created="addReply" v-if="signedIn">
-        </reply-form>
         <!-- elseauth -->
-        <div class="flex flex-col items-start" v-else>
+        <div class="flex flex-col items-start" v-if="!this.$signedIn">
           <div class="flex">
             <signin-button
               class="bg-gray-300 text-gray-800 hover:bg-gray-100 mr-2"
@@ -25,6 +38,9 @@
             Mesaj göndermek için giriş yapın ya da kayıt olun
           </p>
         </div>
+        <p v-if="$parent.locked" class="text-teal-600 mx-auto mt-4">
+          Yönetici bu gönderiyi yoruma kapattı.
+        </p>
         <!-- endauth -->
       </div>
     </div>
@@ -44,15 +60,16 @@ export default {
     SigninButton,
     RegisterButton,
     ReplyForm,
-    Paginator
+    Paginator,
   },
 
   mixins: [collection],
 
-  props: ["thread"],
+  props: ["thread", "bestreply"],
   data() {
     return {
       dataSet: false,
+      displayForm: false,
     };
   },
   mounted() {
@@ -63,22 +80,17 @@ export default {
       axios.get(this.url(page)).then(this.refresh);
     },
     url(page) {
-      if (! page) {
+      if (!page) {
         let query = location.search.match(/page=(\d+)/);
         page = query ? query[1] : 1;
       }
-      return `${location.pathname}/replies?page=`+ page;
+      return `${location.pathname}/replies?page=` + page;
     },
-    refresh({data}) {
+    refresh({ data }) {
       this.items = data.data;
-      this.dataSet = data 
+      this.dataSet = data;
 
-      window.scrollTo(0,0);
-    },
-  },
-  computed: {
-    signedIn() {
-      return window.App.signedIn;
+      window.scrollTo(0, 0);
     },
   },
 };

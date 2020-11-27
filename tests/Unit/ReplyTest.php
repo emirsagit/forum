@@ -48,11 +48,11 @@ class ReplyTest extends TestCase
 
         $attributes = ['body' => "merhaba dosutufasdfdam"];
 
-        $this->json('POST', '/threads/' . $thread->id . '/replies', $attributes);
+        $this->json('POST', '/threads/' . $thread->slug . '/replies', $attributes);
 
         $user->refresh();
 
-        $this->json('POST', '/threads/' . $thread->id . '/replies', $attributes);
+        $this->json('POST', '/threads/' . $thread->slug . '/replies', $attributes);
         
         $this->assertCount(1, $user->replies);
     } 
@@ -74,4 +74,17 @@ class ReplyTest extends TestCase
            'look <a href="/profiles/Emir" class="text-blue-500 hover:text-blue-700">@Emir</a> at this file' ,$reply->body 
         );
     }  
+
+    public function test_a_reply_can_mark_as_best_reply()
+    {
+        $this->be(User::factory()->create());
+
+        $thread = Thread::factory()->create();
+
+        $reply = Reply::factory()->create(['thread_id' => $thread->id]);
+
+        $reply->markAsBest();
+
+        $this->assertTrue($reply->isBest());
+    } 
 }

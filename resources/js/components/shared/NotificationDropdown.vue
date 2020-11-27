@@ -2,7 +2,7 @@
   <div class="relative inline-block text-left" v-if="notifications.length">
     <div
       @click="expand = !expand"
-      class="mr-4 text-white cursor-pointer px-1 py-1 mt-2 lg:mt-1 hover:bg-gray-200 hover:text-teal-500 rounded-xl"
+      class="block mt-4 lg:inline-block lg:mt-0 mr-4 text-red-600 hover:text-red-800 cursor-pointer"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ export default {
         "/profiles/" + window.App.user.name + "/notifications/" + id
       )
       .then(response => { 
-        console.log(response)
+        this.expand = false
       })
       .catch(error => {
         console.log(error.response)
