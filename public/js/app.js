@@ -2999,7 +2999,6 @@ var ajax = __webpack_require__(/*! @codexteam/ajax */ "./node_modules/@codexteam
                     type: ajax.contentType.FORM
                   };
                   return ajax.post(params).then(function (response) {
-                    console.log(response);
                     return {
                       success: response.body.success,
                       file: {
@@ -4213,6 +4212,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     classes: function classes() {
@@ -4312,6 +4312,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4331,7 +4341,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dataSet: false,
-      displayForm: false
+      displayForm: false,
+      requestedReply: ""
     };
   },
   mounted: function mounted() {
@@ -4354,7 +4365,19 @@ __webpack_require__.r(__webpack_exports__);
       this.items = data.data;
       this.dataSet = data;
       window.scrollTo(0, 0);
-    }
+    },
+    updateRequest: function updateRequest(reply) {
+      this.requestedReply = reply;
+      this.displayForm = true;
+    },
+    reset: function reset() {
+      this.displayForm = false;
+      this.requestedReply = "";
+    } //  change : async(items, index, item) => {
+    //    return items.splice(index, 1, item);
+    //    console.log(item);
+    // },
+
   }
 });
 
@@ -4371,8 +4394,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dependencies_form_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dependencies/form.js */ "./resources/js/components/dependencies/form.js");
 /* harmony import */ var _Favourite_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Favourite.vue */ "./resources/js/components/threads/show/local/Favourite.vue");
-/* harmony import */ var _UpdateReplyForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UpdateReplyForm.vue */ "./resources/js/components/threads/show/local/UpdateReplyForm.vue");
-/* harmony import */ var _BestReplyButton_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BestReplyButton.vue */ "./resources/js/components/threads/show/local/BestReplyButton.vue");
+/* harmony import */ var _BestReplyButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BestReplyButton.vue */ "./resources/js/components/threads/show/local/BestReplyButton.vue");
 //
 //
 //
@@ -4444,7 +4466,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4452,8 +4489,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["reply", "bestreply"],
   components: {
     Favourite: _Favourite_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    UpdateReplyForm: _UpdateReplyForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    BestReplyButton: _BestReplyButton_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    BestReplyButton: _BestReplyButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -4461,7 +4497,8 @@ __webpack_require__.r(__webpack_exports__);
       originalReply: "",
       displayForms: false,
       usersOwnReply: false,
-      id: this.reply.id
+      id: this.reply.id,
+      locked: this.reply.thread.locked
     };
   },
   computed: {
@@ -4488,13 +4525,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.$emit("deleted", this.id);
     },
-    toggle: function toggle() {
-      this.displayForms = !this.displayForms;
-    },
-    updated: function updated(body) {
-      this.body = body;
-      this.toggle();
-    },
     markAsBest: function markAsBest() {
       if (!this.changeBest) {
         axios.post("/best-reply/" + this.reply.id).then(flash("En iyi yanıt seçildi"));
@@ -4503,6 +4533,9 @@ __webpack_require__.r(__webpack_exports__);
         axios["delete"]("/best-reply/" + this.reply.id).then(flash("İşaret kaldırıldı", "error"));
         window.deleteMarkAsBest(this.reply);
       }
+    },
+    updateRequest: function updateRequest() {
+      this.$emit('updateRequest', this.reply);
     }
   }
 });
@@ -4567,17 +4600,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     JsEditor: _shared_JsEditor_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: {
-    thread: {
-      type: Object
-    }
-  },
+  props: ["dataThread", "dataReply"],
   data: function data() {
     return {
       form: new _dependencies_form_js__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -4587,9 +4618,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    reset: function reset() {
+      this.$emit("reset");
+    },
     onInitialized: function onInitialized(editor) {
       this.editor = editor;
-      console.log(this.editor);
     },
     editorSave: function editorSave() {
       var _this = this;
@@ -4602,7 +4635,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 2;
                 return _this.editor.save().then(function (outputData) {
                   _this.form.body = outputData;
-                  console.log(_this.form.body);
                 })["catch"](function (error) {
                   console.log("Saving failed: ", error);
                 });
@@ -4627,16 +4659,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this2.editorSave();
 
               case 2:
-                _this2.form.submit("post", "/threads/" + _this2.thread.slug + "/replies", {
+                _this2.form.submit(_this2.dataReply ? "patch" : "post", _this2.dataReply ? "/replies/" + _this2.dataReply.id : "/threads/" + _this2.dataThread.slug + "/replies", {
                   headers: {
                     "Content-Type": "application/json"
                   }
                 }).then(function (response) {
                   flash("Yorumunuz Kaydedildi");
+                  _this2.dataReply ? _this2.$emit("updated", response) : _this2.$emit("created", response);
 
-                  _this2.$emit("created", response);
-
-                  _this2.form.empty();
+                  _this2.$emit("reset");
                 })["catch"](function (error) {
                   flash(error.message, "error");
                 });
@@ -4648,10 +4679,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
-    },
-    change: function change(response) {
-      this.form.recaptcha = response;
-      console.log(this.form.recaptcha);
     }
   }
 });
@@ -4713,98 +4740,6 @@ __webpack_require__.r(__webpack_exports__);
         axios.post(location.pathname + "/subscribe").then(flash("Takiptesiniz..."));
         this.isActive = true;
       }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dependencies_form_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dependencies/form.js */ "./resources/js/components/dependencies/form.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["reply", "displayForms"],
-  data: function data() {
-    return {
-      form: new _dependencies_form_js__WEBPACK_IMPORTED_MODULE_0__["default"]({
-        body: this.reply.body
-      })
-    };
-  },
-  methods: {
-    updateReply: function updateReply() {
-      var _this = this;
-
-      this.form.submit("patch", "/replies/" + this.reply.id).then(function (data) {
-        return _this.success();
-      })["catch"](function (error) {
-        flash(error.errors.body[0] ? error.errors.body[0] : error.message, "error");
-      });
-    },
-    success: function success() {
-      this.$emit("updated", this.form.body);
-      flash("Yorumunuz Kaydedildi");
-    },
-    changeDisplay: function changeDisplay() {
-      this.$emit("changeDisplay");
     }
   }
 });
@@ -27915,8 +27850,13 @@ var render = function() {
       "div",
       {
         staticClass:
-          "text-gray-600 flex flex-row hover:bg-gray-100 items-center mr-1 p-1",
-        class: _vm.classes
+          "text-gray-600 flex flex-row hover:bg-gray-100 items-center mr-1 p-1 cursor-pointer",
+        class: _vm.classes,
+        on: {
+          click: function($event) {
+            return _vm.toggle()
+          }
+        }
       },
       [
         _c(
@@ -27943,18 +27883,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                return _vm.toggle()
-              }
-            }
-          },
-          [_vm._v("Beğen")]
-        )
+        _c("p", [_vm._v("Beğen")])
       ]
     )
   ])
@@ -27987,14 +27916,15 @@ var render = function() {
       _vm._l(_vm.items, function(reply, index) {
         return _c(
           "div",
-          { key: reply.id },
+          { key: reply.updated_at },
           [
             _c("reply", {
               attrs: { reply: reply, bestreply: _vm.bestreply },
               on: {
                 deleted: function($event) {
                   return _vm.remove(index)
-                }
+                },
+                updateRequest: _vm.updateRequest
               }
             })
           ],
@@ -28009,8 +27939,15 @@ var render = function() {
       _vm._v(" "),
       this.$signedIn && !_vm.$parent.locked && _vm.displayForm
         ? _c("reply-form", {
-            attrs: { thread: _vm.thread },
-            on: { created: _vm.addReply }
+            attrs: {
+              "data-thread": _vm.thread,
+              "data-reply": _vm.requestedReply
+            },
+            on: {
+              created: _vm.addReply,
+              updated: _vm.updated,
+              reset: _vm.reset
+            }
           })
         : _vm._e(),
       _vm._v(" "),
@@ -28201,8 +28138,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: !_vm.$parent.displayForm,
-                      expression: "!$parent.displayForm"
+                      value: !_vm.$parent.displayForm && !_vm.locked,
+                      expression: "!$parent.displayForm && !locked"
                     }
                   ],
                   staticClass:
@@ -28239,27 +28176,64 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("p", [_vm._v("\n            Yanıtla\n          ")])
+                  _c("p", [_vm._v("Yanıtla")])
                 ]
               ),
               _vm._v(" "),
-              _c("update-reply-form", {
-                directives: [
+              _c("div", { staticClass: "flex flex-row w-full" }, [
+                _c(
+                  "div",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.usersOwnReply,
-                    expression: "usersOwnReply"
-                  }
-                ],
-                attrs: { reply: _vm.reply, displayForms: _vm.displayForms },
-                on: {
-                  updated: _vm.updated,
-                  changeDisplay: function($event) {
-                    return _vm.toggle()
-                  }
-                }
-              }),
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          !_vm.$parent.displayForm &&
+                          _vm.usersOwnReply &&
+                          !_vm.locked,
+                        expression:
+                          "! $parent.displayForm && usersOwnReply && !locked"
+                      }
+                    ],
+                    staticClass:
+                      "text-gray-600 flex flex-row hover:bg-gray-100 items-center mr-1 p-1 cursor-pointer",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateRequest($event)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "w-5 h-5",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905a3.61 3.61 0 01-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("\n              Düzenle\n            ")])
+                  ]
+                )
+              ]),
               _vm._v(" "),
               !_vm.displayForms
                 ? _c("best-reply-button", {
@@ -28313,7 +28287,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "flex fixed bottom-0 bg-white flex-col lg:w-3/5 w-screen lg:h-auto overflow-y-auto m-auto"
+        "flex sticky bottom-0 bg-white flex-col lg:w-3/5 w-screen lg:h-auto m-auto"
     },
     [
       _c(
@@ -28331,15 +28305,14 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "flex flex-col mb-4 items-center" }, [
-            _c("div", { staticClass: "flex flex-1 mb-2 text-gray-600" }, [
-              _vm._v("Yanıt Formu")
-            ]),
-            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "flex flex-1 w-full flex-col p-4" },
+              { staticClass: "flex flex-1 w-full flex-col" },
               [
-                _c("js-editor", { on: { onInitialized: _vm.onInitialized } }),
+                _c("js-editor", {
+                  attrs: { default: _vm.dataReply.editors_data },
+                  on: { onInitialized: _vm.onInitialized }
+                }),
                 _vm._v(" "),
                 _vm.form.errors.has("body")
                   ? _c("p", {
@@ -28376,7 +28349,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    _vm.$parent.displayForm = false
+                    return _vm.reset($event)
                   }
                 }
               },
@@ -28451,169 +28424,6 @@ var render = function() {
       _vm._v("\n  Takip Et\n")
     ]
   )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=template&id=1acf4a40&":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=template&id=1acf4a40& ***!
-  \*************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex flex-row w-full" }, [
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.displayForms,
-            expression: "!displayForms"
-          }
-        ],
-        staticClass:
-          "text-gray-600 flex flex-row hover:bg-gray-100 items-center mr-1 p-1"
-      },
-      [
-        _c(
-          "svg",
-          {
-            staticClass: "w-5 h-5",
-            attrs: {
-              xmlns: "http://www.w3.org/2000/svg",
-              fill: "none",
-              viewBox: "0 0 24 24",
-              stroke: "currentColor"
-            }
-          },
-          [
-            _c("path", {
-              attrs: {
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round",
-                "stroke-width": "2",
-                d:
-                  "M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905a3.61 3.61 0 01-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            attrs: { type: "submit" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.changeDisplay($event)
-              }
-            }
-          },
-          [_vm._v("Düzenle")]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.displayForms,
-            expression: "displayForms"
-          }
-        ],
-        staticClass: "flex flex-1 flex-col"
-      },
-      [
-        _c(
-          "form",
-          {
-            staticClass: "flex flex-1 flex-col",
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.updateReply()
-              }
-            }
-          },
-          [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.body,
-                  expression: "form.body"
-                }
-              ],
-              staticClass:
-                "resize-y w-full border rounded focus:outline-none focus:shadow-outline",
-              class: { "border-red-500": _vm.form.errors.has("body") },
-              attrs: { required: "", name: "body" },
-              domProps: {
-                innerHTML: _vm._s(_vm.form.body),
-                value: _vm.form.body
-              },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "body", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex flex-row mt-2" }, [
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "flex px-2 py-1 bg-gray-400 rounded text-sm text-white hover:bg-gray-600 mr-1 cursor-pointer",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.changeDisplay($event)
-                    }
-                  }
-                },
-                [_vm._v("Geri")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "flex px-2 py-1 bg-blue-400 rounded text-sm text-white hover:bg-blue-600",
-                  attrs: { type: "submit" }
-                },
-                [_vm._v("\n          Kaydet\n        ")]
-              )
-            ])
-          ]
-        )
-      ]
-    )
-  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41765,6 +41575,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_shared_NotificationDropdown_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/shared/NotificationDropdown.vue */ "./resources/js/components/shared/NotificationDropdown.vue");
 /* harmony import */ var _components_shared_Recaptcha_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/shared/Recaptcha.vue */ "./resources/js/components/shared/Recaptcha.vue");
 /* harmony import */ var vue_editor_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue-editor-js */ "./node_modules/vue-editor-js/dist/vue-editor-js.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_16__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* auth */
 
@@ -41796,6 +41608,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* endshared */
 
 
+
 window.Editor = Vue.use(vue_editor_js__WEBPACK_IMPORTED_MODULE_15__["default"]);
 var app = new Vue({
   el: "#app",
@@ -41821,7 +41634,8 @@ var app = new Vue({
       login: false,
       register: false
     },
-    expand: false
+    expand: false,
+    search: ""
   },
   //for showing and hide login and register page from anywhere in app
   methods: {
@@ -41830,6 +41644,12 @@ var app = new Vue({
     },
     hide: function hide(field) {
       this.control[field] = false;
+    },
+    searchRequest: function searchRequest() {
+      window.location.href = '/search?search=' + this.search; // axios.get("/search?search=" + this.search)
+      // .then(function (response) {
+      //   this.search ="";
+      // })
     }
   },
   created: function created() {
@@ -44036,75 +43856,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/threads/show/local/UpdateReplyForm.vue":
-/*!************************************************************************!*\
-  !*** ./resources/js/components/threads/show/local/UpdateReplyForm.vue ***!
-  \************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UpdateReplyForm_vue_vue_type_template_id_1acf4a40___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpdateReplyForm.vue?vue&type=template&id=1acf4a40& */ "./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=template&id=1acf4a40&");
-/* harmony import */ var _UpdateReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpdateReplyForm.vue?vue&type=script&lang=js& */ "./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _UpdateReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _UpdateReplyForm_vue_vue_type_template_id_1acf4a40___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _UpdateReplyForm_vue_vue_type_template_id_1acf4a40___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/threads/show/local/UpdateReplyForm.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************!*\
-  !*** ./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpdateReplyForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateReplyForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=template&id=1acf4a40&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=template&id=1acf4a40& ***!
-  \*******************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateReplyForm_vue_vue_type_template_id_1acf4a40___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpdateReplyForm.vue?vue&type=template&id=1acf4a40& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/threads/show/local/UpdateReplyForm.vue?vue&type=template&id=1acf4a40&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateReplyForm_vue_vue_type_template_id_1acf4a40___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateReplyForm_vue_vue_type_template_id_1acf4a40___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/threads/show/local/thread/ThreadUpdateButton.vue":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/threads/show/local/thread/ThreadUpdateButton.vue ***!
@@ -44264,6 +44015,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     addReply: function addReply(item) {
       this.items.push(item); // this.$emit("added");
+    },
+    updated: function updated(item) {
+      var index = this.items.findIndex(function (el) {
+        return item.id === el.id;
+      });
+      this.items.splice(index, 1);
+      this.items.push(item); // Vue.set(this.items, index, item);
+
+      console.log(this.items);
     }
   }
 });

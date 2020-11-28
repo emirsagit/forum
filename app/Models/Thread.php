@@ -5,18 +5,31 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Channel;
+use App\Traits\ConvertHtml;
 use Illuminate\Support\Str;
 use App\Events\NewReplyCreated;
 use App\Traits\RecordsActivity;
+use Spatie\Searchable\Searchable;
 use App\Models\ThreadSubscription;
-use App\Traits\ConvertHtml;
+use Spatie\Searchable\SearchResult;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Thread extends Model
+class Thread extends Model implements Searchable
 {
     use HasFactory, RecordsActivity, ConvertHtml;
+
+    public function getSearchResult(): SearchResult
+     {
+        $url = route('threads.show', [$this->channel, $this->slug]);
+     
+         return new SearchResult(
+            $this,
+            $this->title,
+            $url
+         );
+     }
 
     protected $fillable = [
         'user_id', 'title', 'body', 'channel_id', 'replies_count', 'visits_count', 'slug', 'best_reply_id', 'locked', 'editors_data'
@@ -121,7 +134,7 @@ class Thread extends Model
 
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->with('owner');
     }
 
     public function channel()

@@ -109,7 +109,6 @@ export default {
                   };
 
                   return ajax.post(params).then((response) => {
-                    console.log(response);
                     return {
                       success: response.body.success,
                       file: {

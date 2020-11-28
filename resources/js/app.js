@@ -27,6 +27,7 @@ import NotificationDropdown from "./components/shared/NotificationDropdown.vue";
 import Recaptcha from "./components/shared/Recaptcha.vue";
 /* endshared */
 import Editor from 'vue-editor-js'
+import Axios from "axios";
 window.Editor = Vue.use(Editor)
 
 const app = new Vue({
@@ -40,7 +41,8 @@ const app = new Vue({
             login: false,
             register: false
         },
-        expand:false
+        expand:false,
+        search:""
     },
 
 //for showing and hide login and register page from anywhere in app
@@ -51,6 +53,13 @@ const app = new Vue({
         hide(field) {
             this.control[field] = false;
         },
+        searchRequest() {
+            window.location.href = '/search?search=' + this.search;
+            // axios.get("/search?search=" + this.search)
+            // .then(function (response) {
+            //   this.search ="";
+            // })
+        }
     },
 
     created() {

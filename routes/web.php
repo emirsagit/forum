@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
@@ -31,6 +32,8 @@ Route::resource('threads',  ThreadsController::class)->except([
 ]);
 
 Route::get('/channels', [ChannelController::class, 'index']);
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+
 
 Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
 Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'index'])->name('replies.index');

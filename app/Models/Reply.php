@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Thread;
 use App\Traits\WithPolicy;
+use App\Traits\ConvertHtml;
 use App\Traits\Favouriteable;
 use App\Traits\RecordsActivity;
 use App\Casts\DateForHumansCast;
@@ -15,14 +16,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Reply extends Model
 {
     
-    use HasFactory, Favouriteable, RecordsActivity;// withPolicy
+    use HasFactory, Favouriteable, RecordsActivity, ConvertHtml;
 
     protected $casts = [
         'created_at'=> DateForHumansCast::class,
+        'body' => 'array',
+        'editors_data' => 'array'
     ];
     
     protected $fillable = [
-        'user_id', 'thread_id', 'body'
+        'user_id', 'thread_id', 'body', 'editors_data'
     ];
 
     protected $with= [
@@ -47,10 +50,10 @@ class Reply extends Model
         return Carbon::parse($this->created_at)->lt(Carbon::now()->subMinute());         
     } 
 
-    public function setBodyAttribute($value)
+    public function getBodyAttribute($value)
     {
-        $this->attributes['body'] = preg_replace('/@([\w|-]+)/', '<a href="/profiles/$1" class="text-blue-500 hover:text-blue-700">$0</a>', $value);
-    } 
+        return $this->getHtml($value);
+    }
 
     public function owner()
     {

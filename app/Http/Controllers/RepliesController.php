@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Rules\SpamFree;
 use App\Http\Requests\ReplyFormRequest;
-use App\Notifications\YouWereMentioned;
 
 class RepliesController extends Controller
 {
@@ -29,11 +27,12 @@ class RepliesController extends Controller
 
         $reply = $thread->addReply([
             'body' => $request->body,
+            'editors_data' => $request->body,
             'user_id' => auth()->user()->id
         ]);
 
         $reply = $reply->load('owner');
-        
+
         return $reply;
     }
 
@@ -43,14 +42,15 @@ class RepliesController extends Controller
         $reply->delete();
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, ReplyFormRequest $request)
     {
-        $this->validate(request(), [
-            'body' => ['required', 'string', 'min:8', new SpamFree],
-        ]);
-
         $this->authorize('update', $reply);
 
-        $reply->update(['body' => request('body')]);
+        $reply->update([
+            'body' => $request->body,
+            'editors_data' => $request->body
+        ]);
+        $reply = $reply->load('owner');
+        return $reply;
     }
 }

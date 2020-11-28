@@ -1,23 +1,33 @@
 <template>
   <div>
-    <div v-for="(reply, index) in items" :key="reply.id">
+    <div v-for="(reply, index) in items" :key="reply.updated_at">
       <reply
         :reply="reply"
         :bestreply="bestreply"
         @deleted="remove(index)"
+        @updateRequest="updateRequest"
       ></reply>
     </div>
     <paginator :initialDataSet="dataSet" @pageChanged="fetch"></paginator>
     <reply-form
-      :thread="thread"
+      :data-thread="thread"
+      :data-reply="requestedReply"
       @created="addReply"
+      @updated="updated"
+      @reset="reset"
       v-if="this.$signedIn && !$parent.locked && displayForm"
     >
     </reply-form>
     <div class="flex my-2 pl-2 h-32">
       <div class="flex flex-1 mr-2">
-        <div class="flex flex-col w-full h-full border-2 m-auto cursor-pointer" v-if="this.$signedIn && !$parent.locked" @click="displayForm = true">
-          <div class="flex w-full h-full flex-col items-center justify-center rounded-lg border-dashed m-auto">
+        <div
+          class="flex flex-col w-full h-full border-2 m-auto cursor-pointer"
+          v-if="this.$signedIn && !$parent.locked"
+          @click="displayForm = true"
+        >
+          <div
+            class="flex w-full h-full flex-col items-center justify-center rounded-lg border-dashed m-auto"
+          >
             <p class="text-gray-700 text-lg">Yanıtla</p>
           </div>
         </div>
@@ -66,15 +76,19 @@ export default {
   mixins: [collection],
 
   props: ["thread", "bestreply"],
+
   data() {
     return {
       dataSet: false,
       displayForm: false,
+      requestedReply: "",
     };
   },
+
   mounted() {
     this.fetch();
   },
+
   methods: {
     fetch(page) {
       axios.get(this.url(page)).then(this.refresh);
@@ -92,6 +106,19 @@ export default {
 
       window.scrollTo(0, 0);
     },
+    updateRequest(reply) {
+      this.requestedReply = reply;
+      this.displayForm = true;
+    },
+    reset() {
+      this.displayForm = false;
+      this.requestedReply = "";
+    },
+    
+    //  change : async(items, index, item) => {
+    //    return items.splice(index, 1, item);
+    //    console.log(item);
+    // },
   },
 };
 </script>

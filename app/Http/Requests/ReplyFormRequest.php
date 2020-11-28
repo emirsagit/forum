@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Reply;
 use App\Rules\SpamFree;
 use Illuminate\Support\Facades\Gate;
+use App\Rules\EditorJsValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReplyFormRequest extends FormRequest
@@ -27,7 +28,7 @@ class ReplyFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => ['required', 'string', 'min:8', new SpamFree],
+            'body' => ['required', new EditorJsValidationRules]
         ];
     }
 }

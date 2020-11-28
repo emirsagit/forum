@@ -85,7 +85,7 @@ class ThreadsController extends Controller
 
         $thread->increment('visits_count', 1);
 
-        $thread->load('bestReply');
+        $thread->load(['bestReply', 'replies']);
 
         return view('threads.show', ['thread' => $thread]);
     }

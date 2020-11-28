@@ -1,15 +1,17 @@
 <template>
   <div
-    class="flex fixed bottom-0 bg-white flex-col lg:w-3/5 w-screen lg:h-auto overflow-y-auto m-auto"
+    class="flex sticky bottom-0 bg-white flex-col lg:w-3/5 w-screen lg:h-auto m-auto"
   >
     <form
       @submit.prevent="onSubmit()"
       @keydown="form.errors.clear($event.target.body)"
     >
       <div class="flex flex-col mb-4 items-center">
-        <div class="flex flex-1 mb-2 text-gray-600">Yanıt Formu</div>
-        <div class="flex flex-1 w-full flex-col p-4">
-          <js-editor @onInitialized="onInitialized"></js-editor>
+        <div class="flex flex-1 w-full flex-col">
+          <js-editor
+            @onInitialized="onInitialized"
+            :default="dataReply.editors_data"
+          ></js-editor>
           <p
             class="text-red-500 text-xs italic"
             v-text="form.errors.get('body')"
@@ -27,11 +29,11 @@
         >
           Kaydet
         </button>
-         <a
-            class="flex px-2 py-1 text-sm text-gray-700 rounded hover:bg-gray-200 cursor-pointer"
-            @click.prevent="$parent.displayForm=false"
-            >Geri</a
-          >
+        <a
+          class="flex px-2 py-1 text-sm text-gray-700 rounded hover:bg-gray-200 cursor-pointer"
+          @click.prevent="reset"
+          >Geri</a
+        >
       </div>
     </form>
   </div>
@@ -45,11 +47,7 @@ export default {
   components: {
     JsEditor,
   },
-  props: {
-    thread: {
-      type: Object,
-    },
-  },
+  props: ["dataThread", "dataReply"],
   data() {
     return {
       form: new Form({
@@ -58,17 +56,20 @@ export default {
       editor: "",
     };
   },
+
   methods: {
+    reset() {
+      this.$emit("reset");
+    },
+
     onInitialized(editor) {
       this.editor = editor;
-      console.log(this.editor);
     },
     async editorSave() {
       await this.editor
         .save()
         .then((outputData) => {
           this.form.body = outputData;
-          console.log(this.form.body);
         })
         .catch((error) => {
           console.log("Saving failed: ", error);
@@ -77,23 +78,27 @@ export default {
     async onSubmit() {
       await this.editorSave();
       this.form
-        .submit("post", "/threads/" + this.thread.slug + "/replies", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .submit(
+          this.dataReply ? "patch" : "post",
+          this.dataReply
+            ? "/replies/" + this.dataReply.id
+            : "/threads/" + this.dataThread.slug + "/replies",
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((response) => {
           flash("Yorumunuz Kaydedildi");
-          this.$emit("created", response);
-          this.form.empty();
+          this.dataReply
+            ? this.$emit("updated", response)
+            : this.$emit("created", response);
+          this.$emit("reset");
         })
         .catch((error) => {
           flash(error.message, "error");
         });
-    },
-    change(response) {
-      this.form.recaptcha = response;
-      console.log(this.form.recaptcha);
     },
   },
 };
