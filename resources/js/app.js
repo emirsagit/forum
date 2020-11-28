@@ -1,4 +1,3 @@
-
 require("./bootstrap");
 
 /* auth */
@@ -26,14 +25,28 @@ import Paginator from "./components/shared/Paginator.vue";
 import NotificationDropdown from "./components/shared/NotificationDropdown.vue";
 import Recaptcha from "./components/shared/Recaptcha.vue";
 /* endshared */
-import Editor from 'vue-editor-js'
+import Editor from "vue-editor-js";
 import Axios from "axios";
-window.Editor = Vue.use(Editor)
+window.Editor = Vue.use(Editor);
 
 const app = new Vue({
     el: "#app",
     components: {
-        Signin, Threads, Register, SigninButton, RegisterButton, ThreadForm, NavigationAuthDropdown, NavigationAuth, Flash, Thread, Paginator, NotificationDropdown, Profile, Recaptcha, ThreadEditForm
+        Signin,
+        Threads,
+        Register,
+        SigninButton,
+        RegisterButton,
+        ThreadForm,
+        NavigationAuthDropdown,
+        NavigationAuth,
+        Flash,
+        Thread,
+        Paginator,
+        NotificationDropdown,
+        Profile,
+        Recaptcha,
+        ThreadEditForm
     },
 
     data: {
@@ -41,30 +54,35 @@ const app = new Vue({
             login: false,
             register: false
         },
-        expand:false,
-        search:""
+        expand: false,
+        search: ""
     },
 
-//for showing and hide login and register page from anywhere in app
+    //for showing and hide login and register page from anywhere in app
     methods: {
-        show(field) {
-            this.control[field] = true;
+        toggle(data) {
+            this.control[data.field] = data.value;
         },
-        hide(field) {
-            this.control[field] = false;
-        },
+
         searchRequest() {
-            window.location.href = '/search?search=' + this.search;
+            window.location.href = "/search?search=" + this.search;
             // axios.get("/search?search=" + this.search)
             // .then(function (response) {
             //   this.search ="";
             // })
+        },
+        newThreadRequest() {
+            if (App.signedIn) {
+                window.location.href = "/threads/create";
+            } else {
+                window.toggle("login", true);
+            }
         }
     },
 
     created() {
-        window.events.$on('show', field => {
-            this.show(field);
+        window.events.$on("toggle", data => {
+            this.toggle(data);
         });
     }
 });

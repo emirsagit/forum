@@ -9,14 +9,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      register: "register",
-    };
-  },
   methods: {
     showing() {
-        show(this.register)
+        window.toggle('register', true)
     }
   },
 };

@@ -19,8 +19,8 @@
             <a href="{{ route('threads.index') }}" class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800 ">
                 Forum
             </a>
-            <a href="{{ route('threads.create') }}"
-                class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800 ">
+            <a @click="newThreadRequest"
+                class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800 ">
                 Yeni Konu
             </a>
             <a href="#responsive-header" class="block mt-4 mr-4 lg:inline-block lg:mt-0 hover:text-teal-800 ">

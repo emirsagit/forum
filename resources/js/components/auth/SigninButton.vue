@@ -9,14 +9,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      login: "login"
-    }
-  },
   methods: {
     showing() {
-        show(this.login);
+        window.toggle('login', true);
     }
   },
 };

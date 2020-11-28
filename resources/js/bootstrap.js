@@ -25,8 +25,8 @@ window.flash = function(message, type = "success") {
     window.events.$emit("flash", { message, type });
 };
 
-window.show = function($field) {
-    window.events.$emit("show", $field);
+window.toggle = function(field = "login", value = true) {
+    window.events.$emit("toggle", { field, value });
 };
 
 window.markAsBest = function($field) {

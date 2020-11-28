@@ -2255,7 +2255,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     logout: function logout() {
       axios.post("/logout").then(function (response) {
-        console.log(response);
+        window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2405,6 +2405,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2425,16 +2435,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onSubmit: function onSubmit() {
-      var _this = this;
-
       this.form.submit("post", "/register").then(function (data) {
-        return _this.$emit('hide', _this.name);
+        return window.location.reload();
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     registerHide: function registerHide() {
-      this.$emit("hide", this.name);
+      window.toggle("register", false);
+    },
+    loginRequest: function loginRequest() {
+      this.registerHide();
+      window.toggle("login", true);
     }
   }
 });
@@ -2460,14 +2472,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      register: "register"
-    };
-  },
   methods: {
     showing: function showing() {
-      show(this.register);
+      window.toggle('register', true);
     }
   }
 });
@@ -2484,6 +2491,12 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dependencies_form_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dependencies/form.js */ "./resources/js/components/dependencies/form.js");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2592,16 +2605,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onSubmit: function onSubmit() {
-      var _this = this;
-
       this.form.submit("post", "/login").then(function (data) {
-        return _this.$emit("hide", _this.name);
+        return window.location.reload();
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     loginHide: function loginHide() {
-      this.$emit("hide", this.name);
+      window.toggle("login", false);
+    },
+    registerRequest: function registerRequest() {
+      this.loginHide();
+      window.toggle('register', true);
     }
   }
 });
@@ -2627,14 +2642,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      login: "login"
-    };
-  },
   methods: {
     showing: function showing() {
-      show(this.login);
+      window.toggle('login', true);
     }
   }
 });
@@ -3939,6 +3949,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3951,6 +3962,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onChange: function onChange(event) {
       window.location.href = "/threads?" + event.target.value + "=1";
+    },
+    newThreadRequest: function newThreadRequest() {
+      if (App.signedIn) {
+        window.location.href = "/threads/create";
+      } else {
+        window.toggle("login", true);
+      }
     }
   },
   components: {
@@ -25889,7 +25907,7 @@ var render = function() {
                           "button",
                           {
                             staticClass:
-                              "bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-3 rounded focus:outline-none focus:shadow-outline",
+                              "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline",
                             class: {
                               "cursor-not-allowed opacity-50": _vm.form.errors.has()
                             },
@@ -25906,6 +25924,26 @@ var render = function() {
                             attrs: { href: "#" }
                           },
                           [_vm._v("\n            Parolamı unuttum\n          ")]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "cursor-pointer mt-4 inline-block align-baseline text-sm text-gray-500",
+                        on: { click: _vm.loginRequest }
+                      },
+                      [
+                        _vm._v("\n          Üye misiniz?"),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "align-baseline text-sm text-blue-500 hover:text-blue-800"
+                          },
+                          [_vm._v("\n            Giriş yapın")]
                         )
                       ]
                     )
@@ -26164,6 +26202,26 @@ var render = function() {
                             attrs: { href: "#" }
                           },
                           [_vm._v("\n            Parolamı unuttum\n          ")]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "cursor-pointer mt-4 inline-block align-baseline text-sm text-gray-500",
+                        on: { click: _vm.registerRequest }
+                      },
+                      [
+                        _vm._v("\n          Üye değil misiniz?"),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "align-baseline text-sm text-blue-500 hover:text-blue-800"
+                          },
+                          [_vm._v(" Üyemiz olun")]
                         )
                       ]
                     )
@@ -27455,8 +27513,8 @@ var render = function() {
       "a",
       {
         staticClass:
-          "p-2 flex-1 button lg:w-full bg-blue-500 hover:bg-blue-600 text-white rounded text-center border-1 border-blue-600",
-        attrs: { href: "/threads/create" }
+          "p-2 flex-1 button lg:w-full bg-blue-500 hover:bg-blue-600 text-white rounded text-center border-1 border-blue-600 cursor-pointer",
+        on: { click: _vm.newThreadRequest }
       },
       [_vm._v("Yeni Konu")]
     ),
@@ -27479,7 +27537,7 @@ var render = function() {
               "p-2 button text-gray-600 hover:text-gray-800 rounded text-center border-3 border-black mr-0",
             attrs: { href: "#" }
           },
-          [_vm._v("Konular\n    ")]
+          [_vm._v("\n      Konular\n    ")]
         ),
         _vm._v(" "),
         _c("p", { staticClass: "pt-2 text-gray-600" }, [
@@ -41639,24 +41697,28 @@ var app = new Vue({
   },
   //for showing and hide login and register page from anywhere in app
   methods: {
-    show: function show(field) {
-      this.control[field] = true;
-    },
-    hide: function hide(field) {
-      this.control[field] = false;
+    toggle: function toggle(data) {
+      this.control[data.field] = data.value;
     },
     searchRequest: function searchRequest() {
-      window.location.href = '/search?search=' + this.search; // axios.get("/search?search=" + this.search)
+      window.location.href = "/search?search=" + this.search; // axios.get("/search?search=" + this.search)
       // .then(function (response) {
       //   this.search ="";
       // })
+    },
+    newThreadRequest: function newThreadRequest() {
+      if (App.signedIn) {
+        window.location.href = "/threads/create";
+      } else {
+        window.toggle("login", true);
+      }
     }
   },
   created: function created() {
     var _this = this;
 
-    window.events.$on('show', function (field) {
-      _this.show(field);
+    window.events.$on("toggle", function (data) {
+      _this.toggle(data);
     });
   }
 });
@@ -41724,8 +41786,13 @@ window.flash = function (message) {
   });
 };
 
-window.show = function ($field) {
-  window.events.$emit("show", $field);
+window.toggle = function () {
+  var field = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "login";
+  var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  window.events.$emit("toggle", {
+    field: field,
+    value: value
+  });
 };
 
 window.markAsBest = function ($field) {

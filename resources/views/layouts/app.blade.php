@@ -29,8 +29,8 @@
     <div id="app">
         @include('layouts.nav')
         @yield('content')
-        <signin :login="control.login" @hide="hide"></signin>
-        <register :register="control.register" @hide="hide"></register>
+        <signin :login="control.login"></signin>
+        <register :register="control.register"></register>
         <flash flashing="{{ session('message') }}"></flash>
     </div>
     <!-- Scripts -->

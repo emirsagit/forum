@@ -82,6 +82,12 @@
               Parolamı unuttum
             </a>
           </div>
+          <a
+            class="cursor-pointer mt-4 inline-block align-baseline text-sm text-gray-500"
+           @click="registerRequest"
+          >
+            Üye değil misiniz?<span class="align-baseline text-sm text-blue-500 hover:text-blue-800"> Üyemiz olun</span>
+          </a>
         </form>
       </div>
     </div>
@@ -109,12 +115,16 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/login")
-        .then((data) => this.$emit("hide", this.name))
+        .then((data) =>  window.location.reload())
         .catch((error) => console.log(error));
     },
     loginHide() {
-      this.$emit("hide", this.name);
+      window.toggle("login", false);
     },
+    registerRequest () {
+      this.loginHide();
+      window.toggle('register', true);
+    }
   },
 };
 </script>

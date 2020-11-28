@@ -13,15 +13,16 @@
       </select>
     </div>
     <a
-      href="/threads/create"
-      class="p-2 flex-1 button lg:w-full bg-blue-500 hover:bg-blue-600 text-white rounded text-center border-1 border-blue-600"
+      @click="newThreadRequest"
+      class="p-2 flex-1 button lg:w-full bg-blue-500 hover:bg-blue-600 text-white rounded text-center border-1 border-blue-600 cursor-pointer"
       >Yeni Konu</a
     >
     <div class="flex" @click="expandChannel = !expandChannel">
       <p
         href="#"
         class="p-2 button text-gray-600 hover:text-gray-800 rounded text-center border-3 border-black mr-0"
-        >Konular
+      >
+        Konular
       </p>
       <p class="pt-2 text-gray-600">
         <svg
@@ -70,6 +71,13 @@ export default {
   methods: {
     onChange(event) {
       window.location.href = "/threads?" + event.target.value + "=1";
+    },
+    newThreadRequest() {
+      if (App.signedIn) {
+        window.location.href = "/threads/create";
+      }else {
+        window.toggle("login", true);
+      }
     },
   },
   components: {

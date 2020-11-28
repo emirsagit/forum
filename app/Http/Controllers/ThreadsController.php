@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Trending;
 use App\Models\Thread;
 use App\Models\Channel;
 use App\Rules\SpamFree;
@@ -79,11 +78,9 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channel, Thread $thread, Trending $trending)
+    public function show($channel, Thread $thread)
     {
         $thread->append('isSubscribed');
-
-        $trending->push($thread);
 
         $thread->increment('visits_count', 1);
 

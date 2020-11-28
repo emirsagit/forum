@@ -106,7 +106,7 @@
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-2 px-3 rounded focus:outline-none focus:shadow-outline"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
               type="submit"
               v-bind:class="{
                 'cursor-not-allowed opacity-50': form.errors.has(),
@@ -121,6 +121,16 @@
               Parolamı unuttum
             </a>
           </div>
+          <a
+            class="cursor-pointer mt-4 inline-block align-baseline text-sm text-gray-500"
+            @click="loginRequest"
+          >
+            Üye misiniz?<span
+              class="align-baseline text-sm text-blue-500 hover:text-blue-800"
+            >
+              Giriş yapın</span
+            >
+          </a>
         </form>
       </div>
     </div>
@@ -150,11 +160,15 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/register")
-        .then((data) => this.$emit('hide', this.name))
+        .then((data) => window.location.reload())
         .catch((error) => console.log(error));
     },
     registerHide() {
-      this.$emit("hide", this.name);
+      window.toggle("register", false);
+    },
+    loginRequest() {
+      this.registerHide();
+      window.toggle("login", true);
     },
   },
 };

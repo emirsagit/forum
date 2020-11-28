@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <signin :login="control.login = true" @hide="hide"></signin>
+    <signin :login="control.login" @hide="hide"></signin>
 @endsection
