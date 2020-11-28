@@ -23,15 +23,17 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = $this->getThreads($channel, $filters);
+
+        $trendings= Thread::orderBy('visits_count', 'desc')->take(5)->get();
 
         if (request()->wantsJson()) {
             return $threads;
         }
 
-        return view('threads.index', ['threads' => $threads, 'trendings' => $trending->get()]);
+        return view('threads.index', ['threads' => $threads, 'trendings' => $trendings]);
     }
 
     /**

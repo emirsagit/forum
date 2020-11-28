@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Support\Facades\Redis;
 
-class Trending
+class TrendingRedis
 {
     public function get()
     {
