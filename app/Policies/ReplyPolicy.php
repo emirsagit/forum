@@ -20,8 +20,6 @@ class ReplyPolicy
     {
         if (! $lastReply = $user->lastReply) return true;
 
-        return true;
-
         return $lastReply->wasRecentlyPublished()
             ? Response::allow()
             : Response::deny('Lütfen bir dakika bekleyip tekrar deneyin...');

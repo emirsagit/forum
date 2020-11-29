@@ -22,7 +22,7 @@ class ParticipateInForumTest extends TestCase
 
         $this->post('/threads/' . $thread->slug . '/replies', $reply->toArray());
 
-        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertDatabaseHas('replies', ['body' => json_encode($reply->body)]);
     }
 
     public function test_a_guest_can_not_add_threads()
@@ -101,7 +101,7 @@ class ParticipateInForumTest extends TestCase
 
         $this->patch("/replies/$reply->id", ['body' => $newBody]);
 
-        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $newBody]);
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => json_encode($newBody)]);
     }
 
 
@@ -118,7 +118,7 @@ class ParticipateInForumTest extends TestCase
         $this->assertCount(1, $response['data']);
     }
 
-    public function test_if_replies_contains_other_user_name_will_send_notification()
+    public function test_if_replies_contains_other_user_will_send_notification()
     {
         $this->withOutExceptionHandling();
 
@@ -126,13 +126,12 @@ class ParticipateInForumTest extends TestCase
 
         $thread = Thread::factory()->create();
 
-        $user = User::factory()->create([
-            'name' => 'MehmetAli'
-        ]);
+        $user = User::factory()->create();
 
         $reply = Reply::factory()->make([
             'thread_id' => $thread->id,
-            'body' => "@" . $user->name .  " write a reply"
+            'body' => "somethisng to send",
+            'user' => $user->id
         ]);
 
         $this->json('POST', '/threads/' . $thread->slug . '/replies', $reply->toArray());

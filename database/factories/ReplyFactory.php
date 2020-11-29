@@ -28,6 +28,7 @@ class ReplyFactory extends Factory
             'user_id' => User::factory(),
             'thread_id' => Thread::factory(),
             'body' => $this->faker->paragraph,
+            'updated_at' => $this->faker->unique()->dateTimeThisMonth(),
         ];
     }
 }

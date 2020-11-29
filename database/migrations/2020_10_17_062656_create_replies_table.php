@@ -19,6 +19,7 @@ class CreateRepliesTable extends Migration
             $table->foreignId('thread_id')->constrained('threads')->onDelete('cascade');
             $table->text('body');
             $table->text('editors_data')->nullable();
+            $table->unsignedBigInteger('mentioned_user')->nullable();
             $table->timestamps();
         });
     }

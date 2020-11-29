@@ -6,6 +6,7 @@ use App\Models\Reply;
 use App\Models\Thread;
 use App\Rules\SpamFree;
 use App\Http\Requests\ReplyFormRequest;
+use App\Http\Requests\ReplyUpdateFormRequest;
 
 class RepliesController extends Controller
 {
@@ -16,7 +17,7 @@ class RepliesController extends Controller
 
     public function index($channelId, Thread $thread)
     {
-        return $thread->replies()->with(['owner', 'thread', 'favourites'])->paginate(20);
+        return $thread->replies()->with(['owner', 'thread', 'favourites', 'mentionedUser'])->paginate(20);
     }
 
     public function store(Thread $thread, ReplyFormRequest $request)
@@ -28,11 +29,12 @@ class RepliesController extends Controller
         $reply = $thread->addReply([
             'body' => $request->body,
             'editors_data' => $request->body,
+            'mentioned_user' => $request->user,
             'user_id' => auth()->user()->id
         ]);
 
         $reply = $reply->load('owner');
-
+        
         return $reply;
     }
 
@@ -42,7 +44,7 @@ class RepliesController extends Controller
         $reply->delete();
     }
 
-    public function update(Reply $reply, ReplyFormRequest $request)
+    public function update(Reply $reply, ReplyUpdateFormRequest $request)
     {
         $this->authorize('update', $reply);
 

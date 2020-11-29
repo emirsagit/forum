@@ -4,19 +4,18 @@ namespace App\Http\Requests;
 
 use App\Models\Reply;
 use Illuminate\Support\Facades\Gate;
-use App\Rules\EditorJsValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReplyFormRequest extends FormRequest
+class ReplyUpdateFormRequest extends FormRequest
 {
-    /**
+        /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return Gate::authorize('create', new Reply);
+        return true;
     }
 
     /**
@@ -27,7 +26,7 @@ class ReplyFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => ['required', new EditorJsValidationRules],
+            'body' => ['required'],
             'user' => ['nullable' ,'integer']
         ];
     }

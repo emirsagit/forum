@@ -17,12 +17,7 @@ class MentionedUserNotification
      */
     public function handle(NewReplyCreated $event)
     {
-        preg_match_all('/@([\w|-]+)/', $event->reply->body, $notifiableNames);
-        if(empty($notifiableNames[0])) return;
-        User::whereIn('name', $notifiableNames)
-            ->get()
-            ->each(function ($user) use ($event) {
-                $user->notify(new YouWereMentioned($event->reply));
-            });
+        if (!$user = $event->reply->mentionedUser) return;
+        $user->notify(new YouWereMentioned($event->reply));
     }
 }

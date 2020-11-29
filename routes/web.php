@@ -40,8 +40,8 @@ Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'in
 Route::post('/threads/{channel}/{thread}/subscribe', [ThreadSubscriptionsController::class, 'store'])->name('subscribe.store');
 Route::delete('/threads/{channel}/{thread}/subscribe', [ThreadSubscriptionsController::class, 'destroy'])->name('subscribe.destroy');
 
-
 Route::get('/threads/{channel}', [ThreadsController::class, 'index'])->name('channel.index');
+
 
 Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])->name('reply.store');
 

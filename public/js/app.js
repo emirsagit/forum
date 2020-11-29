@@ -4340,6 +4340,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -4360,7 +4362,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       dataSet: false,
       displayForm: false,
-      requestedReply: ""
+      requestedReply: "",
+      replyUser: ""
     };
   },
   mounted: function mounted() {
@@ -4391,6 +4394,11 @@ __webpack_require__.r(__webpack_exports__);
     reset: function reset() {
       this.displayForm = false;
       this.requestedReply = "";
+      this.replyUser = "";
+    },
+    replyAnotherReplyRequest: function replyAnotherReplyRequest(reply) {
+      this.displayForm = true;
+      this.replyUser = reply.owner;
     } //  change : async(items, index, item) => {
     //    return items.splice(index, 1, item);
     //    console.log(item);
@@ -4413,6 +4421,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dependencies_form_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dependencies/form.js */ "./resources/js/components/dependencies/form.js");
 /* harmony import */ var _Favourite_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Favourite.vue */ "./resources/js/components/threads/show/local/Favourite.vue");
 /* harmony import */ var _BestReplyButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BestReplyButton.vue */ "./resources/js/components/threads/show/local/BestReplyButton.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4553,7 +4580,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateRequest: function updateRequest() {
-      this.$emit('updateRequest', this.reply);
+      this.$emit("updateRequest", this.reply);
+    },
+    replyToAnotherReplyRequest: function replyToAnotherReplyRequest() {
+      this.$emit("replyAnotherReplyRequest", this.reply);
     }
   }
 });
@@ -4620,19 +4650,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     JsEditor: _shared_JsEditor_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: ["dataThread", "dataReply"],
+  props: ["dataThread", "dataReply", "dataExistingReplyOwner"],
   data: function data() {
     return {
       form: new _dependencies_form_js__WEBPACK_IMPORTED_MODULE_1__["default"]({
-        body: ""
+        body: "",
+        user: this.dataExistingReplyOwner ? this.dataExistingReplyOwner.id : null
       }),
-      editor: ""
+      editor: "",
+      replyOwner: this.dataExistingReplyOwner ? this.dataExistingReplyOwner : null
     };
   },
   methods: {
@@ -27982,7 +28015,8 @@ var render = function() {
                 deleted: function($event) {
                   return _vm.remove(index)
                 },
-                updateRequest: _vm.updateRequest
+                updateRequest: _vm.updateRequest,
+                replyAnotherReplyRequest: _vm.replyAnotherReplyRequest
               }
             })
           ],
@@ -27999,7 +28033,8 @@ var render = function() {
         ? _c("reply-form", {
             attrs: {
               "data-thread": _vm.thread,
-              "data-reply": _vm.requestedReply
+              "data-reply": _vm.requestedReply,
+              "data-existing-reply-owner": _vm.replyUser
             },
             on: {
               created: _vm.addReply,
@@ -28134,10 +28169,48 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("p", {
-            staticClass: "text-sm text-gray-700 mb-2",
-            domProps: { innerHTML: _vm._s(_vm.body) }
-          }),
+          _c("div", { staticClass: "text-sm text-gray-700 mb-2" }, [
+            _vm.reply.mentioned_user
+              ? _c(
+                  "span",
+                  {
+                    staticClass:
+                      "flex flex-row float-left bg-gray-200 text-indigo-700 px-1 mr-1 rounded"
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "h-4 w-4",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d: "M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.reply.mentioned_user.name) +
+                        "\n        "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("p", { domProps: { innerHTML: _vm._s(_vm.body) } })
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -28165,7 +28238,7 @@ var render = function() {
                 attrs: { reply: _vm.reply }
               }),
               _vm._v(" "),
-              !_vm.displayForms
+              !_vm.displayForms && !_vm.$parent.displayForm
                 ? _c(
                     "button",
                     {
@@ -28205,7 +28278,7 @@ var render = function() {
                   on: {
                     click: function($event) {
                       $event.preventDefault()
-                      _vm.$parent.displayForm = true
+                      return _vm.replyToAnotherReplyRequest($event)
                     }
                   }
                 },
@@ -28251,7 +28324,7 @@ var render = function() {
                           _vm.usersOwnReply &&
                           !_vm.locked,
                         expression:
-                          "! $parent.displayForm && usersOwnReply && !locked"
+                          "!$parent.displayForm && usersOwnReply && !locked"
                       }
                     ],
                     staticClass:
@@ -28288,7 +28361,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _c("p", [_vm._v("\n              Düzenle\n            ")])
+                    _c("p", [_vm._v("Düzenle")])
                   ]
                 )
               ]),
@@ -28367,6 +28440,14 @@ var render = function() {
               "div",
               { staticClass: "flex flex-1 w-full flex-col" },
               [
+                _vm.replyOwner
+                  ? _c(
+                      "p",
+                      { staticClass: "select-none text-sm ml-2 text-gray-600" },
+                      [_vm._v("@" + _vm._s(_vm.replyOwner.name))]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("js-editor", {
                   attrs: { default: _vm.dataReply.editors_data },
                   on: { onInitialized: _vm.onInitialized }

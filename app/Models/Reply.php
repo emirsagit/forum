@@ -25,7 +25,7 @@ class Reply extends Model
     ];
     
     protected $fillable = [
-        'user_id', 'thread_id', 'body', 'editors_data'
+        'user_id', 'thread_id', 'body', 'editors_data', 'mentioned_user'
     ];
 
     protected $with= [
@@ -55,16 +55,6 @@ class Reply extends Model
         return $this->getHtml($value);
     }
 
-    public function owner()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    } 
-
-    public function thread()
-    {
-        return $this->belongsTo(Thread::class);
-    } 
-
     public function path()
     {
         return $this->thread->path() . "#reply-" . $this->id;
@@ -83,5 +73,20 @@ class Reply extends Model
     public function deleteMarkedBest()
     {
         $this->thread->update(['best_reply_id' => null]);
+    } 
+
+    public function mentionedUser()
+    {
+        return $this->belongsTo(User::class, 'mentioned_user');
+    } 
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    } 
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
     } 
 }

@@ -6,12 +6,14 @@
         :bestreply="bestreply"
         @deleted="remove(index)"
         @updateRequest="updateRequest"
+        @replyAnotherReplyRequest="replyAnotherReplyRequest"
       ></reply>
     </div>
     <paginator :initialDataSet="dataSet" @pageChanged="fetch"></paginator>
     <reply-form
       :data-thread="thread"
       :data-reply="requestedReply"
+      :data-existing-reply-owner="replyUser"
       @created="addReply"
       @updated="updated"
       @reset="reset"
@@ -82,6 +84,7 @@ export default {
       dataSet: false,
       displayForm: false,
       requestedReply: "",
+      replyUser:""
     };
   },
 
@@ -113,8 +116,13 @@ export default {
     reset() {
       this.displayForm = false;
       this.requestedReply = "";
+      this.replyUser="";
     },
-    
+    replyAnotherReplyRequest(reply) {
+      this.displayForm = true;
+      this.replyUser = reply.owner;
+    },
+
     //  change : async(items, index, item) => {
     //    return items.splice(index, 1, item);
     //    console.log(item);

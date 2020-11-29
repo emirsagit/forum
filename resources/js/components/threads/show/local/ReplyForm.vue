@@ -8,6 +8,7 @@
     >
       <div class="flex flex-col mb-4 items-center">
         <div class="flex flex-1 w-full flex-col">
+          <p class="select-none text-sm ml-2 text-gray-600" v-if="replyOwner">@{{replyOwner.name}}</p>
           <js-editor
             @onInitialized="onInitialized"
             :default="dataReply.editors_data"
@@ -47,13 +48,15 @@ export default {
   components: {
     JsEditor,
   },
-  props: ["dataThread", "dataReply"],
+  props: ["dataThread", "dataReply", "dataExistingReplyOwner"],
   data() {
     return {
       form: new Form({
         body: "",
+        user: this.dataExistingReplyOwner ? this.dataExistingReplyOwner.id : null,
       }),
       editor: "",
+      replyOwner:this.dataExistingReplyOwner ? this.dataExistingReplyOwner : null,
     };
   },
 

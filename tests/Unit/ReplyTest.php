@@ -64,14 +64,14 @@ class ReplyTest extends TestCase
         $this->assertFalse($reply->wasRecentlyPublished());
     }  
 
-    public function test_it_shows_an_anchor_tag_to_user_profile_when_reply_contains_mentioned()
+    public function test_reply_may_belongs_to_mentioned_user()
     {
         $reply = Reply::factory()->create([
-            'body' => "look @Emir at this file"
+            'mentioned_user' => $user_id = User::factory()->create()->id
         ]);
 
         $this->assertEquals(
-           'look <a href="/profiles/Emir" class="text-blue-500 hover:text-blue-700">@Emir</a> at this file' ,$reply->body 
+           $user_id ,$reply->fresh()->mentionedUser->id 
         );
     }  
 

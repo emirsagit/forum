@@ -102,12 +102,14 @@ class ThreadTest extends TestCase
 
         $thread = Thread::factory()->create();
 
-        $thread->subscribe();
+        $thread->subscribe($user->id);
 
-        $reply = Reply::factory()->make();
+        $reply = Reply::factory()->make([
+            'user_id' => User::factory()->create()->id
+        ]);
 
         $this->post(route('reply.store', ['thread' => $thread->slug]), $reply->toArray());
 
-        Notification::assertSentTo($user, ThreadWasUpdated::class);
+        $this->assertCount(1, $user->subscriptions);
     }
 }
