@@ -29,7 +29,7 @@ class Reply extends Model
     ];
 
     protected $with= [
-        'thread', 
+        'thread'
     ];
     //foru costum get to be shown attributes in json format 
     protected $appends= ['favouritesCount', 'isFavourited'];

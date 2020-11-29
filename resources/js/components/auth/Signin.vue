@@ -30,17 +30,18 @@
             </label>
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              v-bind:class="{ 'border-red-500': form.errors.has('email') }"
+              v-bind:class="{ 'border-red-500': form.errors.has('email') || emailProblem}"
               id="email"
               type="text"
               placeholder="Mail Adresiniz"
               email="email"
               v-model="form.email"
+              @keydown="emailProblem = ''"
             />
             <p
               class="text-red-500 text-xs italic"
-              v-text="form.errors.get('email')"
-              v-if="form.errors.has('email')"
+              v-text="form.errors.get('email') || emailProblem"
+              v-if="form.errors.has('email') || emailProblem"
             ></p>
           </div>
           <div class="mb-6">
@@ -78,15 +79,20 @@
             <a
               class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               href="#"
+              @click="forgatPassword"
             >
               Parolamı unuttum
             </a>
           </div>
           <a
             class="cursor-pointer mt-4 inline-block align-baseline text-sm text-gray-500"
-           @click="registerRequest"
+            @click="registerRequest"
           >
-            Üye değil misiniz?<span class="align-baseline text-sm text-blue-500 hover:text-blue-800"> Üyemiz olun</span>
+            Üye değil misiniz?<span
+              class="align-baseline text-sm text-blue-500 hover:text-blue-800"
+            >
+              Üyemiz olun</span
+            >
           </a>
         </form>
       </div>
@@ -105,6 +111,7 @@ export default {
   data() {
     return {
       name: "login",
+      emailProblem: "",
       form: new Form({
         email: "",
         password: "",
@@ -115,16 +122,29 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/login")
-        .then((data) =>  window.location.reload())
+        .then((data) => window.location.reload())
         .catch((error) => console.log(error));
     },
     loginHide() {
       window.toggle("login", false);
     },
-    registerRequest () {
+    registerRequest() {
       this.loginHide();
-      window.toggle('register', true);
-    }
+      window.toggle("register", true);
+    },
+    forgatPassword() {
+      axios
+        .post("/password/email", {
+          email: this.form.email,
+        })
+        .then((response) => {
+          window.flash('Doğrulama maili gönderildi');
+          this.loginHide();
+        })
+        .catch((error) => {
+            this.emailProblem = error.response.data.errors.email[0];
+        });
+    },
   },
 };
 </script>

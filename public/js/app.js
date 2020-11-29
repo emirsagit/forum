@@ -2587,6 +2587,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2597,6 +2603,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       name: "login",
+      emailProblem: "",
       form: new _dependencies_form_js__WEBPACK_IMPORTED_MODULE_0__["default"]({
         email: "",
         password: ""
@@ -2616,7 +2623,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     registerRequest: function registerRequest() {
       this.loginHide();
-      window.toggle('register', true);
+      window.toggle("register", true);
+    },
+    forgatPassword: function forgatPassword() {
+      var _this = this;
+
+      axios.post("/password/email", {
+        email: this.form.email
+      }).then(function (response) {
+        window.flash('Doğrulama maili gönderildi');
+
+        _this.loginHide();
+      })["catch"](function (error) {
+        _this.emailProblem = error.response.data.errors.email[0];
+      });
     }
   }
 });
@@ -26127,7 +26147,8 @@ var render = function() {
                         staticClass:
                           "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
                         class: {
-                          "border-red-500": _vm.form.errors.has("email")
+                          "border-red-500":
+                            _vm.form.errors.has("email") || _vm.emailProblem
                         },
                         attrs: {
                           id: "email",
@@ -26137,6 +26158,9 @@ var render = function() {
                         },
                         domProps: { value: _vm.form.email },
                         on: {
+                          keydown: function($event) {
+                            _vm.emailProblem = ""
+                          },
                           input: function($event) {
                             if ($event.target.composing) {
                               return
@@ -26146,11 +26170,13 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _vm.form.errors.has("email")
+                      _vm.form.errors.has("email") || _vm.emailProblem
                         ? _c("p", {
                             staticClass: "text-red-500 text-xs italic",
                             domProps: {
-                              textContent: _vm._s(_vm.form.errors.get("email"))
+                              textContent: _vm._s(
+                                _vm.form.errors.get("email") || _vm.emailProblem
+                              )
                             }
                           })
                         : _vm._e()
@@ -26232,7 +26258,8 @@ var render = function() {
                           {
                             staticClass:
                               "inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800",
-                            attrs: { href: "#" }
+                            attrs: { href: "#" },
+                            on: { click: _vm.forgatPassword }
                           },
                           [_vm._v("\n            Parolamı unuttum\n          ")]
                         )
@@ -26254,7 +26281,7 @@ var render = function() {
                             staticClass:
                               "align-baseline text-sm text-blue-500 hover:text-blue-800"
                           },
-                          [_vm._v(" Üyemiz olun")]
+                          [_vm._v("\n            Üyemiz olun")]
                         )
                       ]
                     )

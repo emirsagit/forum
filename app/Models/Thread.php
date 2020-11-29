@@ -134,7 +134,7 @@ class Thread extends Model implements Searchable
 
     public function replies()
     {
-        return $this->hasMany(Reply::class)->with('owner');
+        return $this->hasMany(Reply::class)->with('owner', 'favourites');
     }
 
     public function channel()
