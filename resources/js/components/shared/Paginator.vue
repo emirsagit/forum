@@ -1,9 +1,9 @@
 <template>
   <div
-    class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+    class="px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mb-4"
     v-show="shouldPaginate"
   >
-    <div class="flex-1 flex items-center justify-between">
+    <div class="flex-1 flex flex-row-reverse items-center justify-between">
       <div>
         <p class="text-sm leading-5 text-gray-700">
           <span class="font-medium" v-text="total"></span>
@@ -40,8 +40,7 @@
           <p
             class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700"
             v-text="page"
-          >
-          </p>
+          ></p>
           <a
             href="#"
             class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
@@ -84,30 +83,30 @@ export default {
     page() {
       this.broadcast();
       this.updateUrl();
-    }
+    },
   },
   data() {
     return {
-      page:1,
-      prevUrl: false,
-      nextUrl: false,
-      total:false,
-      from:false,
-      to:false,
+      page: this.initialDataSet.current_page,
+      prevUrl: this.initialDataSet.prev_page_url,
+      nextUrl: this.initialDataSet.next_page_url,
+      total: this.initialDataSet.total,
+      from: this.initialDataSet.from,
+      to: this.initialDataSet.to,
     };
   },
   computed: {
     shouldPaginate() {
-      return !! this.prevUrl || !! this.nextUrl 
-    }
+      return !!this.prevUrl || !!this.nextUrl;
+    },
   },
   methods: {
     broadcast() {
-        return this.$emit('pageChanged', this.page)
+      return this.$emit("pageChanged", this.page);
     },
     updateUrl() {
-        history.pushState(null, null, '?page=' + this.page);
-    }
+      history.pushState(null, null, "?page=" + this.page);
+    },
   },
 };
 </script>

@@ -8,7 +8,7 @@
     >
       <div class="flex flex-col mb-4 items-center">
         <div class="flex flex-1 w-full flex-col">
-          <p class="select-none text-sm ml-2 text-gray-600" v-if="replyOwner">@{{replyOwner.name}}</p>
+          <p class="select-none text-sm ml-2 text-gray-600" v-if="replyOwner">@{{replyOwner.username}}</p>
           <js-editor
             @onInitialized="onInitialized"
             :default="dataReply.editors_data"

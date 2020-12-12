@@ -15,24 +15,61 @@ class ThreadsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['index', 'show']);
+        $this->middleware(['auth', 'verified'])->except(['index', 'show', 'channel']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(ThreadFilters $filters)
     {
-        $threads = $this->getThreads($channel, $filters);
+        $threads = $this->filterBy($filters);
 
-        $trendings= Thread::orderBy('visits_count', 'desc')->take(5)->get();
+        $threads = $this->get($threads);
+
+        $trendings = $threads->sortByDesc('visits_count')->take(5);
+
+        // $trendings = DB::table('threads')
+        // ->select(['threads.*', 'channels.slug as channel.slug'])
+		// ->addSelect(DB::raw('count(visits.visit_id) as visits_count'))
+        // ->from('threads')
+        // ->join('channels', function($join) {
+		// 	$join->on('channels.id', '=', 'threads.channel_id');
+		// 	})
+		// ->join('visits', function($join) {
+		// 	$join->on('threads.id', '=', 'visits.visit_id');
+		// 	})
+		// ->groupBy('visits.visit_id')
+		// ->orderByRaw('visits_count DESC')
+        // ->limit(5)
+        // ->get();
+        
+        // dd($trendings);
 
         if (request()->wantsJson()) {
             return $threads;
         }
 
         return view('threads.index', ['threads' => $threads, 'trendings' => $trendings]);
+    }
+
+
+    public function channel(Channel $channel, ThreadFilters $filters)
+    {
+        $threads = $this->filterBy($filters);
+
+        $threads = $threads->where('channel_id', $channel->id);
+
+        $threads = $this->get($threads);
+
+        $trendings = $threads->sortByDesc('visits_count')->take(5);
+
+        if (request()->wantsJson()) {
+            return $threads;
+        }
+
+        return view('threads.index', ['threads' => $threads, 'trendings' => $trendings, 'channel' => $channel]);
     }
 
     /**
@@ -52,13 +89,13 @@ class ThreadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Recaptcha $recaptcha)
-    {  
+    {
         $this->validate(request(), [
             'title' => ['required', 'string', 'min:8',  new SpamFree],
             'channel_id' => ['required', 'exists:channels,id'],
             'recaptcha' => ['required', $recaptcha],
             'body' => ['required', new EditorJsValidationRules]
-        ]);  
+        ]);
         // $editorJsValidation = new EditorJsValidation($request->body);
         // $body = $editorJsValidation->get();    
         Thread::create([
@@ -82,11 +119,13 @@ class ThreadsController extends Controller
     {
         $thread->append('isSubscribed');
 
-        $thread->increment('visits_count', 1);
+        $thread->recordVisit($_SERVER['REMOTE_ADDR']);
 
-        $thread->load(['bestReply', 'replies']);
+        $thread->load('bestReply');
 
-        return view('threads.show', ['thread' => $thread]);
+        $replies = $thread->replies()->with(['owner', 'thread', 'favourites', 'mentionedUser'])->paginate(config('paginate.paginate.replies'));
+
+        return view('threads.show', ['thread' => $thread, 'replies' => $replies]);
     }
 
     /**
@@ -122,7 +161,6 @@ class ThreadsController extends Controller
             'channel_id' => $request->channel_id,
             'editors_data' => $request->body
         ]);
-
     }
 
     /**
@@ -140,14 +178,13 @@ class ThreadsController extends Controller
         return redirect('/threads')->with('message', 'Konu başarıyla silindi');
     }
 
-
-    protected function getThreads($channel, $filters)
+    protected function filterBy($filters)
     {
-        $threads = Thread::filter($filters);
-        if ($channel->exists) {
-            $threads = $threads->where('channel_id', $channel->id);
-        }
-
-        return $threads->latest()->with('owner')->paginate(30);
+        return Thread::filter($filters);
     }
+
+    protected function get($threads)
+    {
+        return $threads->latest()->with('owner')->withCount('visits')->paginate(config('paginate.paginate.threads'));
+    } 
 }

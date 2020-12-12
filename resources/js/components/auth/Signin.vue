@@ -4,23 +4,23 @@
     v-if="login"
   >
     <div
-      class="bg-white w-screen h-screen sm:w-auto sm:h-auto flex flex-col sm:m-auto p-4"
+      class="bg-white w-screen h-screen sm:w-1/2 lg:w-1/3 overflow-auto sm:h-auto flex flex-col sm:m-auto p-4 sm:rounded-xl"
     >
-      <div class="flex justify-center">
+      <div class="flex justify-center flex-col">
+        <div class="flex flex-row mb-2 justify-between">
+          <h3 class="font-bold text-xl ml-2">Giriş</h3>
+          <p
+            class="text-red-500 hover:text-red-700 cursor-pointer font-bold"
+            @click="loginHide()"
+          >
+            X
+          </p>
+        </div>
         <form
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          class="bg-white rounded p-4"
           @submit.prevent="onSubmit()"
           @keydown="form.errors.clear($event.target.name)"
         >
-          <div class="flex flex-row mb-4 justify-center">
-            <div class="flex flex-1">Giriş Yap</div>
-            <div
-              class="text-red-500 hover:text-red-700 cursor-pointer font-bold"
-              @click="loginHide()"
-            >
-              X
-            </div>
-          </div>
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
@@ -30,7 +30,9 @@
             </label>
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              v-bind:class="{ 'border-red-500': form.errors.has('email') || emailProblem}"
+              v-bind:class="{
+                'border-red-500': form.errors.has('email') || emailProblem,
+              }"
               id="email"
               type="text"
               placeholder="Mail Adresiniz"
@@ -138,11 +140,11 @@ export default {
           email: this.form.email,
         })
         .then((response) => {
-          window.flash('Doğrulama maili gönderildi');
+          window.flash("Doğrulama maili gönderildi");
           this.loginHide();
         })
         .catch((error) => {
-            this.emailProblem = error.response.data.errors.email[0];
+          this.emailProblem = error.response.data.errors.email[0];
         });
     },
   },

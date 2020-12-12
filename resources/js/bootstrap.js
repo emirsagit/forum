@@ -10,6 +10,10 @@ Vue.prototype.$authorize = function(...params) {
         return false;
     }
 
+    if (window.App.isAdmin) {
+        return true;
+    }
+
     if (typeof params[0] === "string") {
         return authorizations[params[0]](params[1]);
     }

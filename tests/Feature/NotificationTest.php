@@ -74,7 +74,7 @@ class NotificationTest extends TestCase
             'body' => 'there is sometihidfafa'
         ]);
 
-        $this->delete("/profiles/{$user->name}/notifications/{$user->unreadNotifications->first()->id}");
+        $this->delete("/profiles/{$user->username}/notifications/{$user->unreadNotifications->first()->id}");
         $this->assertCount(0, $user->fresh()->unreadNotifications);
     }
 }

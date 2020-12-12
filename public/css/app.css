@@ -21671,6 +21671,14 @@ video {
   padding-left: 1rem;
 }
 
+.codex-editor__redactor{
+  padding-bottom: 150px !important;
+}
+
+.ce-toolbar__settings-btn{
+  margin-right: 1rem;
+}
+
 /* .trix-content ul{
     @apply list-disc;
     @apply pl-4;

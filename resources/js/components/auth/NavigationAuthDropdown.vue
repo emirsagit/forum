@@ -4,10 +4,10 @@
         <span class="rounded-md shadow-sm">
           <button
             type="button"
-            class="block mt-4 lg:mt-0 mr-4 hover:text-teal-800 flex flex-row items-center"
+            class="block mt-4 lg:mt-0 mr-4 hover:text-teal-800 flex flex-row items-center font-semibold"
             id="options-menu"
           >
-            {{ user.name }}
+            {{ user.username }}
             <!-- Heroicon name: chevron-down -->
             <svg
               class="-mr-2 h-5 w-5"
@@ -37,13 +37,13 @@
           >
             <a
               @click.prevent="goProfile()"
-              class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+              class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 font-semibold"
               role="menuitem"
               >Profil</a
             >
             <a
               @click.prevent="logout()"
-              class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
+              class="block px-4 py-2 leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 font-semibold text-sm"
               role="menuitem"
             >
               Çıkış</a
@@ -72,7 +72,7 @@ export default {
 
   methods: {
     goProfile() {
-      window.location.href = "/profiles/" + this.user.name;
+      window.location.href = "/profiles/" + this.user.username;
       this.expand = false;
     },
 

@@ -1,13 +1,13 @@
 <template>
-  <div class="shadow mb-4">
-    <p class="mb-1 p-2 text-xl text-teal-600">Trend Başlıklar</p>
+  <div class="mb-4">
+    <p class="mb-1 p-2 text-xl text-teal-600 text-center">Trend Başlıklar</p>
     <ul class="w-full">
       <li 
-      class="mb-2 p-2 text-gray-600 hover:text-teal-600"
+      class="mb-1 px-2 py-1 text-gray-600 hover:text-teal-600 cursor-pointer"
       v-for="trending in trendings"
-      :key="trending.path"
+      :key="trending.id"
       >
-      <a :href="trending.path" v-text="trending.title"></a>
+      <a :href='"/threads/" + trending.channel.slug + "/" + trending.slug'  v-text="trending.title"></a>
       </li>
     </ul>
   </div>

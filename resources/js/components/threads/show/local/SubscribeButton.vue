@@ -1,7 +1,7 @@
 <template>
   <a
     href="#"
-    class="my-2 flex flex-row items-center font-semibold py-2 px-4 border border-gray-400 rounded shadow lg:mt-0 lg:justify-center md:hover:bg-gray-100"
+    class="my-2 flex flex-row items-center font-semibold  py-1 px-2 lg:py-2 lg:px-4 border border-gray-400 rounded shadow lg:mt-0 lg:justify-center md:hover:bg-gray-100 mr-1 text-sm"
     :class="classes"
     @click.prevent="toggleSubscribe()"
   >

@@ -9,8 +9,10 @@ use App\Traits\ConvertHtml;
 use Illuminate\Support\Str;
 use App\Events\NewReplyCreated;
 use App\Traits\RecordsActivity;
+use App\Casts\DateForHumansCast;
 use Spatie\Searchable\Searchable;
 use App\Models\ThreadSubscription;
+use App\Traits\Visitable;
 use Spatie\Searchable\SearchResult;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Thread extends Model implements Searchable
 {
-    use HasFactory, RecordsActivity, ConvertHtml;
+    use HasFactory, RecordsActivity, ConvertHtml, Visitable;
 
     public function getSearchResult(): SearchResult
      {
@@ -32,7 +34,7 @@ class Thread extends Model implements Searchable
      }
 
     protected $fillable = [
-        'user_id', 'title', 'body', 'channel_id', 'replies_count', 'visits_count', 'slug', 'best_reply_id', 'locked', 'editors_data'
+        'user_id', 'title', 'body', 'channel_id', 'replies_count', 'visits_count', 'slug', 'best_reply_id', 'locked', 'editors_data', 'thread_title', 'thread_description'
     ];
 
     protected $with = [
@@ -41,7 +43,9 @@ class Thread extends Model implements Searchable
 
     protected $casts = [
         'body' => 'array',
-        'editors_data' => 'array'
+        'editors_data' => 'array',
+        'locked' => 'boolean',
+        'created_at'=> DateForHumansCast::class,
     ];
 
     public function getRouteKeyName()
@@ -60,8 +64,18 @@ class Thread extends Model implements Searchable
 
         static::created(function ($thread) {
             $thread->update(['slug' => $thread->title]);
+            $thread->channel->increment('threads_count');
+        });
+
+        static::deleted(function ($thread) {
+            $thread->channel->decrement('threads_count');
         });
     }
+
+    public function scopeTrendings($query)
+    {    
+        return $query->where('votes', '>', 100);
+    } 
 
     public function path()
     {

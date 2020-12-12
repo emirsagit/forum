@@ -6,7 +6,7 @@
 @endslot
 
 @slot('body')
-<p class="text-sm text-gray-700">{{ $activity->subject->favourited->body }}</p>
+<p class="text-sm text-gray-700">{!! $activity->subject->favourited->body !!}</p>
 @endslot
 
 @endcomponent

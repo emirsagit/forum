@@ -9,6 +9,10 @@ import NavigationAuthDropdown from "./components/auth/NavigationAuthDropdown.vue
 import NavigationAuth from "./components/auth/NavigationAuth.vue";
 /* endauth */
 
+/* admin */
+import Admin from "./components/admin/Admin.vue";
+/* endadmin */
+
 import Threads from "./components/threads/index/Threads.vue"; //threads.index
 
 import ThreadForm from "./components/threads/create/ThreadForm.vue"; //threads.create
@@ -21,6 +25,8 @@ import Profile from "./components/profiles/show/Profile.vue"; //profile.show
 
 /* shared */
 import Flash from "./components/shared/Flash.vue";
+import NavLink from "./components/shared/NavLink.vue";
+import FooterField from "./components/shared/FooterField.vue";
 import Paginator from "./components/shared/Paginator.vue";
 import NotificationDropdown from "./components/shared/NotificationDropdown.vue";
 import Recaptcha from "./components/shared/Recaptcha.vue";
@@ -46,7 +52,10 @@ const app = new Vue({
         NotificationDropdown,
         Profile,
         Recaptcha,
-        ThreadEditForm
+        ThreadEditForm,
+        Admin,
+        FooterField,
+        NavLink
     },
 
     data: {
@@ -66,18 +75,7 @@ const app = new Vue({
 
         searchRequest() {
             window.location.href = "/search?search=" + this.search;
-            // axios.get("/search?search=" + this.search)
-            // .then(function (response) {
-            //   this.search ="";
-            // })
         },
-        newThreadRequest() {
-            if (App.signedIn) {
-                window.location.href = "/threads/create";
-            } else {
-                window.toggle("login", true);
-            }
-        }
     },
 
     created() {

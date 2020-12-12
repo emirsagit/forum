@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex flex-col text-left text-sm"
+    class="flex flex-col text-left"
   >
-    <div class="flex flex-col lg:items-center cursor-pointer">
+    <div class="flex flex-col lg:items-center cursor-pointer text-lg">
       <a
         class="hover:text-teal-800 mt-4"
         @click.prevent="goProfile()"
@@ -31,7 +31,7 @@ export default {
 
   methods: {
     goProfile() {
-      window.location.href = "/profiles/" + this.user.name;
+      window.location.href = "/profiles/" + this.user.username;
       this.expand = false;
     },
 

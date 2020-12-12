@@ -11,6 +11,8 @@ class Activity extends Model
         'type', 'user_id', 'subject_id', 'subject_type', 'created_at'
     ];
 
+    protected $with = ['subject'];
+
     use HasFactory;
 
     public function subject()
@@ -18,15 +20,15 @@ class Activity extends Model
         return $this->morphTo();
     }
 
-    public static function feed($user, $take=50)
+    public static function feed($user, $take = 50)
     {
-        return static::where('user_id', $user->id)
-        ->with('subject')
-        ->latest()
-        ->take($take)
-        ->get()
-        ->groupBy(function ($activity) {
-            return $activity->created_at->format('d-m-Y');
-        });
+        return
+            $user
+            ->activities()
+            ->take($take)
+            ->get()
+            ->groupBy(function ($activity) {
+                return $activity->created_at->format('d-m-Y');
+            });
     }
 }

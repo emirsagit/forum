@@ -73,7 +73,7 @@
         </div>
         <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
         <br />
-        <div class="flex items-center justify-between">
+        <div class="flex items-center">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
             type="submit"
@@ -83,6 +83,12 @@
           >
             Gönder
           </button>
+          <a
+            href="/"
+            class="bg-gray-100 hover:bg-gray-200 font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline ml-2"
+          >
+            Geri
+          </a>
         </div>
       </form>
     </div>
@@ -92,14 +98,12 @@
 <script>
 import Form from "../../dependencies/form.js";
 import Recaptcha from "../../shared/Recaptcha.vue";
-import VueTrix from "vue-trix";
 import JsEditor from "../../shared/JsEditor.vue";
 
 export default {
   props: ["recapthcaSiteKey"],
   components: {
     Recaptcha,
-    VueTrix,
     JsEditor,
   },
   data() {

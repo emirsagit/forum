@@ -21,10 +21,12 @@ class ChannelFactory extends Factory
      */
     public function definition()
     {
-        $word = $this->faker->word;
+        $word = $this->faker->unique()->word;
         return [
             'name' => $word,
             'slug' => $word,
+            'color' => 'blue',
+            'updated_at' => $this->faker->unique()->dateTimeThisMonth(),
         ];
     }
 }

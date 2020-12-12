@@ -5,7 +5,7 @@
                 <div class="flex flex-row">
                     {{ $heading }}      
                 </div>
-                {{ $body }}    
+                {!! $body !!}    
             </div>
         </div>
     </div>

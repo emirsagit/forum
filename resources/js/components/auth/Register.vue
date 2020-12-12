@@ -4,23 +4,23 @@
     v-if="register"
   >
     <div
-      class="bg-white w-screen h-screen sm:w-auto sm:h-auto flex flex-col sm:m-auto p-4"
+      class="bg-white w-screen h-screen sm:w-1/2 lg:w-1/3 flex flex-col sm:m-auto p-4 sm:rounded-xl overflow-auto"
     >
-      <div class="flex justify-center">
+      <div class="flex justify-center flex-col">
+        <div class="flex flex-row mb-2 justify-between">
+          <h3 class="font-bold text-xl ml-2">Kayıt Ol</h3>
+          <p
+            class="text-red-500 hover:text-red-700 cursor-pointer font-bold"
+            @click="registerHide()"
+          >
+            X
+          </p>
+        </div>
         <form
-          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          class="bg-white rounded px-4 py-4"
           @submit.prevent="onSubmit()"
           @keydown="form.errors.clear($event.target.name)"
         >
-          <div class="flex flex-row mb-4 justify-center">
-            <div class="flex flex-1">Kayıt Ol</div>
-            <div
-              class="text-red-500 hover:text-red-700 cursor-pointer font-bold"
-              @click="registerHide()"
-            >
-              X
-            </div>
-          </div>
           <div class="mb-2">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
@@ -41,6 +41,28 @@
               class="text-red-500 text-xs italic"
               v-text="form.errors.get('name')"
               v-if="form.errors.has('name')"
+            ></p>
+          </div>
+            <div class="mb-2">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="username"
+            >
+              Kullanıcı Adı
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              v-bind:class="{ 'border-red-500': form.errors.has('username') }"
+              id="username"
+              type="text"
+              placeholder="Kullanıcı Adınız"
+              name="username"
+              v-model="form.username"
+            />
+            <p
+              class="text-red-500 text-xs italic"
+              v-text="form.errors.get('username')"
+              v-if="form.errors.has('username')"
             ></p>
           </div>
           <div class="mb-2">
@@ -150,6 +172,7 @@ export default {
       form: new Form({
         email: "",
         name: "",
+        username:"",
         password: "",
         password_confirmation: "",
       }),
@@ -160,7 +183,7 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/register")
-        .then((data) => window.location.reload())
+        .then((data) => window.location.href="/email/verify")
         .catch((error) => console.log(error));
     },
     registerHide() {

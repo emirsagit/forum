@@ -1,5 +1,12 @@
 @extends('layouts.app')
+@section('head')
 
+<title>
+    {{ config('app.name') }} | Konulara göre arama sayfası
+</title>
+<meta name="description" content="Sayfamızda konulara tüm forum içerisinde konulara göre arama yapabilirsiniz." 
+
+@endsection
 @section('content')
 
 <div class="flex w-full h-24 bg-gradient-to-r from-teal-700 to-teal-500 text-white">

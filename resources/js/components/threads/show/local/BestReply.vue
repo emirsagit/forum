@@ -6,9 +6,9 @@
         <div class="flex flex-col w-full">
           <div class="flex items-center mb-2">
             <div class="flex items-center" v-if="reply.owner">
-              <a :href="'/profiles/' + reply.owner.name">
+              <a :href="'/profiles/' + reply.owner.username">
                 <h4 class="font-bold text-l cursor-pointer hover:underline">
-                  {{ reply.owner.name }}
+                  {{ reply.owner.username }}
                 </h4>
               </a>
             </div>

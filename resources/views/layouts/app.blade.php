@@ -8,8 +8,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -20,17 +18,23 @@
         window.App = {!! json_encode([
             'signedIn' => Auth::check(),
             'user' => Auth::user(),
+            'isAdmin' => Auth::user() ? Auth::user()->isAdmin() : false
       ]) !!}      
     </script>
     @yield('head')
 </head>
 
 <body>
-    <div id="app">
-        @include('layouts.nav')
-        @yield('content')
-        <signin :login="control.login"></signin>
-        <register :register="control.register"></register>
+    <div id="app" class="bg-gray-100 min-h-screen">
+        <div class="mb-20">
+            @include('layouts.nav')
+            @yield('content')
+            <signin :login="control.login"></signin>
+            <register :register="control.register"></register>
+        </div>
+        @if($setting)
+        <footer-field :setting="{{ $setting }}"></footer-field>
+        @endif
         <flash flashing="{{ session('message') }}"></flash>
     </div>
     <!-- Scripts -->

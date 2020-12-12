@@ -38,11 +38,10 @@
         <div class="flex flex-col items-start" v-if="!this.$signedIn">
           <div class="flex">
             <signin-button
-              class="bg-gray-300 text-gray-800 hover:bg-gray-100 mr-2"
+              class="mr-2"
             >
             </signin-button>
             <register-button
-              class="bg-gray-300 text-gray-800 hover:bg-gray-100"
             >
             </register-button>
           </div>
@@ -77,19 +76,19 @@ export default {
 
   mixins: [collection],
 
-  props: ["thread", "bestreply"],
+  props: ["thread", "bestreply", "replies"],
 
   data() {
     return {
-      dataSet: false,
       displayForm: false,
       requestedReply: "",
       replyUser:""
     };
   },
 
-  mounted() {
-    this.fetch();
+  created() {
+     this.dataSet= this.replies;
+     this.items = this.replies.data; 
   },
 
   methods: {

@@ -24,6 +24,14 @@
   padding-left: 1rem;
 }
 
+.codex-editor__redactor{
+  padding-bottom: 150px !important;
+}
+
+.ce-toolbar__settings-btn{
+  @apply mr-4;
+}
+
 /* .trix-content ul{
     @apply list-disc;
     @apply pl-4;

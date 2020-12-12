@@ -63,7 +63,7 @@ export default {
     markAsRead(id) {
       axios
       .delete(
-        "/profiles/" + window.App.user.name + "/notifications/" + id
+        "/profiles/" + window.App.user.username + "/notifications/" + id
       )
       .then(response => { 
         this.expand = false

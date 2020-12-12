@@ -24,6 +24,8 @@ class VerificationController extends Controller
 
     public function redirectTo()
     {
+        if(session('url.intended') == route('verification.notice')) return $this->redirectTo;
+        // dd(session('url.intended'));
         return session('url.intended', $this->redirectTo);
     }
 

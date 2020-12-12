@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Thread;
+use App\Casts\DateForHumansCast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,8 +11,12 @@ class Channel extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'created_at'=> DateForHumansCast::class,
+    ];
+
     protected $fillable = [
-        'name', 'slug'
+        'name', 'slug', 'color', 'channel_title', 'channel_description'
     ];
 
     public function getRouteKeyName()

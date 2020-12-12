@@ -17,7 +17,7 @@ class RepliesController extends Controller
 
     public function index($channelId, Thread $thread)
     {
-        return $thread->replies()->with(['owner', 'thread', 'favourites', 'mentionedUser'])->paginate(20);
+        return $thread->replies()->with(['owner', 'thread', 'favourites', 'mentionedUser'])->paginate(config('paginate.paginate.replies'));
     }
 
     public function store(Thread $thread, ReplyFormRequest $request)

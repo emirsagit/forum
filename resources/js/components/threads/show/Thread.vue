@@ -2,8 +2,7 @@
 import Replies from "./local/Replies.vue";
 import BestReply from "./local/BestReply.vue";
 import SubscribeButton from "./local/SubscribeButton.vue";
-import ThreadUpdateButton from "./local/thread/ThreadUpdateButton.vue";
-import ThreadUpdateForm from "./local/thread/ThreadUpdateForm.vue";
+
 export default {
   props: ["dataThread"],
   data() {
@@ -12,7 +11,7 @@ export default {
       repliesCount: this.dataThread.replies_count,
       bestReply: this.dataThread.best_reply,
       locked: this.dataThread.locked,
-      updateFormActive: false,
+      isAdmin: window.App.isAdmin
     };
   },
 
@@ -36,7 +35,6 @@ export default {
       this.thread.title = params.form.title;
       this.thread.channel_id = params.form.channel_id;
       this.thread.channel = params.channel
-      this.updateFormActive = false;
     }
   },
 
@@ -44,8 +42,6 @@ export default {
     Replies,
     SubscribeButton,
     BestReply,
-    ThreadUpdateForm,
-    ThreadUpdateButton
   },
 };
 </script>

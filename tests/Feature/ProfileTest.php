@@ -14,7 +14,7 @@ class ProfileTest extends TestCase
 
         $user = User::factory()->create();
 
-        $this->get("/profiles/$user->name")
+        $this->get("/profiles/$user->username")
             ->assertSee($user->name);
     }
 
@@ -28,7 +28,7 @@ class ProfileTest extends TestCase
             'user_id' => $user->id
         ]);
 
-        $this->get("/profiles/$user->name")
+        $this->get("/profiles/$user->username")
             ->assertSee($thread->title);
     } 
 }

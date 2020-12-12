@@ -1,6 +1,6 @@
 <template>
     <a
-      class="text-sm mt-4 lg:mt-0 mr-4 hover:text-teal-800"
+      class="mt-4 lg:mt-0 mr-4 text-teal-600 hover:text-teal-700 font-semibold text-lg"
       href="#"
       @click.prevent="showing()"
       >Giriş</a

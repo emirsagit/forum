@@ -11,5 +11,5 @@ module.exports = {
 
     updateProfile (user) {
         return user.id === user.id;
-    }
+    },
 }
