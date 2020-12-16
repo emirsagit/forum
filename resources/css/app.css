@@ -11,7 +11,12 @@
 }
 
 .ce-header{
-  @apply text-red-700 text-base;
+  @apply text-teal-700 text-base;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  height: 0px;
+  background: transparent; /* make scrollbar transparent */
 }
 
 .ce-paragraph{

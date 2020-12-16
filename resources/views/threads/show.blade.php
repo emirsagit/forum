@@ -13,7 +13,7 @@
 
 @section('content')
 <thread :data-thread="{{ $thread }}" inline-template>
-   <div>
+   <div class="pb-24">
       <div class="flex w-full h-24 bg-{{ $thread->channel->color }}-600 text-white">
          <div class="flex m-auto">
             <h1 class="text-xl" v-text='thread.title'></h1>

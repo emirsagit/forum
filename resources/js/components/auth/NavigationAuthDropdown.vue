@@ -1,10 +1,10 @@
 <template>
-  <div class="relative inline-block text-left">
+  <div class="relative inline-block text-left z-50">
       <div @click="expand = !expand">
         <span class="rounded-md shadow-sm">
           <button
             type="button"
-            class="block mt-4 lg:mt-0 mr-4 hover:text-teal-800 flex flex-row items-center font-semibold"
+            class="mt-4 lg:mt-0 mr-4 hover:text-teal-800 flex flex-row items-center font-semibold"
             id="options-menu"
           >
             {{ user.username }}

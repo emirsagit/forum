@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\User;
 use App\Models\Thread;
 use Illuminate\Http\Request;
@@ -44,6 +45,23 @@ class SearchController extends Controller
 
         $results = (new Search())
             ->registerModel(Thread::class, 'title')
+            ->search($request->search);
+
+        $results = $results->map(function ($result) {
+            return $result->searchable;
+        });
+
+        return $results;
+    }
+
+    public function blogs(Request $request)
+    {
+        if (!$request->search) {
+            return Blog::latest()->get();
+        }
+
+        $results = (new Search())
+            ->registerModel(Blog::class, 'title')
             ->search($request->search);
 
         $results = $results->map(function ($result) {

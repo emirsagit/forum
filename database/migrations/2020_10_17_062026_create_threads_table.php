@@ -23,8 +23,8 @@ class CreateThreadsTable extends Migration
             $table->boolean('locked')->default(false);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('channel_id')->constrained()->onDelete('cascade');
-            $table->string('thread_title');
-            $table->string('thread_description');
+            $table->string('thread_title')->nullable();
+            $table->string('thread_description')->nullable();
             $table->timestamps();
         });
     }

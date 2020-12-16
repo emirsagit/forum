@@ -52,7 +52,7 @@ export default {
     },
     fetch() {
       if (this.selected === "all") {
-        window.location.href = "/";
+        window.location.href = "/threads";
       } else {
         this.$emit("selected", this.selected);
       }

@@ -51,8 +51,6 @@ class AdminThreadsController extends Controller
             'channel_id' => ['required', 'exists:channels,id'],
         ]);
 
-        dd($request);
-
         $thread = Thread::create([
             'user_id' => auth()->user()->id,
             'channel_id' => $request->channel_id,

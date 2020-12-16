@@ -26,12 +26,10 @@
 
 <body>
     <div id="app" class="bg-gray-100 min-h-screen">
-        <div class="mb-20">
-            @include('layouts.nav')
-            @yield('content')
-            <signin :login="control.login"></signin>
-            <register :register="control.register"></register>
-        </div>
+        @include('layouts.nav')
+        @yield('content')
+        <signin :login="control.login"></signin>
+        <register :register="control.register"></register>
         @if($setting)
         <footer-field :setting="{{ $setting }}"></footer-field>
         @endif

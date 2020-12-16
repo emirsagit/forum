@@ -4,13 +4,13 @@
       href="/"
       class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
     >
-      Forum
+      Blog
     </a>
     <a
-      @click="newThreadRequest"
-      class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
+      href="/threads"
+      class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
     >
-      Yeni Konu
+      Bir Bilene Sorun
     </a>
     <a
       class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
@@ -23,15 +23,5 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    newThreadRequest() {
-      if (App.signedIn) {
-        window.location.href = "/threads/create";
-      } else {
-        window.toggle("login", true);
-      }
-    },
-  },
-};
+export default {};
 </script>

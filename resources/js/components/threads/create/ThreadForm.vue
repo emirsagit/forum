@@ -1,12 +1,11 @@
 <template>
-  <div class="bg-white sm:w-1/2 flex flex-col sm:m-auto p-4">
-    <div class="flex justify-center">
+  <div class="sm:w-1/2 flex flex-col sm:m-auto">
+    <div class="flex justify-center lg:mt-4 bg-white lg:p-2 rounded-lg shadow-lg">
       <form
-        class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        class="bg-white w-full rounded lg:p-4 p-2 mb-4"
         @submit.prevent="onSubmit()"
         @keydown="form.errors.clear($event.target.name)"
       >
-        <h2 class="text-lg mb-2 text-indigo-500">Yeni Konu Oluştur</h2>
         <div class="mb-2">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -31,6 +30,11 @@
               {{ channel.name }}
             </option>
           </select>
+          <p
+            class="text-red-500 text-xs italic"
+            v-text="form.errors.get('channel_id')"
+            v-if="form.errors.has('channel_id')"
+          ></p>
         </div>
         <div class="mb-2">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -72,6 +76,11 @@
           ></p>
         </div>
         <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
+        <p
+          class="text-red-500 text-xs italic"
+          v-text="form.errors.get('recaptcha')"
+          v-if="form.errors.has('recaptcha')"
+        ></p>
         <br />
         <div class="flex items-center">
           <button
@@ -121,14 +130,12 @@ export default {
   methods: {
     onInitialized(editor) {
       this.editor = editor;
-      console.log(this.editor);
     },
     async editorSave() {
       await this.editor
         .save()
         .then((outputData) => {
           this.form.body = outputData;
-          console.log(this.form.body);
         })
         .catch((error) => {
           console.log("Saving failed: ", error);
@@ -144,17 +151,15 @@ export default {
         })
         .then((data) => flash("Konu kaydedildi."))
         .catch((error) => {
+          grecaptcha.reset();
           flash(
-            error.errors.recaptcha[0]
-              ? error.errors.recaptcha[0]
-              : error.message,
+            error.errors.recaptcha ? error.errors.recaptcha[0] : error.message,
             "error"
           );
         });
     },
     change(response) {
       this.form.recaptcha = response;
-      console.log(this.form.recaptcha);
     },
   },
   mounted() {

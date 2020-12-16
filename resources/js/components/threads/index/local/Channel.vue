@@ -56,7 +56,7 @@ export default {
       this.$emit("selected", channel);
     },
     all() {
-      window.location.href = "/";
+      window.location.href = "/threads";
     },
   },
 };

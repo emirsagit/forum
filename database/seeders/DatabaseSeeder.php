@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blog;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\Channel;
@@ -19,6 +20,9 @@ class DatabaseSeeder extends Seeder
         //her chanelin 10 threadi, her threadin 10 reply'ı var.
         $channels = Channel::factory(10)->create();
         $channels->each(function ($channel) {
+            Blog::factory(10)->create([
+                'channel_id' => $channel->id
+            ]);
             $threads = Thread::factory(10)->create([
                 'channel_id' => $channel->id
             ]);

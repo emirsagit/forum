@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('avatar_path')->nullable();
             $table->rememberToken();
-            $table->softDeletes();
+            $table->softDeletes()->index();
             $table->timestamps();
         });
     }

@@ -1,12 +1,11 @@
 <template>
-  <div class="bg-white sm:w-1/2 flex flex-col sm:m-auto p-4">
-    <div class="flex justify-center">
+  <div class="sm:w-1/2 flex flex-col sm:m-auto">
+    <div class="flex justify-center rounded-lg shadow-lg bg-white lg:mt-4 lg:p-4">
       <form
-        class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        class="w-full p-2"
         @submit.prevent="onSubmit()"
         @keydown="form.errors.clear($event.target.name)"
       >
-        <h2 class="text-lg mb-2 text-indigo-500">Yeni Konu Oluştur</h2>
         <div class="mb-2">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -22,7 +21,9 @@
             v-model="form.channel_id"
             @change="form.errors.clear($event.target.name)"
           >
-            <option :value="form.channel_id" selected="true">{{ thread.channel.name }}</option>
+            <option :value="form.channel_id" selected="true">
+              {{ thread.channel.name }}
+            </option>
             <option
               v-for="channel in channels"
               :value="channel.id"
@@ -31,6 +32,11 @@
               {{ channel.name }}
             </option>
           </select>
+           <p
+            class="text-red-500 text-xs italic"
+            v-text="form.errors.get('channel_id')"
+            v-if="form.errors.has('channel_id')"
+          ></p>
         </div>
         <div class="mb-2">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -114,14 +120,12 @@ export default {
   methods: {
     onInitialized(editor) {
       this.editor = editor;
-      console.log(this.editor);
     },
     async editorSave() {
       await this.editor
         .save()
         .then((outputData) => {
           this.form.body = outputData;
-          console.log(this.form.body);
         })
         .catch((error) => {
           console.log("Saving failed: ", error);
@@ -133,7 +137,7 @@ export default {
         .submit("patch", "/threads/" + this.thread.slug)
         .then((data) => flash("Konu kaydedildi."))
         .catch((error) => {
-          flash(error.message,"error");
+          flash(error.message, "error");
         });
     },
   },

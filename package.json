@@ -41,6 +41,7 @@
         "@editorjs/warning": "^1.2.0",
         "@vue/composition-api": "^1.0.0-beta.20",
         "tailwindcss": "^1.9.6",
-        "vue-editor-js": "^2.0.1"
+        "vue-editor-js": "^2.0.1",
+        "vue-slick-carousel": "^1.0.6"
     }
 }

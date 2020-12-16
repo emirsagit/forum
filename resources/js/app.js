@@ -15,6 +15,9 @@ import Admin from "./components/admin/Admin.vue";
 
 import Threads from "./components/threads/index/Threads.vue"; //threads.index
 
+import Blogs from "./components/blogs/index/Blogs.vue"; //blogs.index
+import Blog from "./components/blogs/show/Blog.vue"; //blogs.index
+
 import ThreadForm from "./components/threads/create/ThreadForm.vue"; //threads.create
 
 import ThreadEditForm from "./components/threads/edit/ThreadEditForm.vue"; //threads.update
@@ -55,7 +58,9 @@ const app = new Vue({
         ThreadEditForm,
         Admin,
         FooterField,
-        NavLink
+        NavLink,
+        Blogs,
+        Blog
     },
 
     data: {

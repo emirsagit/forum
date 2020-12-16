@@ -22,8 +22,6 @@ class AdminChannelsController extends Controller
         $request->validate([
             'name' => ['required','string', Rule::unique('channels')->ignore($channel->id)],
             'color' => 'string',
-            'channel_title' => 'string',
-            'channel_description' => 'string',
         ]);
 
         $channel->update([

@@ -2,7 +2,7 @@
     <div class="lg:w-5/6 m-auto flex flex-row items-center justify-between flex-wrap py-4 px-2 lg:p-2">
         <div class="lg:mr-6">
             @if($setting)
-            <a href="/" class="flex flex-row">
+            <a href="/threads" class="flex flex-row">
                 @if($setting->logo)
                 <img class="object-cover h-10 w-25 w-full" src="/storage/{{ $setting->logo }}" alt="logo">
                 @else
@@ -51,7 +51,7 @@
                 @else
                 @if(strlen(($user = auth()->user())->avatar_path) != 1)
                 <img src="{{ $user->avatar_path }}" alt="{{ $user->name }}"
-                    class="h-6 w-6 mr-2 hidden lg:flex">
+                    class="h-6 w-6 mr-2 hidden lg:flex rounded-full">
                 @endif
                 <navigation-auth-dropdown :user="{{ $user }}" class="hidden lg:flex">
                 </navigation-auth-dropdown>

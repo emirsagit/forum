@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\Blog;
 use App\Models\Image;
 use App\Models\Reply;
 use App\Models\Thread;
 use App\Models\Activity;
 use App\Casts\DateForHumansCast;
+use Spatie\Searchable\Searchable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Searchable\SearchResult;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Searchable\Searchable;
 
-class User extends Authenticatable implements MustVerifyEmail, Searchable 
+class User extends Authenticatable implements MustVerifyEmail, Searchable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
@@ -23,8 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail, Searchable
     {
         // ModelSearchAspect clasına withtrashed eklediğim için sonuçlar softdelete olanlarla birlikte gelecek
         return new SearchResult(
-           $this,
-           $this->username,
+            $this,
+            $this->username,
         );
     }
 
@@ -59,11 +61,23 @@ class User extends Authenticatable implements MustVerifyEmail, Searchable
     public function isAdmin()
     {
         return in_array($this->email, config('admin'));
-    } 
+    }
+
+    public function getAdmins()
+    {
+        return static::select()
+            ->whereIn('email', config('admin'))
+            ->get();
+    }
 
     public function threads()
     {
         return $this->hasMany(Thread::class)->latest();
+    }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class)->latest();
     }
 
     public function activities()
@@ -84,10 +98,10 @@ class User extends Authenticatable implements MustVerifyEmail, Searchable
     public function images()
     {
         return $this->hasMany(Image::class);
-    } 
+    }
 
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
-    } 
+    }
 }

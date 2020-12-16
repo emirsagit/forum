@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col w-full sticky top-0 ">
+  <div class="flex flex-col w-full sticky top-0">
     <p
       class="cursor-pointer mb-2 flex flex-col items-end mr-1"
       @click="$parent.hide = true"
@@ -55,6 +55,15 @@
         :href="'/admin/users'"
       >
         Üyeler
+      </a>
+      <a
+        class="flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2"
+        :class="
+          currentPage == '/admin/blogs' ? 'border-white' : 'border-indigo-600'
+        "
+        :href="'/admin/blogs'"
+      >
+        Blog
       </a>
     </div>
   </div>

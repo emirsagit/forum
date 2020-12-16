@@ -28,15 +28,13 @@ class StoreChannel extends FormRequest
             'name' => 'required|string|unique:channels',
             'slug' => 'unique:channels',
             'color' => 'string',
-            'channel_title' => 'string',
-            'channel_description' => 'string',
         ];
     }
 
     protected function prepareForValidation()
-{
-    $this->merge([
-        'slug' => Str::slug($this->name),
-    ]);
-}
+    {
+        $this->merge([
+            'slug' => Str::slug($this->name),
+        ]);
+    }
 }

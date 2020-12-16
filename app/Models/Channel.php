@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Blog;
 use App\Models\Thread;
 use App\Casts\DateForHumansCast;
 use Illuminate\Database\Eloquent\Model;
@@ -27,5 +28,10 @@ class Channel extends Model
     public function threads()
     {
         return $this->hasMany(Thread::class);
+    } 
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
     } 
 }
