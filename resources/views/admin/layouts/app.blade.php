@@ -2,7 +2,7 @@
 
 @section('content')
 <admin inline-template>
-    <div class="flex flex-col">
+    <div class="flex flex-col min-h-screen">
         <div class="flex w-full h-24 bg-indigo-700 text-white">
             <div class="flex m-auto">
                 <h1 class="text-l">Yönetim Paneline Hoşgeldiniz</h1>
