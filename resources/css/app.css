@@ -1,6 +1,7 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+/* purgecss start ignore */
 .max-content {
   height: max-content;
 }
@@ -36,54 +37,5 @@
 .ce-toolbar__settings-btn{
   @apply mr-4;
 }
+/* purgecss end ignore */
 
-/* .trix-content ul{
-    @apply list-disc;
-    @apply pl-4;
-}
-
-.trix-content i{
-    @apply italic;
-}
-
-.trix-content ol{
-    @apply list-decimal;
-    @apply pl-4;
-}
-
-.trix-content blockquote {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
-    margin: 1.5em 10px;
-    padding: 0.5em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
-  }
-
-.trix-content blockquote:before {
-    color: #ccc;
-    content: open-quote;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-  }
-  
-  .trix-content blockquote p {
-    display: inline;
-  }
-
-  .trix-content pre {
-    @apply whitespace-pre; 
-    @apply overflow-x-auto;
-  }
-
-  .trix-content h1 {
-    @apply text-xl; 
-    @apply font-semibold;
-  }
-
-  .trix-content a{
-    @apply cursor-pointer;
-    @apply text-blue-600;
-    @apply underline;
-} */
