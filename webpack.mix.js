@@ -19,5 +19,9 @@ mix.js("resources/js/app.js", "public/js")
         postCss: [require("tailwindcss")]
     })
     .purgeCss({
-        enabled: true
+        extend: {
+            content: [path.join(__dirname, 'vendor/spatie/menu/**/*.php')],
+            whitelist: ['text-teal-700', 'text-base', 'text-blue-600', 'text-gray-700', 'max-content'],
+            whitelistPatterns: [/bg-.+\-(600|700|800|900)/],
+        },
     });
