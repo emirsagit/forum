@@ -19,17 +19,17 @@ class Blog extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        //    $url = route('threads.show', [$this->channel, $this->slug]);
+        $url = route('blogs.show', [$this->channel, $this->slug]);
 
         return new SearchResult(
             $this,
             $this->title,
-            //    $url
+            $url
         );
     }
 
     protected $fillable = [
-        'title', 'body', 'summary', 'image', 'user_id', 'channel_id', 'blog_title', 'blog_description', 'slug', 'slider', 'editors_data'
+        'title', 'body', 'summary', 'image', 'user_id', 'channel_id', 'blog_title', 'blog_description', 'slug', 'slider', 'editors_data',
     ];
 
     protected $casts = [

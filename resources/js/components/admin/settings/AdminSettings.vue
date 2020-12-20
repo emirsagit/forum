@@ -133,7 +133,7 @@
 
       <div class="mb-2">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-          Anasayfa Title
+          Anasayfa Seo Title
         </label>
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -151,7 +151,7 @@
 
       <div class="mb-2">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-          Anasayfa Description
+          Anasayfa Seo Description
         </label>
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -168,6 +168,47 @@
           v-if="form.errors.has('home_description')"
         ></p>
       </div>
+
+        <div class="mb-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+           Bilmece Anasayfası Seo Title
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          v-bind:class="{
+            'border-red-500': form.errors.has('puzzle_title'),
+          }"
+          type="text"
+          placeholder="Bilmece Ana Sayfası Seo Title"
+          v-model="form.puzzle_title"
+        />
+        <p
+          class="text-red-500 text-xs italic"
+          v-text="form.errors.get('puzzle_title')"
+          v-if="form.errors.has('puzzle_title')"
+        ></p>
+      </div>
+
+        <div class="mb-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+          Bilmece Anasayfası Seo Description
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          v-bind:class="{
+            'border-red-500': form.errors.has('puzzle_description'),
+          }"
+          type="text"
+          placeholder="Bilmece Ana Sayfası Seo Description"
+          v-model="form.puzzle_description"
+        />
+        <p
+          class="text-red-500 text-xs italic"
+          v-text="form.errors.get('puzzle_description')"
+          v-if="form.errors.has('puzzle_description')"
+        ></p>
+      </div>
+
       <div class="flex items-center">
         <button
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline"
@@ -203,6 +244,8 @@ export default {
         twitter: "",
         facebook: "",
         about: "",
+        puzzle_title: "",
+        puzzle_description: "",
       }),
     };
   },
@@ -212,6 +255,8 @@ export default {
       this.form.home_h1 = response.data.home_h1;
       this.form.logo_title = response.data.logo_title;
       this.form.home_title = response.data.home_title;
+      this.form.puzzle_title = response.data.puzzle_title;
+      this.form.puzzle_description = response.data.puzzle_description;
       this.form.home_description = response.data.home_description;
       this.form.instagram = response.data.instagram;
       this.form.twitter = response.data.twitter;

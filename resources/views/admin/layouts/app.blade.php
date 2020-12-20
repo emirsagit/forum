@@ -8,7 +8,7 @@
                 <h1 class="text-l">Yönetim Paneline Hoşgeldiniz</h1>
             </div>
         </div>
-        <div class="flex lg:flex-row w-full h-full bg-indigo-900">
+        <div class="flex lg:flex-row w-full h-full bg-indigo-900 min-h-screen">
             <div class="w-1/3 lg:w-1/5 bg-indigo-700 text-white text-sm lg:text-lg" :class="hide ? 'hidden' : 'flex'"
                 id="sidebar">
                 <admin-sidebar></admin-sidebar>
@@ -21,7 +21,7 @@
                             d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </p>
-                <div class="pb-24">
+                <div class="pb-24 min-h-screen">
                     @yield('body')
                 </div>
             </div>

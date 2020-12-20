@@ -1,13 +1,17 @@
 <template>
   <div class="bg-gray-100 text-gray-700" id="last-published">
-    <div class="lg:px-24 p-8 flex flex-row">
+    <div class="lg:px-24 p-8 flex lg:flex-row flex-col">
       <div class="lg:w-3/5 w-full">
-        <p
-          class="text-lg font-bold text-white table px-1 rounded-lg"
-          :class="'bg-' + blog.channel.color + '-600'"
-        >
-          #{{ blog.channel.name }}
-        </p>
+        <div class="flex flex-row justify-between">
+          <a
+            class="text-lg font-bold text-white table px-1 rounded-lg cursor-pointer"
+            :class="'bg-' + blog.channel.color + '-600'"
+            :href="'/blogs/channels/'+blog.channel.slug"
+          >
+            #{{ blog.channel.name }}
+          </a>
+          <span class="ml-1 text-gray-500">{{ blog.visits_count + 1 }} Görüntüleme</span>
+        </div>
         <h1 class="text-4xl text-teal-700 font-bold pb-4 leading-tight">
           {{ blog.title }}
         </h1>
@@ -19,25 +23,27 @@
           :alt="blog.title"
           class="object-cover w-full mb-8 shadow-xl"
         />
-        <div class="pb-8 text-xl leading-loose text-justify p-link" v-html="blog.body">
-        </div>
+        <div
+          class="pb-8 text-xl leading-loose text-justify p-link"
+          v-html="blog.body"
+        ></div>
       </div>
-      <div class="lg:w-2/5 hidden lg:flex lg:flex-col pl-12">
-        <div class="flex flex-row pb-8 items-center">
+      <div class="lg:w-2/5 w-full flex flex-col lg:pl-12">
+        <div
+          class="flex flex-row pb-8 items-center justify-center lg:justify-start"
+        >
           <avatar :item="blog"></avatar>
-          <div class="md:flex flex-col">
-            <p class="ml-2 text-lg font-semibold">
-              {{ blog.owner.name }} tarafından yazıldı.
-            </p>
-            <p class="ml-2 text-md">
-              {{ blog.updated_at }} güncellendi
-            </p>
-            <hr class="bg-teal-700 h-2 shadow-lg rounded-lg mt-2 ml-2" />
-          </div>
+          <writer :item="blog"></writer>
         </div>
         <div class="flex flex-col pb-8 sticky top-0">
-            <p class="text-teal-700 mb-2 text-2xl font-semibold">{{blog.channel.name}} ile ilgili diğer yazılar</p>
-          <div class="flex-row flex items-center mb-4" v-for="relatedBlog in blogs" :key="relatedBlog.id">
+          <p class="text-teal-700 mb-4 text-2xl font-semibold">
+            {{ blog.channel.name }} ile ilgili diğer yazılar
+          </p>
+          <div
+            class="flex-row flex items-center mb-4"
+            v-for="relatedBlog in blogs"
+            :key="relatedBlog.id"
+          >
             <span
               class="rounded-full mr-2 table"
               :class="'bg-' + relatedBlog.channel.color + '-600'"
@@ -46,7 +52,12 @@
                 <circle cx="50" cy="50" r="40" fill="currentColor" />
               </svg>
             </span>
-            <a :href="'/blogs/'+relatedBlog.channel.slug+'/'+relatedBlog.slug" class="text-teal-600 text-lg hover:text-teal-800">
+            <a
+              :href="
+                '/blogs/' + relatedBlog.channel.slug + '/' + relatedBlog.slug
+              "
+              class="text-teal-600 text-lg hover:text-teal-800"
+            >
               {{ relatedBlog.title }}
             </a>
           </div>
@@ -58,16 +69,18 @@
 
 <script>
 import Avatar from "../../shared/Avatar.vue";
+import Writer from "../../shared/Writer.vue";
 export default {
-  props: ["dataBlog", 'dataBlogs'],
+  props: ["dataBlog", "dataBlogs"],
   data() {
     return {
       blog: this.dataBlog,
-      blogs: this.dataBlogs
+      blogs: this.dataBlogs,
     };
   },
   components: {
     Avatar,
+    Writer,
   },
 };
 </script>

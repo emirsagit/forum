@@ -61,6 +61,8 @@ class AdminThreadsController extends Controller
             'thread_description' => $request->thread_description,
         ]);
 
+        $thread->subscribe();
+
         return $thread->load('channel');
     } 
 }

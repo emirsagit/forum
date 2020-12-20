@@ -1,8 +1,8 @@
-<nav class="bg-white text-lg font-semibold lg:h-16 lg:flex lg:flex-col">
-    <div class="lg:w-5/6 m-auto flex flex-row items-center justify-between flex-wrap py-4 px-2 lg:p-2">
+<nav class="bg-white text-lg font-semibold lg:h-16 lg:flex lg:flex-col tracking-wide">
+    <div class="flex flex-row my-auto justify-between flex-wrap py-4 px-2 lg:p-2 lg:px-16">
         <div class="lg:mr-6">
             @if($setting)
-            <a href="/threads" class="flex flex-row">
+            <a href="/" class="flex flex-row">
                 @if($setting->logo)
                 <img class="object-cover h-10 w-25 w-full" src="/storage/{{ $setting->logo }}" alt="logo">
                 @else
@@ -24,8 +24,8 @@
         </div>
         <div class="w-full block flex-grow text-teal-600 lg:flex lg:items-center lg:w-auto"
             :class="expand ? 'flex flex-col' : 'hidden'">
-            <div class="lg:flex-grow flex flex-col lg:flex-row">
-                <nav-link class="lg:flex-row"></nav-link>
+            <div class="lg:flex-grow flex flex-col lg:flex-row items-center">
+                <nav-link class="lg:flex-row text-xl"></nav-link>
                 <div class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-800 text-sm">
                     <div class="flex flex-row">
                         <input type="search" class="bg-purple-white shadow rounded border-0 p-1 pl-2"
@@ -42,20 +42,20 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col lg:flex-row">
+            <div class="flex flex-col lg:flex-row items-center">
                 @guest
-                <signin-button>
+                <signin-button class="text-xl">
                 </signin-button>
-                <register-button>
+                <register-button class="text-xl">
                 </register-button>
                 @else
                 @if(strlen(($user = auth()->user())->avatar_path) != 1)
                 <img src="{{ $user->avatar_path }}" alt="{{ $user->name }}"
                     class="h-6 w-6 mr-2 hidden lg:flex rounded-full">
                 @endif
-                <navigation-auth-dropdown :user="{{ $user }}" class="hidden lg:flex">
+                <navigation-auth-dropdown :user="{{ $user }}" class="hidden lg:flex text-xl">
                 </navigation-auth-dropdown>
-                <navigation-auth :user="{{ $user }}" class="lg:hidden">
+                <navigation-auth :user="{{ $user }}" class="lg:hidden text-xl">
                 </navigation-auth>
                 <notification-dropdown></notification-dropdown>
                 @endguest

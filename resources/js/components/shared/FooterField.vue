@@ -22,7 +22,7 @@
       </div>
       <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-6/12 px-4 flex flex-wrap items-center lg:items-start flex-col">
             <h4 class="text-3xl font-semibold">Hakkımızda</h4>
             <h5 class="text-md mt-0 mb-2 text-gray-700">
               {{ about }}
@@ -31,9 +31,9 @@
           </div>
           <div class="w-full lg:w-6/12 px-4 mt-6">
             <div class="flex flex-wrap items-top mb-6">
-              <div class="w-full lg:w-4/12 px-4 ml-auto">
+              <div class="w-full lg:w-4/12 ml-auto">
                 <span
-                  class="block uppercase text-gray-600 text-sm font-semibold"
+                  class="block uppercase text-gray-600 text-sm font-semibold text-center"
                   >Kullanışlı Bağlantılar</span
                 >
                 <nav-link class="text-gray-700"></nav-link>

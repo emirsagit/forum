@@ -10,9 +10,12 @@ class AdminSliderController extends Controller
 {
     public function update(Blog $blog)
     {
+        $blog->timestamps = false;
+
         $blog->update([
             'slider' => ! $blog->slider
         ]);
+        
         return $blog->slider;
     } 
 }

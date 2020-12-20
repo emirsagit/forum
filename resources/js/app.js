@@ -26,6 +26,8 @@ import Thread from "./components/threads/show/Thread.vue"; //threads.show
 
 import Profile from "./components/profiles/show/Profile.vue"; //profile.show
 
+import Puzzle from "./components/puzzles/show/Puzzle.vue"; //puzzles.show
+
 /* shared */
 import Flash from "./components/shared/Flash.vue";
 import NavLink from "./components/shared/NavLink.vue";
@@ -33,6 +35,7 @@ import FooterField from "./components/shared/FooterField.vue";
 import Paginator from "./components/shared/Paginator.vue";
 import NotificationDropdown from "./components/shared/NotificationDropdown.vue";
 import Recaptcha from "./components/shared/Recaptcha.vue";
+import NavChannels from "./components/shared/NavChannels.vue";
 /* endshared */
 import Editor from "vue-editor-js";
 import Axios from "axios";
@@ -60,7 +63,9 @@ const app = new Vue({
         FooterField,
         NavLink,
         Blogs,
-        Blog
+        Blog,
+        NavChannels,
+        Puzzle
     },
 
     data: {

@@ -7,6 +7,10 @@
         class="bg-white w-full rounded pr-1 md:p-6 mb-4"
         @submit.prevent="onSubmit()"
       >
+        <p
+          class="text-2xl text-teal-700 font-semibold mb-2"
+          v-text="dataBlog ? 'Blog Sayfası Düzenle' : 'Yeni Blog Sayfası'"
+        ></p>
         <div class="mb-2">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -255,7 +259,7 @@ export default {
             flash(error.message, "error");
           });
       } else {
-        this.formData.append('_method', 'PATCH');
+        this.formData.append("_method", "PATCH");
         axios
           .post(`/admin/blogs/${this.dataBlog.slug}`, this.formData, {
             headers: {

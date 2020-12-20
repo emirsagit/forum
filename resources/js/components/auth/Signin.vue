@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-screen h-screen fixed top-0 right-0 bg-gray-800 bg-opacity-75 flex justify-center m-auto"
+    class="w-screen h-screen fixed top-0 right-0 bg-gray-800 bg-opacity-75 flex justify-center m-auto z-50"
     v-if="login"
   >
     <div
@@ -124,14 +124,16 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/login")
-        .then((data) => window.location.reload())
+        .then((data) => {
+          flash("Hoşgeldiniz");
+          window.location.reload();
+        })
         .catch((error) => console.log(error));
     },
     loginHide() {
       window.toggle("login", false);
     },
     registerRequest() {
-      this.loginHide();
       window.toggle("register", true);
     },
     forgatPassword() {
@@ -147,6 +149,14 @@ export default {
           this.emailProblem = error.response.data.errors.email[0];
         });
     },
+  },
+  mounted() {
+    if (this.$signIn) return;
+
+    var pageURL = window.location.href;
+    if (pageURL.substr(pageURL.lastIndexOf("/") + 1) == "login") {
+      window.toggle("login", true);
+    }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-screen h-screen fixed top-0 right-0 bg-gray-800 bg-opacity-75 flex justify-center m-auto"
+    class="w-screen h-screen fixed top-0 right-0 bg-gray-800 bg-opacity-75 flex justify-center m-auto z-50"
     v-if="register"
   >
     <div
@@ -16,6 +16,12 @@
             X
           </p>
         </div>
+        <p class="ml-2 text-teal-700 text-sm">
+          Forumda konunun uzmanlarına soru sormak, paylaşım yapmak daima
+          ücretsizdir. Ancak sitemizi spam içerikten korumak için üyelik
+          sisteminden başka bir yol bulamadık. Zaman ayırdığınız için
+          teşekkürler...
+        </p>
         <form
           class="bg-white rounded px-4 py-4"
           @submit.prevent="onSubmit()"
@@ -43,7 +49,7 @@
               v-if="form.errors.has('name')"
             ></p>
           </div>
-            <div class="mb-2">
+          <div class="mb-2">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
               for="username"
@@ -114,7 +120,7 @@
               class="block text-gray-700 text-sm font-bold mb-2"
               for="password"
             >
-              Parola Onayı
+              Parola Tekrarı
             </label>
             <input
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -172,7 +178,7 @@ export default {
       form: new Form({
         email: "",
         name: "",
-        username:"",
+        username: "",
         password: "",
         password_confirmation: "",
       }),
@@ -183,7 +189,10 @@ export default {
     onSubmit() {
       this.form
         .submit("post", "/register")
-        .then((data) => window.location.href="/email/verify")
+        .then((data) => {
+          window.location.reload();
+          flash("Kayıt Başarılı");
+        })
         .catch((error) => console.log(error));
     },
     registerHide() {

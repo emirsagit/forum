@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Blog;
+use App\Models\Level;
 use App\Models\Reply;
+use App\Models\Puzzle;
 use App\Models\Thread;
 use App\Models\Channel;
 use Illuminate\Database\Seeder;
@@ -32,5 +34,14 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
         });
+        $levels = Level::factory(5)
+            ->create()
+            ->each(function ($level) {
+                $level->puzzles()->attach($puzzles = Puzzle::factory(10)
+                    ->create()
+                    ->filter(function ($puzzle) {
+                        return $puzzle->id;
+                    }));
+            });
     }
 }

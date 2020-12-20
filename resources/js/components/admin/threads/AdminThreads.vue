@@ -56,7 +56,7 @@
         class="bg-teal-800 mb-2 rounded-lg text-white px-2 py-1 text-lg hover:bg-teal-700 cursor-pointer hidden md:flex"
         @click="displayForm = true"
       >
-        Yeni Başlık
+        Yeni Sorunsal
       </a>
     </div>
     <table class="border-collapse w-full" v-if="!displayForm">

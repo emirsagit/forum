@@ -13,28 +13,23 @@ class AdminSettingsController extends Controller
     {
         $setting = Setting::first();
 
+        $data = [
+            'home_h1' => $request->home_h1,
+            'home_title' => $request->home_title,
+            'logo_title' => $request->logo_title,
+            'home_description' => $request->home_description,
+            'facebook' => $request->facebook,
+            'instagram' => $request->instagram,
+            'twitter' => $request->twitter,
+            'about' => $request->about,
+            'puzzle_title' => $request->puzzle_title,
+            'puzzle_description' => $request->puzzle_description
+        ];
+
         if (!$setting) {
-            Setting::create([
-                'home_h1' => $request->home_h1,
-                'home_title' => $request->home_title,
-                'logo_title' => $request->logo_title,
-                'home_description' => $request->home_description,
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                'twitter' => $request->twitter,
-                'about' => $request->about,
-            ]);
+            Setting::create($data);
         } else {
-            $setting->update([
-                'home_h1' => $request->home_h1,
-                'logo_title' => $request->logo_title,
-                'home_title' => $request->home_title,
-                'home_description' => $request->home_description,
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                'twitter' => $request->twitter,
-                'about' => $request->about,
-            ]);
+            $setting->update($data);
         }
     }
 

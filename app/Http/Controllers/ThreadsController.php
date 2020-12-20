@@ -15,7 +15,7 @@ class ThreadsController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['index', 'show', 'channel']);
+        $this->middleware(['auth', 'verified'])->except(['index', 'show', 'channel', 'create']);
     }
     /**
      * Display a listing of the resource.
@@ -98,13 +98,15 @@ class ThreadsController extends Controller
         ]);
         // $editorJsValidation = new EditorJsValidation($request->body);
         // $body = $editorJsValidation->get();    
-        Thread::create([
+        $thread = Thread::create([
             'user_id' => auth()->user()->id,
             'channel_id' => $request->channel_id,
             'title' => $request->title,
             'body' => $request->body,
             'editors_data' => $request->body
         ]);
+
+        $thread->subscribe();
 
         return back()->with('message', 'Başarıyla kaydedildi');
     }
@@ -185,6 +187,6 @@ class ThreadsController extends Controller
 
     protected function get($threads)
     {
-        return $threads->latest()->with('owner')->withCount('visits')->paginate(config('paginate.paginate.threads'));
+        return $threads->orderByDesc('updated_at')->with('owner')->withCount('visits')->paginate(config('paginate.paginate.threads'));
     } 
 }

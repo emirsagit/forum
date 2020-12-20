@@ -4,7 +4,7 @@
         <span class="rounded-md shadow-sm">
           <button
             type="button"
-            class="mt-4 lg:mt-0 mr-4 hover:text-teal-800 flex flex-row items-center font-semibold"
+            class="mt-4 lg:mt-0 mr-4 hover:text-teal-800 flex flex-row items-center font-semibold text-xl"
             id="options-menu"
           >
             {{ user.username }}
@@ -25,7 +25,7 @@
         </span>
       </div>
       <div
-        class="origin-top-right absolute mt-8 rounded-md shadow-lg w-24"
+        class="origin-top-right absolute mt-10 rounded-md shadow-lg w-24"
         v-show="expand"
       >
         <div class="rounded-md bg-white shadow-xs">
@@ -37,13 +37,13 @@
           >
             <a
               @click.prevent="goProfile()"
-              class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 font-semibold"
+              class="block px-4 py-2 text-lg leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 font-semibold"
               role="menuitem"
               >Profil</a
             >
             <a
               @click.prevent="logout()"
-              class="block px-4 py-2 leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 font-semibold text-sm"
+              class="block px-4 py-2 leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 font-semibold text-lg"
               role="menuitem"
             >
               Çıkış</a

@@ -4,7 +4,7 @@
 <title>
     {{ config('app.name') }} | Konulara göre arama sayfası
 </title>
-<meta name="description" content="Sayfamızda konulara tüm forum içerisinde konulara göre arama yapabilirsiniz." 
+<meta name="description" content="Sayfamızda konulara tüm forum içerisinde konulara göre arama yapabilirsiniz."> 
 
 @endsection
 @section('content')
@@ -14,7 +14,7 @@
         <h1 class="text-l">Arama Sonuçları</h1>
     </div>
 </div>
-<div class="flex flex-col lg:w-1/2 p-2 pt-4 m-auto">
+<div class="flex flex-col lg:w-1/2 p-2 pt-4 m-auto min-h-screen pb-24">
     <p class="text-lg text-red-700 m-4">İçerisinde "{{ $search }}" ifadesi ya da ifadelerinden birisi bulunan {{ $searchResults->count() }} konu başlığı bulduk.</p>
     @forelse ($searchResults as $result)
     <div class="mb-4">

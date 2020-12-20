@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex flex-col text-left"
+    class="flex flex-col items-center"
   >
-    <div class="flex flex-col lg:items-center cursor-pointer text-lg">
+    <div class="flex flex-col lg:items-center cursor-pointer text-2lg">
       <a
         class="hover:text-teal-800 mt-4"
         @click.prevent="goProfile()"

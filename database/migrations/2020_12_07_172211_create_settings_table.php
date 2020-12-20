@@ -20,6 +20,8 @@ class CreateSettingsTable extends Migration
             $table->string('home_h1')->nullable();
             $table->string('home_title')->nullable();
             $table->string('home_description')->nullable();
+            $table->string('puzzle_title')->nullable();
+            $table->string('puzzle_description')->nullable();
             $table->text('about')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();

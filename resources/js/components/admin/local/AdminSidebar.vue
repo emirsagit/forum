@@ -45,7 +45,16 @@
         "
         :href="'/admin/threads'"
       >
-        Başlıklar
+        Forum Sorunsallar
+      </a>
+      <a
+        class="flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2"
+        :class="
+          currentPage == '/admin/blogs' ? 'border-white' : 'border-indigo-600'
+        "
+        :href="'/admin/blogs'"
+      >
+        Blog
       </a>
       <a
         class="flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2"
@@ -59,11 +68,20 @@
       <a
         class="flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2"
         :class="
-          currentPage == '/admin/blogs' ? 'border-white' : 'border-indigo-600'
+          currentPage == '/admin/levels' ? 'border-white' : 'border-indigo-600'
         "
-        :href="'/admin/blogs'"
+        :href="'/admin/levels'"
       >
-        Blog
+        Bilmece Seviyesi
+      </a>
+      <a
+        class="flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2"
+        :class="
+          currentPage == '/admin/puzzles' ? 'border-white' : 'border-indigo-600'
+        "
+        :href="'/admin/puzzles'"
+      >
+        Bilmeceler
       </a>
     </div>
   </div>

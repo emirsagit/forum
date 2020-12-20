@@ -15,6 +15,7 @@ class SearchController extends Controller
     {
         $searchResults = (new Search())
             ->registerModel(Thread::class, 'title')
+            ->registerModel(Blog::class, 'title')
             ->search($search = $request->search);
 
         return view('search.index', compact(['searchResults', 'search']));

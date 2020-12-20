@@ -1,12 +1,21 @@
 <template>
-  <div class="sm:w-1/2 flex flex-col sm:m-auto">
-    <div class="flex justify-center lg:mt-4 bg-white lg:p-2 rounded-lg shadow-lg">
+  <div class="sm:w-1/2 flex flex-col sm:m-auto pb-24">
+    <div
+      class="flex justify-center lg:mt-4 bg-white lg:p-2 rounded-lg shadow-lg"
+    >
       <form
         class="bg-white w-full rounded lg:p-4 p-2 mb-4"
         @submit.prevent="onSubmit()"
         @keydown="form.errors.clear($event.target.name)"
       >
         <div class="mb-2">
+          <div v-if="!$signedIn" class="flex lg:flex-row flex-col items-center justify-between">
+             <p class="text-red-600">Paylaşım yapmak, sorunsal bildirmek için lütfen giriş yapın ya da kayıt olun</p>
+             <div>
+               <signin-button></signin-button>
+               <register-button></register-button>
+             </div>
+          </div>
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
             for="channel_id"
@@ -108,12 +117,16 @@
 import Form from "../../dependencies/form.js";
 import Recaptcha from "../../shared/Recaptcha.vue";
 import JsEditor from "../../shared/JsEditor.vue";
+import SigninButton from "../../auth/SigninButton.vue"
+import RegisterButton from "../../auth/RegisterButton.vue"
 
 export default {
   props: ["recapthcaSiteKey"],
   components: {
     Recaptcha,
     JsEditor,
+    RegisterButton,
+    SigninButton
   },
   data() {
     return {
@@ -171,6 +184,9 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    if (!this.$signedIn) {
+      window.toggle("register", true);
+    }
   },
 };
 </script>

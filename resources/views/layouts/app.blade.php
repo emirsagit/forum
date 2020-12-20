@@ -24,8 +24,8 @@
     @yield('head')
 </head>
 
-<body>
-    <div id="app" class="bg-gray-100 min-h-screen">
+<body class="min-h-screen ">
+    <div id="app" class="bg-gray-100">
         @include('layouts.nav')
         @yield('content')
         <signin :login="control.login"></signin>

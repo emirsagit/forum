@@ -5,14 +5,14 @@
 <title>
     {{ config('app.name') }} | Kullanıcı profili görüntüle
 </title>
-<meta name="description" content="Sayfamızda forumumuzun kullanıcı profillerini, aktivitelerini görüntüleyebilirsiniz." 
+<meta name="description" content="Sayfamızda forumumuzun kullanıcı profillerini, aktivitelerini görüntüleyebilirsiniz."> 
 
 @endsection
 
 @section('content')
 
 <profile data="{{ $user->avatar_path }}" inline-template>
-    <div>
+    <div class="pb-24 min-h-screen">
         <div class="flex w-full h-24 bg-blue-600 text-white">
             <div class="flex m-auto items-end">
                 <div class="flex overflow-hidden mr-2">

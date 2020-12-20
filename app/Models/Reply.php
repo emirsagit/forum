@@ -67,11 +67,15 @@ class Reply extends Model
 
     public function markAsBest()
     {
+        $this->thread->timestamps = false;
+
         $this->thread->update(['best_reply_id' => $this->id]);
     } 
 
     public function deleteMarkedBest()
     {
+        $this->thread->timestamps = false;
+
         $this->thread->update(['best_reply_id' => null]);
     } 
 

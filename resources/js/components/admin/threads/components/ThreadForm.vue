@@ -1,11 +1,19 @@
 <template>
-  <div class="bg-white w-full sm:w-2/3 flex flex-col sm:m-auto p-1 md:p-4 absulate">
+  <div
+    class="bg-white w-full sm:w-2/3 flex flex-col sm:m-auto p-1 md:p-4 absulate"
+  >
     <div class="flex justify-center">
       <form
         class="bg-white w-full rounded pr-1 md:p-6 mb-4"
         @submit.prevent="onSubmit()"
         @keydown="form.errors.clear($event.target.name)"
       >
+        <p
+          class="text-2xl text-teal-700 font-semibold mb-2"
+          v-text="
+            dataThread ? 'Form Sayfası Düzenle' : 'Yeni Forum Sayfası'
+          "
+        ></p>
         <div class="mb-2">
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -64,8 +72,11 @@
             v-if="form.errors.has('body')"
           ></p>
         </div>
-           <div class="mb-2">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="thread_title">
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="thread_title"
+          >
             Başlık Title (seo)
           </label>
           <input
@@ -83,13 +94,18 @@
             v-if="form.errors.has('thread_title')"
           ></p>
         </div>
-           <div class="mb-2">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="thread_description">
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="thread_description"
+          >
             Başlık Description (seo)
           </label>
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            v-bind:class="{ 'border-red-500': form.errors.has('thread_description') }"
+            v-bind:class="{
+              'border-red-500': form.errors.has('thread_description'),
+            }"
             id="thread_description"
             type="text"
             name="thread_description"
@@ -139,8 +155,10 @@ export default {
         title: this.dataThread ? this.dataThread.title : "",
         body: this.dataThread ? this.dataThread.body : "",
         channel_id: this.dataThread ? this.dataThread.channel_id : "",
-        thread_title:this.dataThread ? this.dataThread.thread_title : "",
-        thread_description:this.dataThread ? this.dataThread.thread_description : "",
+        thread_title: this.dataThread ? this.dataThread.thread_title : "",
+        thread_description: this.dataThread
+          ? this.dataThread.thread_description
+          : "",
       }),
       channels: {},
       editor: "",
@@ -150,14 +168,12 @@ export default {
   methods: {
     onInitialized(editor) {
       this.editor = editor;
-      console.log(this.editor);
     },
     async editorSave() {
       await this.editor
         .save()
         .then((outputData) => {
           this.form.body = outputData;
-          console.log(this.form.body);
         })
         .catch((error) => {
           console.log("Saving failed: ", error);

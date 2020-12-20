@@ -9,7 +9,6 @@ use App\Models\Thread;
 use App\Models\Activity;
 use App\Casts\DateForHumansCast;
 use Spatie\Searchable\Searchable;
-use Illuminate\Support\Facades\DB;
 use Spatie\Searchable\SearchResult;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,7 +16,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail, Searchable
+class User extends Authenticatable implements Searchable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
