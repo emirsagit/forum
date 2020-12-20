@@ -18,7 +18,7 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('body');
-            $table->text('editors_data');
+            $table->text('editors_data')->nullable();
             $table->text('summary')->nullable();
             $table->string('image')->nullable();
             $table->boolean('slider')->default(false)->index();
