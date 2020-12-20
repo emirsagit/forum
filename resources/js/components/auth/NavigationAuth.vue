@@ -15,12 +15,6 @@
         role="menuitem"
         >Çıkış</a
       >
-      <form
-        id="logout-form"
-        action="/logout"
-        method="POST"
-        class="d-none"
-      ></form>
     </div>
   </div>
 </template>
@@ -39,7 +33,7 @@ export default {
       axios
         .post("/logout")
         .then(function (response) {
-          console.log(response);
+          window.location.reload();
         })
         .catch(function (error) {
           console.log(error);

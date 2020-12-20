@@ -11,7 +11,7 @@
         <div class="mb-2">
           <div v-if="!$signedIn" class="flex lg:flex-row flex-col items-center justify-between">
              <p class="text-red-600">Paylaşım yapmak, sorunsal bildirmek için lütfen giriş yapın ya da kayıt olun</p>
-             <div>
+             <div class="flex flex-row">
                <signin-button></signin-button>
                <register-button></register-button>
              </div>

@@ -22,11 +22,10 @@
                 </svg>
             </button>
         </div>
-        <div class="w-full block flex-grow text-teal-600 lg:flex lg:items-center lg:w-auto"
-            :class="expand ? 'flex flex-col' : 'hidden'">
-            <div class="lg:flex-grow flex flex-col lg:flex-row items-center">
-                <nav-link class="lg:flex-row text-xl"></nav-link>
-                <div class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-800 text-sm">
+        <div :class="expand ? 'flex flex-col' : 'hidden'">
+            <div class="w-full flex-grow text-teal-600 lg:items-center lg:w-auto flex flex-col">
+                <div class="lg:flex-grow flex flex-col lg:flex-row items-center">
+                    <nav-link class="lg:flex-row text-xl"></nav-link>
                     <div class="flex flex-row">
                         <input type="search" class="bg-purple-white shadow rounded border-0 p-1 pl-2"
                             placeholder="Ara..." v-model="search">
@@ -41,24 +40,24 @@
                         </svg>
                     </div>
                 </div>
-            </div>
-            <div class="flex flex-col lg:flex-row items-center">
-                @guest
-                <signin-button class="text-xl">
-                </signin-button>
-                <register-button class="text-xl">
-                </register-button>
-                @else
-                @if(strlen(($user = auth()->user())->avatar_path) != 1)
-                <img src="{{ $user->avatar_path }}" alt="{{ $user->name }}"
-                    class="h-6 w-6 mr-2 hidden lg:flex rounded-full">
-                @endif
-                <navigation-auth-dropdown :user="{{ $user }}" class="hidden lg:flex text-xl">
-                </navigation-auth-dropdown>
-                <navigation-auth :user="{{ $user }}" class="lg:hidden text-xl">
-                </navigation-auth>
-                <notification-dropdown></notification-dropdown>
-                @endguest
+                <div class="flex flex-col lg:flex-row items-center">
+                    @guest
+                    <signin-button class="text-xl">
+                    </signin-button>
+                    <register-button class="text-xl">
+                    </register-button>
+                    @else
+                    @if(strlen(($user = auth()->user())->avatar_path) != 1)
+                    <img src="{{ $user->avatar_path }}" alt="{{ $user->name }}"
+                        class="h-6 w-6 mr-2 hidden lg:flex rounded-full">
+                    @endif
+                    <navigation-auth-dropdown :user="{{ $user }}" class="hidden lg:flex text-xl">
+                    </navigation-auth-dropdown>
+                    <navigation-auth :user="{{ $user }}" class="lg:hidden text-xl">
+                    </navigation-auth>
+                    <notification-dropdown></notification-dropdown>
+                    @endguest
+                </div>
             </div>
         </div>
     </div>

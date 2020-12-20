@@ -1,20 +1,19 @@
 <template>
   <div class="flex shadow-sm p-1 rounded-xl flex-col mb-8">
     <div
+      class="flex flex-row justify-between cursor-pointer"
       @click="expand = !expand"
-      class="flex flex-row justify-between lg:items-center cursor-pointer"
     >
       <h5 class="lg:text-2xl text-lg text-indigo-800 cursor-pointer pr-2">
         <span class="text-gray-500">{{ index + 1 }}.</span>
         {{ dataPuzzle.question }}
       </h5>
-      <span class="text-indigo-500">
+      <span class="text-indigo-500 lg:mt-1 cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           class="w-8 h-8 fill-current cursor-pointer"
           v-show="!expand"
-          @click="expand = true"
         >
           <path
             fill-rule="evenodd"
@@ -27,7 +26,6 @@
           viewBox="0 0 20 20"
           class="w-8 h-8 fill-current cursor-pointer"
           v-show="expand"
-          @click="expand = false"
         >
           <path
             fill-rule="evenodd"

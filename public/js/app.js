@@ -5363,12 +5363,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user"],
   methods: {
@@ -5378,7 +5372,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     logout: function logout() {
       axios.post("/logout").then(function (response) {
-        console.log(response);
+        window.location.reload();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -6438,8 +6432,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -34206,12 +34198,7 @@ var render = function() {
             }
           },
           [_vm._v("Çıkış")]
-        ),
-        _vm._v(" "),
-        _c("form", {
-          staticClass: "d-none",
-          attrs: { id: "logout-form", action: "/logout", method: "POST" }
-        })
+        )
       ]
     )
   ])
@@ -35815,8 +35802,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass:
-            "flex flex-row justify-between lg:items-center cursor-pointer",
+          staticClass: "flex flex-row justify-between cursor-pointer",
           on: {
             click: function($event) {
               _vm.expand = !_vm.expand
@@ -35838,75 +35824,69 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("span", { staticClass: "text-indigo-500" }, [
-            _c(
-              "svg",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.expand,
-                    expression: "!expand"
-                  }
-                ],
-                staticClass: "w-8 h-8 fill-current cursor-pointer",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 20 20"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.expand = true
-                  }
-                }
-              },
-              [
-                _c("path", {
+          _c(
+            "span",
+            { staticClass: "text-indigo-500 lg:mt-1 cursor-pointer" },
+            [
+              _c(
+                "svg",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.expand,
+                      expression: "!expand"
+                    }
+                  ],
+                  staticClass: "w-8 h-8 fill-current cursor-pointer",
                   attrs: {
-                    "fill-rule": "evenodd",
-                    d:
-                      "M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z",
-                    "clip-rule": "evenodd"
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 20 20"
                   }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "svg",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.expand,
-                    expression: "expand"
-                  }
-                ],
-                staticClass: "w-8 h-8 fill-current cursor-pointer",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 20 20"
                 },
-                on: {
-                  click: function($event) {
-                    _vm.expand = false
-                  }
-                }
-              },
-              [
-                _c("path", {
+                [
+                  _c("path", {
+                    attrs: {
+                      "fill-rule": "evenodd",
+                      d:
+                        "M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z",
+                      "clip-rule": "evenodd"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "svg",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.expand,
+                      expression: "expand"
+                    }
+                  ],
+                  staticClass: "w-8 h-8 fill-current cursor-pointer",
                   attrs: {
-                    "fill-rule": "evenodd",
-                    d:
-                      "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z",
-                    "clip-rule": "evenodd"
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 20 20"
                   }
-                })
-              ]
-            )
-          ])
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      "fill-rule": "evenodd",
+                      d:
+                        "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z",
+                      "clip-rule": "evenodd"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
         ]
       ),
       _vm._v(" "),
@@ -36965,6 +36945,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
+                        { staticClass: "flex flex-row" },
                         [
                           _c("signin-button"),
                           _vm._v(" "),
