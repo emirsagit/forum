@@ -38,7 +38,6 @@ import Recaptcha from "./components/shared/Recaptcha.vue";
 import NavChannels from "./components/shared/NavChannels.vue";
 /* endshared */
 import Editor from "vue-editor-js";
-import Axios from "axios";
 window.Editor = Vue.use(Editor);
 
 const app = new Vue({
