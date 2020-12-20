@@ -36,7 +36,9 @@
         <flash flashing="{{ session('message') }}"></flash>
     </div>
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer type="application/javascript"></script>
+    <script src="/js/manifest.js"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
 </body>
 
 </html>
