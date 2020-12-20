@@ -1,8 +1,6 @@
 
 window.Vue = require("vue");
 
-window._ = require("lodash");
-
 let authorizations = require("./authorizations.js");
 
 Vue.prototype.$authorize = function(...params) {

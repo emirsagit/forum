@@ -12,16 +12,15 @@
         "codex-team/editor.js": "dev-master",
         "doctrine/dbal": "^2.12",
         "fideloper/proxy": "^4.2",
-        "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "predis/predis": "^1.1",
-        "fzaninotto/faker": "^1.9.1",
         "spatie/laravel-searchable": "^1.7"
     },
     "require-dev": {
+        "fruitcake/laravel-cors": "^2.0",
+        "fzaninotto/faker": "^1.9.1",
         "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.3.6",
         "mockery/mockery": "^1.3.1",

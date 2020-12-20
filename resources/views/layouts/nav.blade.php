@@ -1,6 +1,6 @@
 <nav class="bg-white text-lg font-semibold lg:h-16 lg:flex lg:flex-col tracking-wide">
     <div class="flex flex-row my-auto justify-between items-center flex-wrap py-4 px-2 lg:p-2 lg:px-16">
-        <div class="lg:mr-6 flex flex-row order-3 lg:order-first">
+        <div class="lg:mr-6 flex flex-row order-3 lg:order-first" v-if="! expand">
             @if($setting)
             <a href="/" class="mr-1">
                 @if($setting->logo)
@@ -11,7 +11,7 @@
             </a>
             @endif
         </div>
-        <div class="text-sm text-teal-800 lg:mt-0 flex flex-row order-2">
+        <div class="text-sm text-teal-800 lg:mt-0 flex flex-row order-2" v-if="! expand">
             <input type="search" class="bg-purple-white shadow rounded border-0 p-1 pl-2" placeholder="Forum ya da blog"
                 v-model="search">
             <svg version="1.1" class="h-4 text-dark mt-2 -ml-4 cursor-pointer hover:text-teal-600"
