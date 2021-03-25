@@ -21,11 +21,12 @@ class TrendingRedis
 
     public function cacheKey()
     {
-        return app()->environment('testing') ? 'test_trending_threads' : 'trending_threads';
-    } 
+        return
+            app()->environment('testing') ? 'test_trending_threads' : 'trending_threads';
+    }
 
     public function reset()
     {
         Redis::del($this->cacheKey());
-    } 
+    }
 }

@@ -21688,6 +21688,14 @@ video {
 
 /* purgecss end ignore */
 
+.bg-navy {
+  background-color: #002a5c;
+}
+
+.text-navy {
+  color: #002a5c;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

@@ -1,7 +1,19 @@
 {
-    "/js/app.js": "/js/app.js?id=cbcf6d3198396e04a713",
-    "/css/app.css": "/css/app.css?id=ba8c46f6f29547034947",
-    "/js/manifest.js": "/js/manifest.js?id=7f7facd6b7c3c07c640a",
-    "/js/vendor.js": "/js/vendor.js?id=5fd10ab971979a04426d",
-    "/js/components/component-name.js": "/js/components/component-name.js?id=473cf206e61617526955"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/Admin.js": "/Admin.js",
+    "/NavChannels.js": "/NavChannels.js",
+    "/NavigationAuthDropdown.js": "/NavigationAuthDropdown.js",
+    "/NotificationDropdown.js": "/NotificationDropdown.js",
+    "/Paginator.js": "/Paginator.js",
+    "/Profile.js": "/Profile.js",
+    "/Puzzle.js": "/Puzzle.js",
+    "/Recaptcha.js": "/Recaptcha.js",
+    "/Thread.js": "/Thread.js",
+    "/ThreadEditForm.js": "/ThreadEditForm.js",
+    "/ThreadForm.js": "/ThreadForm.js",
+    "/Threads.js": "/Threads.js",
+    "/blog.js": "/blog.js",
+    "/vendors~Admin.js": "/vendors~Admin.js",
+    "/vendors~Admin~Thread~ThreadEditForm~ThreadForm.js": "/vendors~Admin~Thread~ThreadEditForm~ThreadForm.js"
 }

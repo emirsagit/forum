@@ -13,6 +13,10 @@ class SearchController extends Controller
     // Spatie ModelSearchAspect clasına withtrashed eklediğim için sonuçlar softdelete olanlarla birlikte gelecek
     public function index(Request $request)
     {
+        $request->validate([
+            'search' => 'required|string'
+        ]);
+        
         $searchResults = (new Search())
             ->registerModel(Thread::class, 'title')
             ->registerModel(Blog::class, 'title')

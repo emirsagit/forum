@@ -34,14 +34,5 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
         });
-        $levels = Level::factory(5)
-            ->create()
-            ->each(function ($level) {
-                $level->puzzles()->attach($puzzles = Puzzle::factory(10)
-                    ->create()
-                    ->filter(function ($puzzle) {
-                        return $puzzle->id;
-                    }));
-            });
     }
 }

@@ -1,31 +1,25 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center justify-around lg:w-2/3 uppercase absolute top-0 lg:static w-full border-b-2 border-teal-800 lg:border-none">
     <a
       href="/"
-      class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
-    >
-      Anasayfa
-    </a>
-    <a
-      href="/threads"
-      class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
+      class="block mt-4 lg:inline-block lg:mt-0 lg:mr-4 hover:text-teal-800"
     >
       Forum
     </a>
     <a
       href="/threads/create"
-      class="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
+      class="block mt-4 lg:inline-block lg:mt-0 lg:mr-4 hover:text-teal-800"
     >
-      Uzmana Sorun
+      Paylaşım Yap
     </a>
     <a
-      class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
-      href="/puzzles"
+      href="/blog"
+      class="block mt-4 lg:inline-block lg:mt-0 lg:mr-4 hover:text-teal-800"
     >
-      Bilmeceler
+      Blog
     </a>
     <a
-      class="cursor-pointer block mt-4 lg:inline-block lg:mt-0 mr-4 hover:text-teal-800"
+      class="cursor-pointer block my-4 lg:mb-0 lg:inline-block lg:mt-0 lg:mr-4 hover:text-teal-800"
       href="/contact"
     >
       İletişim

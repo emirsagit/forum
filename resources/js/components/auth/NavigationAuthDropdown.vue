@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block text-left z-50">
+  <div class="relative text-left">
       <div @click="expand = !expand">
         <span class="rounded-md shadow-sm">
           <button
@@ -25,7 +25,7 @@
         </span>
       </div>
       <div
-        class="origin-top-right absolute mt-10 rounded-md shadow-lg w-24"
+        class="absolute top-0 mt-12 lg:mt-10 rounded-md shadow-lg w-24"
         v-show="expand"
       >
         <div class="rounded-md bg-white shadow-xs">

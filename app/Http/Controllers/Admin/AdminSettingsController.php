@@ -55,15 +55,17 @@ class AdminSettingsController extends Controller
 
         $setting = Setting::first();
 
+
         if (!$setting) {
             Setting::create([
                 'logo' => request()->file('logo')->store('logo', 'public')
             ]);
         } else {
             Storage::disk('public')->delete($setting->logo);
-            $setting->update([
+            $logo = $setting->update([
                 'logo' => request()->file('logo')->store('logo', 'public')
             ]);
+
         }
     }
 }

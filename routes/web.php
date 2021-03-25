@@ -5,7 +5,6 @@ use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\PuzzlesController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ThreadsController;
 use App\Http\Controllers\ProfilesController;
@@ -18,10 +17,8 @@ use App\Http\Controllers\Api\UserAvatarsController;
 use App\Http\Controllers\Admin\AdminBlogsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminImagesController;
-use App\Http\Controllers\Admin\AdminLevelsController;
 use App\Http\Controllers\Admin\AdminSliderController;
 use App\Http\Controllers\UserNotificationsController;
-use App\Http\Controllers\Admin\AdminPuzzlesController;
 use App\Http\Controllers\Admin\AdminThreadsController;
 use App\Http\Controllers\Admin\AdminChannelsController;
 use App\Http\Controllers\Admin\AdminSettingsController;
@@ -41,11 +38,12 @@ use App\Http\Controllers\ThreadSubscriptionsController;
 
 Auth::routes(['verify' => true]);
 
-Route::get('/',  [BlogsController::class, 'index']);
+Route::get('/',  [ThreadsController::class, 'index']);
 
-Route::resource('/blogs',  ThreadsController::class)->except([
+Route::resource('/blog',  BlogsController::class)->except([
     'show'
 ]);
+
 Route::get('/blogs/channels/{channel}', [BlogChannelsController::class, 'index']);
 
 Route::get('/blogs/{channel}/{blog}', [BlogsController::class, 'show'])->name('blogs.show');
@@ -61,8 +59,6 @@ Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show'])->n
 
 Route::get('/channels', [ChannelController::class, 'index']);
 
-Route::get('/puzzles', [PuzzlesController::class, 'index']);
-Route::get('/puzzles/{level}', [PuzzlesController::class, 'show'])->name('puzzles.show');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
@@ -100,9 +96,6 @@ Route::post('/api/profiles/{user}/avatar', [UserAvatarsController::class, 'store
 Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminHomeController::class, 'index'])->name('admin.index');
     Route::resource('/channels', AdminChannelsController::class)->except(['show', 'edit']);
-    Route::resource('/puzzles', AdminPuzzlesController::class)->except(['show', 'edit']);
-    Route::resource('/levels', AdminLevelsController::class)->except(['show', 'edit']);
-    Route::get('/puzzles/{level}', [AdminPuzzlesController::class, 'level']);
     Route::resource('/threads', AdminThreadsController::class, ['as' => 'admin'])->except(['show', 'edit']);
     Route::resource('/blogs', AdminBlogsController::class, ['as' => 'admin'])->except(['show', 'edit']);
     Route::resource('/users', AdminUsersController::class, ['as' => 'admin'])->except(['show', 'edit']);

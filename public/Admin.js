@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[25],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["Admin"],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/Admin.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
@@ -1571,24 +1571,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5511,7 +5493,7 @@ var render = function() {
               : "border-indigo-600",
           attrs: { href: "/admin/threads" }
         },
-        [_vm._v("\n      Forum Sorunsallar\n    ")]
+        [_vm._v("\n      Forum Paylaşılanlar\n    ")]
       ),
       _vm._v(" "),
       _c(
@@ -5540,34 +5522,6 @@ var render = function() {
           attrs: { href: "/admin/users" }
         },
         [_vm._v("\n      Üyeler\n    ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass:
-            "flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2",
-          class:
-            _vm.currentPage == "/admin/levels"
-              ? "border-white"
-              : "border-indigo-600",
-          attrs: { href: "/admin/levels" }
-        },
-        [_vm._v("\n      Bilmece Seviyesi\n    ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass:
-            "flex w-full max-content border-2 rounded-lg hover:border-white lg:px-2 lg:py-1 cursor-pointer justify-center mx-1 lg:mx-2 mb-2",
-          class:
-            _vm.currentPage == "/admin/puzzles"
-              ? "border-white"
-              : "border-indigo-600",
-          attrs: { href: "/admin/puzzles" }
-        },
-        [_vm._v("\n      Bilmeceler\n    ")]
       )
     ])
   ])
@@ -9463,158 +9417,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminUser_vue_vue_type_template_id_5726ec93___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/dependencies/errors.js":
-/*!********************************************************!*\
-  !*** ./resources/js/components/dependencies/errors.js ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Errors = /*#__PURE__*/function () {
-  function Errors() {
-    _classCallCheck(this, Errors);
-
-    this.errors = {};
-  }
-
-  _createClass(Errors, [{
-    key: "record",
-    value: function record(errors) {
-      this.errors = errors;
-    }
-  }, {
-    key: "get",
-    value: function get(field) {
-      if (this.errors[field]) return this.errors[field][0];
-    }
-  }, {
-    key: "clear",
-    value: function clear(field) {
-      if (field) {
-        delete this.errors[field];
-        return;
-      }
-
-      this.errors = {};
-    }
-  }, {
-    key: "has",
-    value: function has() {
-      var field = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-      if (field) {
-        return this.errors[field] ? true : false;
-      }
-
-      return Object.keys(this.errors).length > 0;
-    }
-  }]);
-
-  return Errors;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Errors);
-
-/***/ }),
-
-/***/ "./resources/js/components/dependencies/form.js":
-/*!******************************************************!*\
-  !*** ./resources/js/components/dependencies/form.js ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./errors.js */ "./resources/js/components/dependencies/errors.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Form = /*#__PURE__*/function () {
-  function Form(data) {
-    _classCallCheck(this, Form);
-
-    this.originalData = data;
-
-    for (var field in data) {
-      this[field] = data[field];
-    }
-
-    this.errors = new _errors_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
-  }
-
-  _createClass(Form, [{
-    key: "data",
-    value: function data() {
-      var data = {};
-
-      for (var field in this.originalData) {
-        data[field] = this[field];
-      }
-
-      return data;
-    }
-  }, {
-    key: "submit",
-    value: function submit(requestType, url) {
-      var _this = this;
-
-      var parameter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      return new Promise(function (resolve, reject) {
-        axios[requestType](url, _this.data(), parameter).then(function (response) {
-          _this.onSuccess(response.data);
-
-          resolve(response.data);
-        })["catch"](function (error) {
-          _this.onFail(error.response.data);
-
-          reject(error.response.data);
-        });
-      });
-    }
-  }, {
-    key: "onSuccess",
-    value: function onSuccess(data) {
-      this.errors.clear();
-    }
-  }, {
-    key: "onFail",
-    value: function onFail(data) {
-      if (data.errors) {
-        this.errors.record(data.errors);
-      }
-    }
-  }, {
-    key: "empty",
-    value: function empty() {
-      var _this2 = this;
-
-      Object.keys(this.originalData).forEach(function (field) {
-        _this2[field] = "";
-      });
-    }
-  }]);
-
-  return Form;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Form);
 
 /***/ }),
 

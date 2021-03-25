@@ -1,39 +1,81 @@
 require("./bootstrap");
 
-const Signin = () => import('./components/auth/Signin.vue')
-const Register = () => import('./components/auth/Register.vue')
-const SigninButton = () => import('./components/auth/SigninButton.vue')
-const RegisterButton = () => import('./components/auth/RegisterButton.vue')
-const NavigationAuthDropdown = () => import('./components/auth/NavigationAuthDropdown.vue')
-const NavigationAuth = () => import('./components/auth/NavigationAuth.vue')
+// const Signin = () => import('./components/auth/Signin.vue' /* webpackChunkName: "Signin" */ )
+// const Register = () => import('./components/auth/Register.vue' /* webpackChunkName: "Register" */ )
+// const SigninButton = () => import('./components/auth/SigninButton.vue' /* webpackChunkName: "SigninButton" */ )
+// const RegisterButton = () => import('./components/auth/RegisterButton.vue' /* webpackChunkName: "RegisterButton" */ )
 
+const NavigationAuthDropdown = () =>
+  import(
+    "./components/auth/NavigationAuthDropdown.vue" /* webpackChunkName: "NavigationAuthDropdown" */
+  );
 
-const Admin = () => import('./components/admin/Admin.vue')
+const Admin = () =>
+  import("./components/admin/Admin.vue" /* webpackChunkName: "Admin" */);
 
-const Threads = () => import('./components/threads/index/Threads.vue')
+const Threads = () =>
+  import(
+    "./components/threads/index/Threads.vue" /* webpackChunkName: "Threads" */
+  );
 
-const Blogs = () => import('./components/blogs/index/Blogs.vue')
-const Blog = () => import('./components/blogs/show/Blog.vue')
+const ThreadForm = () =>
+  import(
+    "./components/threads/create/ThreadForm.vue" /* webpackChunkName: "ThreadForm" */
+  );
+const ThreadEditForm = () =>
+  import(
+    "./components/threads/edit/ThreadEditForm.vue" /* webpackChunkName: "ThreadEditForm" */
+  );
 
-const ThreadForm = () => import('./components/threads/create/ThreadForm.vue')
-const ThreadEditForm = () => import('./components/threads/edit/ThreadEditForm.vue')
+const Thread = () =>
+  import(
+    "./components/threads/show/Thread.vue" /* webpackChunkName: "Thread" */
+  );
 
-const Thread = () => import('./components/threads/show/Thread.vue')
+const Profile = () =>
+  import(
+    "./components/profiles/show/Profile.vue" /* webpackChunkName: "Profile" */
+  );
 
-const Profile = () => import('./components/profiles/show/Profile.vue')
+const Puzzle = () =>
+  import(
+    "./components/puzzles/show/Puzzle.vue" /* webpackChunkName: "Puzzle" */
+  );
 
-const Puzzle = () => import('./components/puzzles/show/Puzzle.vue')
+// const Flash = () => import('./components/shared/Flash.vue' /* webpackChunkName: "Flash" */ )
+// const NavLink = () => import('./components/shared/NavLink.vue' /* webpackChunkName: "NavLink" */ )
+// const FooterField = () => import('./components/shared/FooterField.vue' /* webpackChunkName: "FooterField" */ )
+const Paginator = () =>
+  import(
+    "./components/shared/Paginator.vue" /* webpackChunkName: "Paginator" */
+  );
+const NotificationDropdown = () =>
+  import(
+    "./components/shared/NotificationDropdown.vue" /* webpackChunkName: "NotificationDropdown" */
+  );
+const Recaptcha = () =>
+  import(
+    "./components/shared/Recaptcha.vue" /* webpackChunkName: "Recaptcha" */
+  );
+const NavChannels = () =>
+  import(
+    "./components/shared/NavChannels.vue" /* webpackChunkName: "NavChannels" */
+  );
 
-const Flash = () => import('./components/shared/Flash.vue')
-const NavLink = () => import('./components/shared/NavLink.vue')
-const FooterField = () => import('./components/shared/FooterField.vue')
-const Paginator = () => import('./components/shared/Paginator.vue')
-const NotificationDropdown = () => import('./components/shared/NotificationDropdown.vue')
-const Recaptcha = () => import('./components/shared/Recaptcha.vue')
-const NavChannels = () => import('./components/shared/NavChannels.vue')
+// const Blogs = () => import('./components/blogs/index/Blogs.vue' /* webpackChunkName: "blogs" */ )
 
+const Blog = () =>
+  import("./components/blogs/show/Blog.vue" /* webpackChunkName: "blog" */);
 
-
+import NavLink from "./components/shared/NavLink.vue";
+import Search from "./components/shared/Search.vue";
+import Signin from "./components/auth/Signin.vue";
+import Register from "./components/auth/Register.vue";
+import SigninButton from "./components/auth/SigninButton.vue";
+import RegisterButton from "./components/auth/RegisterButton.vue";
+import FooterField from "./components/shared/FooterField.vue";
+import Flash from "./components/shared/Flash.vue";
+import Blogs from "./components/blogs/index/Blogs.vue"; //blogs.index
 
 // /* auth */
 // import Signin from "./components/auth/Signin.vue";
@@ -50,7 +92,6 @@ const NavChannels = () => import('./components/shared/NavChannels.vue')
 
 // import Threads from "./components/threads/index/Threads.vue"; //threads.index
 
-// import Blogs from "./components/blogs/index/Blogs.vue"; //blogs.index
 // import Blog from "./components/blogs/show/Blog.vue"; //blogs.index
 
 // import ThreadForm from "./components/threads/create/ThreadForm.vue"; //threads.create
@@ -75,58 +116,60 @@ const NavChannels = () => import('./components/shared/NavChannels.vue')
 import Editor from "vue-editor-js";
 window.Editor = Vue.use(Editor);
 
-
-
 const app = new Vue({
-    el: "#app",
-    components: {
-        Signin,
-        Threads,
-        Register,
-        SigninButton,
-        RegisterButton,
-        ThreadForm,
-        NavigationAuthDropdown,
-        NavigationAuth,
-        Flash,
-        Thread,
-        Paginator,
-        NotificationDropdown,
-        Profile,
-        Recaptcha,
-        ThreadEditForm,
-        Admin,
-        FooterField,
-        NavLink,
-        Blogs,
-        Blog,
-        NavChannels,
-        Puzzle
+  el: "#app",
+  components: {
+    Signin,
+    Threads,
+    Register,
+    SigninButton,
+    RegisterButton,
+    ThreadForm,
+    NavigationAuthDropdown,
+    Flash,
+    Thread,
+    Paginator,
+    NotificationDropdown,
+    Profile,
+    Recaptcha,
+    ThreadEditForm,
+    Admin,
+    FooterField,
+    NavLink,
+    Blogs,
+    Blog,
+    NavChannels,
+    Puzzle,
+    Search,
+  },
+
+  data: {
+    control: {
+      login: false,
+      register: false,
     },
+    expand: false,
+    windowWidth: "",
+  },
 
-    data: {
-        control: {
-            login: false,
-            register: false
-        },
-        expand: false,
-        search: ""
+  //for showing and hide login and register page from anywhere in app
+  methods: {
+    toggle(data) {
+      this.control[data.field] = data.value;
     },
+  },
 
-    //for showing and hide login and register page from anywhere in app
-    methods: {
-        toggle(data) {
-            this.control[data.field] = data.value;
-        },
+  created() {
+    window.events.$on("toggle", (data) => {
+      this.toggle(data);
+    });
 
-        searchRequest() {
-            window.location.href = "/search?search=" + this.search;
-        },
-    },
+    this.windowWidth = window.innerWidth;
+  },
 
-    created() {
-        window.events.$on("toggle", data => {
-            this.toggle(data);
-        });
-    }
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.windowWidth = window.innerWidth;
+    });
+  },
 });

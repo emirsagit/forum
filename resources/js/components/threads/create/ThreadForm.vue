@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:w-1/2 flex flex-col sm:m-auto pb-24">
+  <div class="sm:w-1/2 flex flex-col sm:m-auto mb-24">
     <div
       class="flex justify-center lg:mt-4 bg-white lg:p-2 rounded-lg shadow-lg"
     >
@@ -9,12 +9,18 @@
         @keydown="form.errors.clear($event.target.name)"
       >
         <div class="mb-2">
-          <div v-if="!$signedIn" class="flex lg:flex-row flex-col items-center justify-between">
-             <p class="text-red-600">Paylaşım yapmak, sorunsal bildirmek için lütfen giriş yapın ya da kayıt olun</p>
-             <div class="flex flex-row">
-               <signin-button></signin-button>
-               <register-button></register-button>
-             </div>
+          <div
+            v-if="!$signedIn"
+            class="flex lg:flex-row flex-col items-center justify-between"
+          >
+            <p class="text-red-600">
+              Paylaşım yapmak, sorunsal bildirmek için lütfen giriş yapın ya da
+              kayıt olun
+            </p>
+            <div class="flex flex-row">
+              <signin-button></signin-button>
+              <register-button></register-button>
+            </div>
           </div>
           <label
             class="block text-gray-700 text-sm font-bold mb-2"
@@ -84,7 +90,9 @@
             v-if="form.errors.has('body')"
           ></p>
         </div>
-        <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
+        <div class="h-32">
+          <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
+        </div>
         <p
           class="text-red-500 text-xs italic"
           v-text="form.errors.get('recaptcha')"
@@ -117,8 +125,8 @@
 import Form from "../../dependencies/form.js";
 import Recaptcha from "../../shared/Recaptcha.vue";
 import JsEditor from "../../shared/JsEditor.vue";
-import SigninButton from "../../auth/SigninButton.vue"
-import RegisterButton from "../../auth/RegisterButton.vue"
+import SigninButton from "../../auth/SigninButton.vue";
+import RegisterButton from "../../auth/RegisterButton.vue";
 
 export default {
   props: ["recapthcaSiteKey"],
@@ -126,7 +134,7 @@ export default {
     Recaptcha,
     JsEditor,
     RegisterButton,
-    SigninButton
+    SigninButton,
   },
   data() {
     return {

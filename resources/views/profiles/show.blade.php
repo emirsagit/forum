@@ -5,7 +5,7 @@
 <title>
     {{ config('app.name') }} | Kullanıcı profili görüntüle
 </title>
-<meta name="description" content="Sayfamızda forumumuzun kullanıcı profillerini, aktivitelerini görüntüleyebilirsiniz."> 
+<meta name="description" content="Sayfamızda forumumuzun kullanıcı profillerini, aktivitelerini görüntüleyebilirsiniz.">
 
 @endsection
 

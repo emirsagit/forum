@@ -12,7 +12,7 @@
 @endsection
 @section('content')
 <div class="pb-24 min-h-screen">
-    <div class="flex w-full h-24 bg-gradient-to-r from-teal-500 to-blue-500 text-white px-4 text-center">
+    <div class="flex w-full h-24 bg-navy text-white font-bold px-4 text-center">
         <div class="flex m-auto">
             <h1 class="text-2xl">@if($setting) {{ $setting->home_h1 }} @else Foruma Hoşgeldiniz @endif</h1>
         </div>
