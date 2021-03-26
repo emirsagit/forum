@@ -17,9 +17,9 @@
           </p>
         </div>
         <p class="ml-2 text-teal-700 text-sm">
-          Forumda konunun uzmanlarına soru sormak, paylaşım yapmak daima
+          Forumda sohbet etmek, paylaşım yapmak, gönderileri yantlamak daima
           ücretsizdir. Ancak sitemizi spam içerikten korumak için üyelik
-          sisteminden başka bir yol bulamadık. Zaman ayırdığınız için
+          sisteminden başka bir yol bulamadık. Lütfen üye olun. Zaman ayırdığınız için
           teşekkürler...
         </p>
         <form

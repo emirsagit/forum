@@ -4,7 +4,7 @@
   >
     <div class="flex flex-row items-center">
       <a
-        class="text-lg font-semibold px-2 rounded-md mr-4 lg:mr-8 text-white"
+        class="text-lg font-semibold px-2 rounded-md mr-4 lg:mr-8 text-white transition duration-500 ease-in-out"
         :href="'/blogs/channels/' + channel.slug"
         :class="
           dataUrl(channel.slug)

@@ -25,7 +25,7 @@
       <paginator :initialDataSet="dataSet" @pageChanged="fetch"></paginator>
 
       <h3 class="text-gray-700 text-l mt-4" v-if="threads.length <= 0">
-        Maalesef aradığınız konuyla ilgili yazı bulamadık.
+        Maalesef aradığınız konuyla ilgili paylaşım bulamadık. Yeni paylaşım sekmesinden sohbeti siz başlatabilirsiniz.
       </h3>
     </div>
     <div class="fixed bottom-0 right-0 mr-4 mb-4 md:hidden">

@@ -12,7 +12,7 @@
                 </svg>
             </button>
         </div>
-        <div class="w-full text-teal-700 flex flex-col items-center relative" :class="{hidden : !expand && windowWidth < 1024}">
+        <div class="h-8 w-full text-teal-700 flex flex-col items-center relative" :class="{hidden : !expand && windowWidth < 1024}">
             <nav-link class="lg:flex-row text-xl bg-white"></nav-link>
         </div>
     </div>

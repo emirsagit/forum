@@ -1,24 +1,7 @@
 <template>
   <div>
-    <div class="bg-gray-300" id="slider">
-      <div class="lg:px-24 lg:pt-8 pb-8 lg:pb-0" v-if="dataSliders.length">
-        <slider
-          :blogs="blogs"
-          :sliders="dataSliders"
-          v-if="dataSliders.length"
-        ></slider>
-      </div>
-      <div class="lg:px-24 p-4 lg:p-8" v-else>
-        <p class="text-3xl text-teal-700 font-extrabold pb-8">
-          Slider:
-        </p>
-      </div>
-    </div>
     <div class="bg-gray-200" id="last-published">
       <div class="lg:px-24 p-4 lg:p-8">
-        <p class="text-3xl text-teal-700 font-extrabold pb-8">
-          Son Paylaşılanlar:
-        </p>
         <div class="flex md:flex-row flex-col flex-wrap">
           <div
             class="md:w-1/2 w-full flex flex-col pb-8 md:pr-8"
@@ -26,7 +9,7 @@
           >
             <img
               :src="'/storage/' + blogs[0].image"
-              class="rounded-md hover:opacity-75 cursor-pointer shadow-xl"
+              class="rounded-md transform hover:scale-105 transition duration-500 ease-in-out cursor-pointer shadow-xl"
               loading="lazy"
               :alt="blogs[0].title"
               @click="goto(blogs[0])"
@@ -38,7 +21,7 @@
               #{{ blogs[0].channel.name }}
             </p>
             <h4
-              class="font-bold md:text-3xl text-2xl hover:opacity-75 cursor-pointer pt-2 leading-tight"
+              class="font-bold md:text-3xl text-2xl  hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer pt-2 leading-tight"
               v-text="blogs[0].title"
               @click="goto(blogs[0])"
             ></h4>
@@ -58,7 +41,7 @@
                   :src="'/storage/' + blog.image"
                   :alt="blogs.title"
                   loading="lazy"
-                  class="rounded-md hover:opacity-75 cursor-pointer shadow-xl"
+                  class="rounded-md transform hover:scale-105 transition duration-500 ease-in-out cursor-pointer shadow-xl"
                   @click="goto(blog)"
                 />
                 <p
@@ -70,7 +53,7 @@
               </div>
               <div class="w-1/2 md:w-2/3 px-2 md:pl-4" v-if="index !== 0">
                 <h4
-                  class="font-bold md:text-2xl text-xl hover:opacity-75 cursor-pointer leading-tight"
+                  class="font-bold md:text-2xl text-xl  hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
                   v-text="blog.title"
                   @click="goto(blog)"
                 ></h4>
@@ -83,9 +66,7 @@
     <div class="bg-gray-300" id="trendings">
       <div class="flex flex-col lg:flex-row">
         <div class="lg:w-3/4 w-full p-4 lg:p-8 lg:pl-24">
-          <p class="text-3xl font-extrabold pb-8 text-teal-800">
-            Popüler:
-          </p>
+          <p class="text-3xl font-extrabold pb-8 text-teal-800">Popüler:</p>
           <div class="flex flex-row flex-wrap">
             <div
               class="lg:w-1/2 w-full flex flex-row pb-8"
@@ -97,7 +78,7 @@
                   :src="'/storage/' + trending.image"
                   :alt="trending.title"
                   loading="lazy"
-                  class="rounded-md hover:opacity-75 cursor-pointer shadow-xl"
+                  class="rounded-md transform hover:scale-105 transition duration-500 ease-in-out cursor-pointer shadow-xl"
                   @click="goto(trending)"
                 />
                 <p
@@ -109,7 +90,7 @@
               </div>
               <div class="w-1/2 lg:w-2/3 px-2 md:pr-4">
                 <h4
-                  class="font-bold md:text-2xl text-xl hover:opacity-75 cursor-pointer leading-tight"
+                  class="font-bold md:text-2xl text-xl  hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
                   @click="goto(trending)"
                 >
                   {{ trending.title }}
@@ -120,7 +101,7 @@
         </div>
         <div class="lg:w-1/4 w-full bg-gray-100 p-4 lg:p-8 lg:pr-24 rounded-lg">
           <p class="text-3xl font-extrabold pb-4 text-teal-800">
-            Son Sorunsallar
+            Sizden Gelenler
           </p>
           <div class="flex flex-col">
             <a
@@ -139,7 +120,7 @@
 </template>
 
 <script>
-import Slider from "../../shared/VueSlickSlider.vue";
+// import Slider from "../../shared/VueSlickSlider.vue";
 export default {
   props: ["dataBlogs", "dataSliders", "dataTrendings", "dataThreads"],
   data() {
@@ -149,9 +130,7 @@ export default {
       threads: this.dataThreads,
     };
   },
-  components: {
-    Slider,
-  },
+
   methods: {
     goto(blog) {
       window.location.href = "/blogs/" + blog.channel.slug + "/" + blog.slug;

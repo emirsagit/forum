@@ -67,15 +67,44 @@ const NavChannels = () =>
 const Blog = () =>
   import("./components/blogs/show/Blog.vue" /* webpackChunkName: "blog" */);
 
-import NavLink from "./components/shared/NavLink.vue";
-import Search from "./components/shared/Search.vue";
-import Signin from "./components/auth/Signin.vue";
-import Register from "./components/auth/Register.vue";
-import SigninButton from "./components/auth/SigninButton.vue";
-import RegisterButton from "./components/auth/RegisterButton.vue";
-import FooterField from "./components/shared/FooterField.vue";
-import Flash from "./components/shared/Flash.vue";
-import Blogs from "./components/blogs/index/Blogs.vue"; //blogs.index
+  
+const Blogs = () =>
+import("./components/blogs/index/Blogs.vue" /* webpackChunkName: "blog" */);
+
+const NavLink = () =>
+import("./components/shared/NavLink.vue" /* webpackChunkName: "NavLink" */);
+
+const Search = () =>
+import("./components/shared/Search.vue" /* webpackChunkName: "Search" */);
+
+const FooterField = () =>
+import("./components/shared/FooterField.vue" /* webpackChunkName: "FooterField" */);
+
+const Flash = () =>
+import("./components/shared/Flash.vue" /* webpackChunkName: "Flash" */);
+
+const Signin = () =>
+import("./components/auth/Signin.vue" /* webpackChunkName: "Signin" */);
+
+
+const Register = () =>
+import("./components/auth/Register.vue" /* webpackChunkName: "Register" */);
+
+const SigninButton = () =>
+import("./components/auth/SigninButton.vue" /* webpackChunkName: "SigninButton" */);
+
+const RegisterButton = () =>
+import("./components/auth/RegisterButton.vue" /* webpackChunkName: "RegisterButton" */);
+
+// import NavLink from "./components/shared/NavLink.vue";
+// import Search from "./components/shared/Search.vue";
+// import Signin from "./components/auth/Signin.vue";
+// import Register from "./components/auth/Register.vue";
+// import SigninButton from "./components/auth/SigninButton.vue";
+// import RegisterButton from "./components/auth/RegisterButton.vue";
+// import FooterField from "./components/shared/FooterField.vue";
+// import Flash from "./components/shared/Flash.vue";
+// import Blogs from "./components/blogs/index/Blogs.vue"; //blogs.index
 
 // /* auth */
 // import Signin from "./components/auth/Signin.vue";
@@ -113,8 +142,8 @@ import Blogs from "./components/blogs/index/Blogs.vue"; //blogs.index
 // import Recaptcha from "./components/shared/Recaptcha.vue";
 // import NavChannels from "./components/shared/NavChannels.vue";
 // /* endshared */
-import Editor from "vue-editor-js";
-window.Editor = Vue.use(Editor);
+// import Editor from "vue-editor-js";
+// window.Editor = Vue.use(Editor);
 
 const app = new Vue({
   el: "#app",

@@ -3,7 +3,7 @@
     <p class="mb-1 p-2 text-xl text-teal-600">Konular</p>
     <ul class="w-full flex flex-col items-center">
       <li
-        class="flex flex-col items-center w-2/3 m-1 p-1 rounded-lg hover:bg-gray-200 hover:text-teal-600 hover:border-teal-600 border-2 cursor-pointer"
+        class="flex flex-col items-center w-2/3 m-1 p-1 rounded-lg hover:bg-gray-200 hover:text-teal-600 hover:border-teal-600 border-2 cursor-pointer transition duration-500 ease-in-out"
         :class="
           !selected
             ? 'bg-gray-200 text-teal-600 border-teal-600'
@@ -16,7 +16,7 @@
       <li
         v-for="channel in channels"
         :key="channel.id"
-        class="flex flex-row align-center justify-left items-center w-3/5 m-1 p-1 rounded-lg  border-2 cursor-pointer"
+        class="flex flex-row align-center transition duration-500 ease-in-out justify-left items-center w-3/5 m-1 p-1 rounded-lg  border-2 cursor-pointer"
         @click="fetch(channel)"
         :class="
           selected.id == channel.id

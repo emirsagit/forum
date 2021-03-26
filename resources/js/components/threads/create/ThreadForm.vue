@@ -14,7 +14,7 @@
             class="flex lg:flex-row flex-col items-center justify-between"
           >
             <p class="text-red-600">
-              Paylaşım yapmak, sorunsal bildirmek için lütfen giriş yapın ya da
+              Sohbet ve paylaşım yapmak için lütfen giriş yapın ya da
               kayıt olun
             </p>
             <div class="flex flex-row">
@@ -90,7 +90,7 @@
             v-if="form.errors.has('body')"
           ></p>
         </div>
-        <div class="h-32">
+        <div class="h-16 mt-2">
           <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
         </div>
         <p
