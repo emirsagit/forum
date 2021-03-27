@@ -9,13 +9,14 @@ use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 use App\Rules\EditorJsValidationRules;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class ThreadsController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except(['index', 'show', 'channel', 'create']);
+        $this->middleware(['auth'])->except(['index', 'show', 'channel', 'create']);
     }
     /**
      * Display a listing of the resource.
@@ -24,39 +25,47 @@ class ThreadsController extends Controller
      */
     public function index(ThreadFilters $filters)
     {
+        $this->indexSeo();
+
         $threads = $this->filterBy($filters);
 
         $threads = $this->get($threads);
 
         $trendings = $threads->sortByDesc('visits_count')->take(5);
 
+        $channels = Channel::orderBy('created_at', 'desc')->get();
+
         // $trendings = DB::table('threads')
         // ->select(['threads.*', 'channels.slug as channel.slug'])
-		// ->addSelect(DB::raw('count(visits.visit_id) as visits_count'))
+        // ->addSelect(DB::raw('count(visits.visit_id) as visits_count'))
         // ->from('threads')
         // ->join('channels', function($join) {
-		// 	$join->on('channels.id', '=', 'threads.channel_id');
-		// 	})
-		// ->join('visits', function($join) {
-		// 	$join->on('threads.id', '=', 'visits.visit_id');
-		// 	})
-		// ->groupBy('visits.visit_id')
-		// ->orderByRaw('visits_count DESC')
+        // 	$join->on('channels.id', '=', 'threads.channel_id');
+        // 	})
+        // ->join('visits', function($join) {
+        // 	$join->on('threads.id', '=', 'visits.visit_id');
+        // 	})
+        // ->groupBy('visits.visit_id')
+        // ->orderByRaw('visits_count DESC')
         // ->limit(5)
         // ->get();
-        
+
         // dd($trendings);
 
         if (request()->wantsJson()) {
             return $threads;
         }
 
-        return view('threads.index', ['threads' => $threads, 'trendings' => $trendings]);
+        return view('threads.index', ['threads' => $threads, 'trendings' => $trendings, 'channels' => $channels]);
     }
 
 
     public function channel(Channel $channel, ThreadFilters $filters)
     {
+        if($channel->channel_description && $channel->channel_title) {
+            $this->channelSeo($channel);
+        }
+
         $threads = $this->filterBy($filters);
 
         $threads = $threads->where('channel_id', $channel->id);
@@ -69,7 +78,9 @@ class ThreadsController extends Controller
             return $threads;
         }
 
-        return view('threads.index', ['threads' => $threads, 'trendings' => $trendings, 'channel' => $channel]);
+        $channels = Channel::orderBy('created_at', 'desc')->get();
+
+        return view('threads.index', ['threads' => $threads, 'channels' => $channels, 'trendings' => $trendings, 'channel' => $channel]);
     }
 
     /**
@@ -79,6 +90,9 @@ class ThreadsController extends Controller
      */
     public function create()
     {
+        SEOTools::setTitle('Parkinson Hastaları Yardımlaşma ve Dayanışma Formu');
+        SEOTools::setDescription('Parkinson hasta ve hasta yakınları forumumuzu kullanarak ücretsiz paylaşım yapabilir, hastalık hakkında detaylı bilgiler alabilirler.');
+        
         return view('threads.create');
     }
 
@@ -108,6 +122,10 @@ class ThreadsController extends Controller
 
         $thread->subscribe();
 
+        if ($request->expectsJson()) {
+            return $thread;
+        }
+
         return back()->with('message', 'Başarıyla kaydedildi');
     }
 
@@ -117,13 +135,15 @@ class ThreadsController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channel, Thread $thread)
+    public function show(Thread $thread)
     {
         $thread->append('isSubscribed');
 
         $thread->recordVisit($_SERVER['REMOTE_ADDR']);
 
         $thread->load('bestReply');
+
+        $this->showSeo($thread);
 
         $replies = $thread->replies()->with(['owner', 'thread', 'favourites', 'mentionedUser'])->paginate(config('paginate.paginate.replies'));
 
@@ -138,6 +158,9 @@ class ThreadsController extends Controller
      */
     public function edit(Thread $thread)
     {
+        SEOTools::setTitle('Parkinson Hastaları Yardımlaşma ve Dayanışma Formu');
+        SEOTools::setDescription('Parkinson hasta ve hasta yakınları forumumuzu kullanarak ücretsiz paylaşım yapabilir, hastalık hakkında detaylı bilgiler alabilirler.');
+
         return view('threads.edit', ['thread' => $thread]);
     }
 
@@ -188,5 +211,35 @@ class ThreadsController extends Controller
     protected function get($threads)
     {
         return $threads->orderByDesc('updated_at')->with('owner')->withCount('visits')->paginate(config('paginate.paginate.threads'));
-    } 
+    }
+
+    protected function indexSeo()
+    {
+        SEOTools::setTitle('Parkinson Hastaları Yardımlaşma ve Dayanışma Formu');
+        SEOTools::setDescription('Parkinson hasta ve hasta yakınlarının sohbet edebileceği, kendileri için önemli olan konuları paylaşabilecekleri ücretsiz yardımlaşma ve dayanışma formu.');
+        SEOTools::opengraph()->setUrl('https://www.parkinsonnedir.com/');
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('@parkinsonnedir');
+        SEOTools::jsonLd()->addImage('https://www.parkinsonnedir.com/img/logo.jpg');
+    }
+
+    protected function channelSeo($channel)
+    {
+        SEOTools::setTitle($channel->channel_title);
+        SEOTools::setDescription($channel->channel_description);
+        SEOTools::opengraph()->setUrl('https://www.parkinsonnedir.com/forum/' . $channel->slug);
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('@parkinsonnedir');
+        SEOTools::jsonLd()->addImage('https://www.parkinsonnedir.com/img/logo.jpg');
+    }
+
+    protected function showSeo($thread)
+    {
+        SEOTools::setTitle($thread->thread_title);
+        SEOTools::setDescription($thread->thread_description);
+        SEOTools::opengraph()->setUrl('https://www.parkinsonnedir.com/' . $thread->slug);
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('@parkinsonnedir');
+        SEOTools::jsonLd()->addImage('https://www.parkinsonnedir.com/img/logo.jpg');
+    }
 }

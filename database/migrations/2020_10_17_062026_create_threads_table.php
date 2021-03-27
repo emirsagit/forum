@@ -17,7 +17,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('replies_count')->default(0)->index();
             $table->string('title');
-            $table->string('slug')->unique()->nullable();
+            $table->string('slug')->unique();
             $table->text('body');
             $table->text('editors_data')->nullable();
             $table->boolean('locked')->default(false);

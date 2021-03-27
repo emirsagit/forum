@@ -70,7 +70,15 @@ class AdminBlogsController extends Controller
         return $blog->load('channel');
     }
 
-    public function destroyEditorsNotUsedImages()
+    
+    public function destroy(Blog $blog)
+    {
+        Storage::disk('public')->delete($blog->image);
+
+        $blog->delete();
+    } 
+
+    protected function destroyEditorsNotUsedImages()
     {
         $images = Image::where('blog_id', null)->get();
         foreach ($images as $image) {
@@ -79,7 +87,7 @@ class AdminBlogsController extends Controller
         }
     } 
 
-    public function updateImagesTable($request, $blog)
+    protected function updateImagesTable($request, $blog)
     {
         foreach ($request->body['blocks'] as $block) {
             if ($block['type'] === 'image') {

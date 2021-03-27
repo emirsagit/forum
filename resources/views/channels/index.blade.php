@@ -1,15 +1,5 @@
 @extends('layouts.app')
-@section('head')
-<title>
-    @isset($channel) {{ $channel->channel_title }}
-    @elseif($setting) {{ $setting->home_title }} | {{ config('app.name') }}
-    @endif
-</title>
-<meta name="description" content="
-   @isset($channel) {{ $channel->channel_description }} 
-   @elseif ($setting) {{ $setting->home_description }} 
-   @endif">
-@endsection
+
 @section('content')
 <div class="pb-24">
     <nav-channels></nav-channels>
@@ -24,12 +14,12 @@
                     <div class="w-1/2 md:pt-0 flex flex-col justify-center">
                         <a href="{{ route('blogs.show', ['channel' => $blog->channel, 'blog' => $blog])  }}">
                             <img src="/storage/{{ $blog->image }}" alt="blogs.title" loading="lazy"
-                                class="rounded-md hover:opacity-75 cursor-pointer shadow-xl">
+                                class="rounded-md cursor-pointer shadow-xl transform hover:scale-105 transition duration-500 ease-in-out">
                         </a>
                     </div>
                     <div class="w-1/2 px-2 md:pr-4 flex flex-col justify-center">
                         <a href="{{ route('blogs.show', ['channel' => $blog->channel, 'blog' => $blog])  }}">
-                            <h4 class="font-bold md:text-2xl text-xl hover:opacity-75 cursor-pointer leading-tight">
+                            <h4 class="font-bold md:text-2xl text-xl cursor-pointer leading-tight transform hover:scale-105 transition duration-500 ease-in-out">
                                 {{ $blog->title }}
                             </h4>
                         </a>

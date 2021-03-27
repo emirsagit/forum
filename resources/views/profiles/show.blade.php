@@ -1,14 +1,5 @@
 @extends('layouts.app')
 
-@section('head')
-
-<title>
-    {{ config('app.name') }} | Kullanıcı profili görüntüle
-</title>
-<meta name="description" content="Sayfamızda forumumuzun kullanıcı profillerini, aktivitelerini görüntüleyebilirsiniz.">
-
-@endsection
-
 @section('content')
 
 <profile data="{{ $user->avatar_path }}" inline-template>
@@ -16,8 +7,14 @@
         <div class="flex w-full h-24 bg-blue-600 text-white">
             <div class="flex m-auto items-end">
                 <div class="flex overflow-hidden mr-2">
-                    <img class="inline-block h-10 w-10 rounded-full text-white shadow-solid" :src="avatar"
-                        alt="{{ $user->name }}" />
+                    <img v-if="!avatarHasExisted" class="inline-block h-10 w-10 rounded-full text-white shadow-solid"
+                        :src="avatar" alt="{{ $user->name }}" />
+                    <!-- random color mixin color -->
+                    <div v-if="avatarHasExisted"
+                        class="w-10 h-10 rounded-full flex flex-col items-center justify-center bg-red-600">
+                        <p class="text-white font-semibold text-xl" v-text="avatar">
+                        </p>
+                    </div>
                 </div>
                 <h1 class="text-xl mr-2">{{ $user->name }}</h1>
                 <p class="text-teal-200 text-xs mb-1">{{ $user->created_at }} üye oldu</p>

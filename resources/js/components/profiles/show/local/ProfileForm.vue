@@ -7,7 +7,7 @@
     >
       <div class="flex flex-col m-auto">
         <file-upload @initialUpload="persist"></file-upload>
-        <div class="flex overflow-hidden my-1" v-if="avatar">
+        <div class="flex overflow-hidden my-1" v-if="hasAvatar">
           <img
             class="h-20 w-20 rounded-full text-white shadow-solid m-auto"
             :src="avatar"
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import FileUpload from './FileUpload.vue'
+import FileUpload from "./FileUpload.vue";
 export default {
   components: {
     FileUpload,
@@ -37,8 +37,8 @@ export default {
           this.$emit("updated", this.avatar);
         })
         .catch((error) => {
-           flash(error.response.data.errors.avatar[0], 'error');
-        })
+          flash(error.response.data.errors.avatar[0], "error");
+        });
     },
   },
 
@@ -48,7 +48,12 @@ export default {
     };
   },
 
-  props: ["user"],
+  computed: {
+    hasAvatar() {
+      return this.avatar.length > 1;
+    },
+  },
 
+  props: ["user"],
 };
 </script>

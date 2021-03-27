@@ -71,25 +71,15 @@ export default {
     return {
       threads: this.data.data,
       dataSet: this.data,
-      channels: {},
       expandChannel: false,
       expandOrderBy: false,
       filterBy: "",
-      channel: "",
+      channel: this.dataChannel ? this.dataChannel : "",
     };
   },
 
-  props: ["data", "trendings"],
-  mounted() {
-    axios
-      .get("/channels")
-      .then((response) => {
-        this.channels = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+  props: ["data", "trendings", "channels", "dataChannel"],
+
   methods: {
     newThreadRequest() {
       if (App.signedIn) {
@@ -122,7 +112,6 @@ export default {
     },
 
     refresh({ data }) {
-      console.log(data);
       this.threads = data.data;
       this.dataSet = data;
     },
@@ -133,14 +122,14 @@ export default {
         history.pushState(
           null,
           null,
-          "/threads/" + channel.slug + "?" + this.filterBy + "=1"
+          "/forum/" + channel.slug + "?" + this.filterBy + "=1"
         );
         axios
-          .get("/threads/" + channel.slug + "?" + this.filterBy + "=1")
+          .get("/forum/" + channel.slug + "?" + this.filterBy + "=1")
           .then(this.refresh);
       } else {
-        history.pushState(null, null, "/threads/" + channel.slug);
-        axios.get("/threads/" + channel.slug).then(this.refresh);
+        history.pushState(null, null, "/forum/" + channel.slug);
+        axios.get("/forum/" + channel.slug).then(this.refresh);
       }
     },
   },

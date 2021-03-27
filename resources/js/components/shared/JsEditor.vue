@@ -13,10 +13,7 @@ import Quote from "@editorjs/quote";
 import Delimiter from "@editorjs/delimiter";
 import Image from "@editorjs/image";
 const ajax = require("@codexteam/ajax");
-// import CodeTool from "@editorjs/code";
-// import Embed from "@editorjs/embed";
-// import Table from "@editorjs/table";
-// import InlineCode from "@editorjs/inline-code";
+
 
 export default {
   props: ["default", "image"],
@@ -55,34 +52,7 @@ export default {
           paragraph: {
             class: Paragraph,
           },
-          // code: {
-          //   class: CodeTool,
-          // },
-
-          // embed: {
-          //   class: Embed,
-          //   config: {
-          //     services: {
-          //       youtube: true,
-          //       coub: true,
-          //       imgur: true,
-          //     },
-          //   },
-          // },
-
-          // table: {
-          //   class: Table,
-          //   inlineToolbar: true,
-          //   config: {
-          //     rows: 2,
-          //     cols: 3,
-          //   },
-          // },
-
-          // inlineCode: {
-          //   class: InlineCode,
-          //   shortcut: "CMD+SHIFT+M",
-          // },
+    
           image: this.image ? {
             class: Image,
             config: {

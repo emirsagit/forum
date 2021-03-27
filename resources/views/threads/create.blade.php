@@ -1,12 +1,5 @@
 @extends('layouts.app')
-@section('head')
 
-<title>
-    Başlık oluşturma sayfası | {{ config('app.name') }}
-</title>
-<meta name="description" content="Bu bölümden forumumuzda yeni başlık açabilirsiniz.">
-
-@endsection
 @section('content')
 
 <div class="flex w-full h-24 bg-gradient-to-r from-teal-700 to-teal-500 text-white text-2xl font-bold">

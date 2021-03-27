@@ -20,7 +20,7 @@
     </a>
     <a
       class="cursor-pointer block my-4 lg:mb-0 lg:inline-block lg:mt-0 lg:mr-4 hover:text-teal-800 transition duration-500 ease-in-out"
-      href="/contact"
+      href="/iletisim"
     >
       İletişim
     </a>

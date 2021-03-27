@@ -67,34 +67,38 @@ const NavChannels = () =>
 const Blog = () =>
   import("./components/blogs/show/Blog.vue" /* webpackChunkName: "blog" */);
 
-  
 const Blogs = () =>
-import("./components/blogs/index/Blogs.vue" /* webpackChunkName: "blog" */);
+  import("./components/blogs/index/Blogs.vue" /* webpackChunkName: "blog" */);
 
 const NavLink = () =>
-import("./components/shared/NavLink.vue" /* webpackChunkName: "NavLink" */);
+  import("./components/shared/NavLink.vue" /* webpackChunkName: "NavLink" */);
 
 const Search = () =>
-import("./components/shared/Search.vue" /* webpackChunkName: "Search" */);
+  import("./components/shared/Search.vue" /* webpackChunkName: "Search" */);
 
 const FooterField = () =>
-import("./components/shared/FooterField.vue" /* webpackChunkName: "FooterField" */);
+  import(
+    "./components/shared/FooterField.vue" /* webpackChunkName: "FooterField" */
+  );
 
 const Flash = () =>
-import("./components/shared/Flash.vue" /* webpackChunkName: "Flash" */);
+  import("./components/shared/Flash.vue" /* webpackChunkName: "Flash" */);
 
 const Signin = () =>
-import("./components/auth/Signin.vue" /* webpackChunkName: "Signin" */);
-
+  import("./components/auth/Signin.vue" /* webpackChunkName: "Signin" */);
 
 const Register = () =>
-import("./components/auth/Register.vue" /* webpackChunkName: "Register" */);
+  import("./components/auth/Register.vue" /* webpackChunkName: "Register" */);
 
 const SigninButton = () =>
-import("./components/auth/SigninButton.vue" /* webpackChunkName: "SigninButton" */);
+  import(
+    "./components/auth/SigninButton.vue" /* webpackChunkName: "SigninButton" */
+  );
 
 const RegisterButton = () =>
-import("./components/auth/RegisterButton.vue" /* webpackChunkName: "RegisterButton" */);
+  import(
+    "./components/auth/RegisterButton.vue" /* webpackChunkName: "RegisterButton" */
+  );
 
 // import NavLink from "./components/shared/NavLink.vue";
 // import Search from "./components/shared/Search.vue";

@@ -14,8 +14,7 @@
             class="flex lg:flex-row flex-col items-center justify-between"
           >
             <p class="text-red-600">
-              Sohbet ve paylaşım yapmak için lütfen giriş yapın ya da
-              kayıt olun
+              Sohbet ve paylaşım yapmak için lütfen giriş yapın ya da kayıt olun
             </p>
             <div class="flex flex-row">
               <signin-button></signin-button>
@@ -75,15 +74,6 @@
             İçerik
           </label>
           <js-editor @onInitialized="onInitialized"></js-editor>
-          <!-- <VueTrix v-model="form.body" placeholder="İçerik" class="trix-content trix-editor "/> -->
-          <!-- <textarea
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            v-bind:class="{ 'border-red-500': form.errors.has('body') }"
-            type="text"
-            placeholder="İçerik"
-            name="body"
-            v-model="form.body"
-          /> -->
           <p
             class="text-red-500 text-xs italic"
             v-text="form.errors.get('body')"
@@ -170,17 +160,25 @@ export default {
             "Content-Type": "application/json",
           },
         })
-        .then((data) => flash("Konu kaydedildi."))
+        .then((data) => {
+          console.log('burd');
+          this.submitted();
+        })
         .catch((error) => {
           grecaptcha.reset();
           flash(
-            error.errors.recaptcha ? error.errors.recaptcha[0] : error.message,
+            error.errors ? error.errors.recaptcha[0] : error.message,
             "error"
           );
         });
     },
     change(response) {
       this.form.recaptcha = response;
+    },
+
+    submitted() {
+      window.location.href = '/';
+      flash("Konu kaydedildi.");
     },
   },
   mounted() {

@@ -21,7 +21,7 @@
               #{{ blogs[0].channel.name }}
             </p>
             <h4
-              class="font-bold md:text-3xl text-2xl  hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer pt-2 leading-tight"
+              class="font-bold md:text-3xl text-2xl hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer pt-2 leading-tight"
               v-text="blogs[0].title"
               @click="goto(blogs[0])"
             ></h4>
@@ -53,7 +53,7 @@
               </div>
               <div class="w-1/2 md:w-2/3 px-2 md:pl-4" v-if="index !== 0">
                 <h4
-                  class="font-bold md:text-2xl text-xl  hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
+                  class="font-bold md:text-2xl text-xl hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
                   v-text="blog.title"
                   @click="goto(blog)"
                 ></h4>
@@ -90,7 +90,7 @@
               </div>
               <div class="w-1/2 lg:w-2/3 px-2 md:pr-4">
                 <h4
-                  class="font-bold md:text-2xl text-xl  hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
+                  class="font-bold md:text-2xl text-xl hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
                   @click="goto(trending)"
                 >
                   {{ trending.title }}
@@ -105,7 +105,7 @@
           </p>
           <div class="flex flex-col">
             <a
-              :href="'/threads/' + thread.channel.slug + '/' + thread.slug"
+              :href="'/' + thread.slug"
               v-for="thread in threads"
               :key="thread.id"
               v-text="thread.title"
@@ -122,7 +122,7 @@
 <script>
 // import Slider from "../../shared/VueSlickSlider.vue";
 export default {
-  props: ["dataBlogs", "dataSliders", "dataTrendings", "dataThreads"],
+  props: ["dataBlogs", "dataTrendings", "dataThreads"],
   data() {
     return {
       blogs: this.dataBlogs,
@@ -133,7 +133,7 @@ export default {
 
   methods: {
     goto(blog) {
-      window.location.href = "/blogs/" + blog.channel.slug + "/" + blog.slug;
+      window.location.href = "/blog/" + blog.slug;
     },
   },
 };

@@ -112,7 +112,7 @@ export default {
   methods: {
     href(thread) {
       window.location.href =
-        "/threads/" + thread.channel.slug + "/" + thread.slug;
+        "/" + thread.slug;
     },
   },
 };

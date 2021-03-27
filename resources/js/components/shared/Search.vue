@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="bg-white flex items-center rounded-full shadow-xl z-30 flex-row absolute lg:static left-0"
+      class="bg-white flex items-center rounded-full shadow-xl z-30 flex-row absolute lg:static left-0 mt-16 md:mt-0"
       v-if="showInput || $parent.windowWidth > 1024"
     >
       <input
@@ -28,8 +28,8 @@
             style="enable-background: new 0 0 52.966 52.966"
             xml:space="preserve"
             fill="currentColor"
-            width="1.5rem"
-            height="1.5rem"
+            width="1.5em"
+            height="1.5em"
           >
             <path
               d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
@@ -59,8 +59,8 @@
           style="enable-background: new 0 0 52.966 52.966"
           xml:space="preserve"
           fill="currentColor"
-          width="1.5rem"
-          height="1.5rem"
+          width="1.5em"
+          height="1.5em"
         >
           <path
             d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
@@ -80,8 +80,8 @@
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          width="1.5rem"
-          height="1.5rem"
+          width="1.5em"
+          height="1.5em"
         >
           <path
             stroke-linecap="round"

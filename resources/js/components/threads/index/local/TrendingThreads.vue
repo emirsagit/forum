@@ -7,7 +7,7 @@
       v-for="trending in trendings"
       :key="trending.id"
       >
-      <a :href='"/threads/" + trending.channel.slug + "/" + trending.slug'  v-text="trending.title"></a>
+      <a :href='"/" + trending.slug'  v-text="trending.title"></a>
       </li>
     </ul>
   </div>

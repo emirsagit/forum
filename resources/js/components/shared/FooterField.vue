@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center md:justify-between w-full justify-center mt-4 bg-navy text-white"
+    class="flex flex-col items-center md:justify-between w-full justify-center pt-4 bg-navy text-white"
   >
     <div class="mt-4 mb-6">
       <footer-social :setting="setting"></footer-social>

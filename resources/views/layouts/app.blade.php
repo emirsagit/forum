@@ -21,6 +21,7 @@
             'isAdmin' => Auth::user() ? Auth::user()->isAdmin() : false
       ]) !!}      
     </script>
+    {!! SEO::generate(true) !!}
     @yield('head')
 </head>
 

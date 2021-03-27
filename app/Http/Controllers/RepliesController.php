@@ -15,7 +15,7 @@ class RepliesController extends Controller
         $this->middleware('auth', ['except' => 'index']);
     }
 
-    public function index($channelId, Thread $thread)
+    public function index(Thread $thread)
     {
         return $thread->replies()->with(['owner', 'thread', 'favourites', 'mentionedUser'])->paginate(config('paginate.paginate.replies'));
     }

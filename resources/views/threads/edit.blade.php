@@ -1,12 +1,4 @@
 @extends('layouts.app')
-@section('head')
-
-<title>
-    Başlık düzenleme sayfası | {{ config('app.name') }}
-</title>
-<meta name="description" content="Bu bölümden forumumuzda açtığınız başlıkları düzenleyebilirsiniz.">
-
-@endsection
 
 @section('content')
 <div class="pb-24">

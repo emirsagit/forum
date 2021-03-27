@@ -124,7 +124,6 @@
   </div>
 </template>
 <script>
-import Form from "../../../dependencies/form.js";
 import Favourite from "./Favourite.vue";
 import BestReplyButton from "./BestReplyButton.vue";
 import Avatar from "../../../shared/Avatar.vue"

@@ -1,15 +1,5 @@
 @extends('layouts.app')
 @section('head')
-<title>
-   @if($thread->thread_title) {{ $thread->thread_title }}
-   @else {{ $thread->title }}
-   @endif
-</title>
-<meta name="description" content="
-   @if($thread->thread_description) {{ $thread->thread_description }} 
-   @else {{ $thread->title }} | {{ config('app.name') }}
-   @endif">
-@endsection
 
 @section('content')
 <thread :data-thread="{{ $thread }}" inline-template>

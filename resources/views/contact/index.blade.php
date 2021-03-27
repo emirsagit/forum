@@ -2,12 +2,8 @@
 
 @section('head')
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<title>
-    {{ config('app.name') }} | İletişim
-</title>
-<meta name="description" content="Formu kullanarak forum yöneticileri ile iletişime geçebilirsiniz. ">
-@endsection
 @section('content')
+
 <section class="pb-24 flex flex-col bg-gray-900">
     <div class="container mx-auto px-4 lg:pt-8 pt-4">
         <div class="flex flex-wrap text-center justify-center">

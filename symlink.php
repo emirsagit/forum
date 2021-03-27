@@ -1,3 +1,7 @@
 <?php
+$targetFolder = $_SERVER['DOCUMENT_ROOT'].'/storage/app/public';
+$linkFolder = $_SERVER['DOCUMENT_ROOT'].'/public/storage';
+symlink($targetFolder,$linkFolder);
+echo 'Symlink process successfully completed';
 
-symlink('/home/bilmecebulmaca/forum/storage/app/public', '/home/bilmecebulmaca/public_html/storage');
+

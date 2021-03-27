@@ -38,6 +38,7 @@ use App\Http\Controllers\ThreadSubscriptionsController;
 
 Auth::routes(['verify' => true]);
 
+
 Route::get('/',  [ThreadsController::class, 'index']);
 
 Route::resource('/blog',  BlogsController::class)->except([
@@ -46,7 +47,7 @@ Route::resource('/blog',  BlogsController::class)->except([
 
 Route::get('/blogs/channels/{channel}', [BlogChannelsController::class, 'index']);
 
-Route::get('/blogs/{channel}/{blog}', [BlogsController::class, 'show'])->name('blogs.show');
+Route::get('/blog/{blog}', [BlogsController::class, 'show'])->name('blogs.show');
 
 
 Route::get('/blogs/{channel}', [BlogsController::class, 'channel'])->name('blog.channel.index');
@@ -54,23 +55,21 @@ Route::get('/blogs/{channel}', [BlogsController::class, 'channel'])->name('blog.
 Route::resource('/threads',  ThreadsController::class)->except([
     'show'
 ]);
-Route::get('/threads/{channel}/{thread}', [ThreadsController::class, 'show'])->name('threads.show');
-
 
 Route::get('/channels', [ChannelController::class, 'index']);
 
 
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/iletisim', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 
-Route::get('/threads/{channel}/{thread}/replies', [RepliesController::class, 'index'])->name('replies.index');
+Route::get('/{thread}/replies', [RepliesController::class, 'index'])->name('replies.index');
 Route::post('/threads/{channel}/{thread}/subscribe', [ThreadSubscriptionsController::class, 'store'])->name('subscribe.store');
 Route::delete('/threads/{channel}/{thread}/subscribe', [ThreadSubscriptionsController::class, 'destroy'])->name('subscribe.destroy');
 
-Route::get('/threads/{channel}', [ThreadsController::class, 'channel'])->name('channel.index');
+Route::get('/forum/{channel}', [ThreadsController::class, 'channel'])->name('channel.index');
 
 
 Route::post('/threads/{thread}/replies', [RepliesController::class, 'store'])->name('reply.store');
@@ -107,3 +106,5 @@ Route::prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/settings', AdminSettingsController::class, ['as' => 'admin'])->except(['show', 'edit']);
     Route::post('/upload/images', [AdminImagesController::class, 'store'])->name('image.store');
 });
+
+Route::get('/{thread}', [ThreadsController::class, 'show'])->name('threads.show');

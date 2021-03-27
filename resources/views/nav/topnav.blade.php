@@ -21,7 +21,7 @@
             </register-button>
             @else
             @if(strlen(($user = auth()->user())->avatar_path) != 1)
-            <img src="{{ $user->avatar_path }}" alt="{{ $user->name }}"
+            <img src="{{ url($user->avatar_path) }}" alt="{{ $user->name }}"
                 class="h-6 w-6 mr-2 hidden lg:flex rounded-full">
             @endif
             <navigation-auth-dropdown :user="{{ $user }}" class="flex text-xl">

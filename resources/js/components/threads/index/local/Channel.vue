@@ -42,7 +42,7 @@ export default {
   props: ["channels", "selectedChannel"],
   data() {
     return {
-      selected: "",
+      selected: this.selectedChannel ? this.selectedChannel : "",
     };
   },
   watch: {
