@@ -1,5 +1,4 @@
 {
-    "/vendors~Admin~Thread~ThreadEditForm~ThreadForm.js": "/vendors~Admin~Thread~ThreadEditForm~ThreadForm.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/Admin.js": "/Admin.js",
@@ -23,5 +22,6 @@
     "/ThreadForm.js": "/ThreadForm.js",
     "/Threads.js": "/Threads.js",
     "/blog.js": "/blog.js",
-    "/vendors~Admin.js": "/vendors~Admin.js"
+    "/vendors~Admin.js": "/vendors~Admin.js",
+    "/vendors~Admin~Thread~ThreadEditForm~ThreadForm.js": "/vendors~Admin~Thread~ThreadEditForm~ThreadForm.js"
 }
