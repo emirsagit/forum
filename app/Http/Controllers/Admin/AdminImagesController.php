@@ -11,7 +11,7 @@ class AdminImagesController extends Controller
     public function store(Image $image)
     {
         $image = $image->create([
-            'image_path' => request()->file('file')->store('blog/editor', 'public'),
+            'image_path' => request()->file('file')->store('blog/editor'),
             // 'alt' => pathinfo(request()->file('file')->getClientOriginalName(), PATHINFO_FILENAME)
         ]);
 

@@ -17,7 +17,7 @@ class UserAvatarsController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'avatar' => 'required|image'
+            'avatar' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $user = auth()->user();
@@ -27,7 +27,7 @@ class UserAvatarsController extends Controller
         }
 
         $user->update([
-            'avatar_path' => request()->file('avatar')->store('avatars', 'public')
+            'avatar_path' => request()->file('avatar')->store('avatars')
         ]);
     }
 }

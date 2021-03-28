@@ -34,7 +34,7 @@ class AdminBlogsController extends Controller
             'editors_data' => $request->body,
             'blog_title' => $request->blog_title,
             'blog_description' => $request->blog_description,
-            'image' => $request->file('image')->store('blog', 'public')
+            'image' => $request->file('image')->store('blog')
         ]);
         
         $this->updateImagesTable($request, $blog);
@@ -49,7 +49,7 @@ class AdminBlogsController extends Controller
         if ($request->image) {
             Storage::disk('public')->delete($blog->image);
             $blog->update([
-                'image' => $request->file('image')->store('blog', 'public')
+                'image' => $request->file('image')->store('blog')
             ]);
         };
 

@@ -28,6 +28,7 @@ export default {
   methods: {
     persist(data) {
       let form = new FormData();
+      console.log(data.avatar)
       form.append("avatar", data.avatar);
       axios
         .post("/api/profiles/" + this.user.name + "/avatar", form)

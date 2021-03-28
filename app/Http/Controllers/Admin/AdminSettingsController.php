@@ -50,20 +50,19 @@ class AdminSettingsController extends Controller
     public function upload()
     {
         $this->validate(request(), [
-            'logo' => 'required|image'
+            'logo' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $setting = Setting::first();
 
-
         if (!$setting) {
             Setting::create([
-                'logo' => request()->file('logo')->store('logo', 'public')
+                'logo' => request()->file('logo')->store('logo')
             ]);
         } else {
             Storage::disk('public')->delete($setting->logo);
             $logo = $setting->update([
-                'logo' => request()->file('logo')->store('logo', 'public')
+                'logo' => request()->file('logo')->store('logo')
             ]);
 
         }
