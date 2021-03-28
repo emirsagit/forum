@@ -1,30 +1,16 @@
 require("./bootstrap");
 
-// const Signin = () => import('./components/auth/Signin.vue' /* webpackChunkName: "Signin" */ )
-// const Register = () => import('./components/auth/Register.vue' /* webpackChunkName: "Register" */ )
-// const SigninButton = () => import('./components/auth/SigninButton.vue' /* webpackChunkName: "SigninButton" */ )
-// const RegisterButton = () => import('./components/auth/RegisterButton.vue' /* webpackChunkName: "RegisterButton" */ )
+const Admin = () =>
+  import("./components/admin/Admin.vue" /* webpackChunkName: "Admin" */);
 
 const NavigationAuthDropdown = () =>
   import(
     "./components/auth/NavigationAuthDropdown.vue" /* webpackChunkName: "NavigationAuthDropdown" */
   );
 
-const Admin = () =>
-  import("./components/admin/Admin.vue" /* webpackChunkName: "Admin" */);
-
 const Threads = () =>
   import(
     "./components/threads/index/Threads.vue" /* webpackChunkName: "Threads" */
-  );
-
-const ThreadForm = () =>
-  import(
-    "./components/threads/create/ThreadForm.vue" /* webpackChunkName: "ThreadForm" */
-  );
-const ThreadEditForm = () =>
-  import(
-    "./components/threads/edit/ThreadEditForm.vue" /* webpackChunkName: "ThreadEditForm" */
   );
 
 const Thread = () =>
@@ -42,9 +28,6 @@ const Puzzle = () =>
     "./components/puzzles/show/Puzzle.vue" /* webpackChunkName: "Puzzle" */
   );
 
-// const Flash = () => import('./components/shared/Flash.vue' /* webpackChunkName: "Flash" */ )
-// const NavLink = () => import('./components/shared/NavLink.vue' /* webpackChunkName: "NavLink" */ )
-// const FooterField = () => import('./components/shared/FooterField.vue' /* webpackChunkName: "FooterField" */ )
 const Paginator = () =>
   import(
     "./components/shared/Paginator.vue" /* webpackChunkName: "Paginator" */
@@ -62,13 +45,11 @@ const NavChannels = () =>
     "./components/shared/NavChannels.vue" /* webpackChunkName: "NavChannels" */
   );
 
-// const Blogs = () => import('./components/blogs/index/Blogs.vue' /* webpackChunkName: "blogs" */ )
-
 const Blog = () =>
-  import("./components/blogs/show/Blog.vue" /* webpackChunkName: "blog" */);
+  import("./components/blogs/show/Blog.vue" /* webpackChunkName: "Blog" */);
 
 const Blogs = () =>
-  import("./components/blogs/index/Blogs.vue" /* webpackChunkName: "blog" */);
+  import("./components/blogs/index/Blogs.vue" /* webpackChunkName: "Blogs" */);
 
 const NavLink = () =>
   import("./components/shared/NavLink.vue" /* webpackChunkName: "NavLink" */);
@@ -99,6 +80,73 @@ const RegisterButton = () =>
   import(
     "./components/auth/RegisterButton.vue" /* webpackChunkName: "RegisterButton" */
   );
+
+const ThreadForm = () =>
+  import(
+    "./components/threads/create/ThreadForm.vue" /* webpackChunkName: "ThreadForm" */
+  );
+const ThreadEditForm = () =>
+  import(
+    "./components/threads/edit/ThreadEditForm.vue" /* webpackChunkName: "ThreadEditForm" */
+  );
+
+const app = new Vue({
+  el: "#app",
+  components: {
+    Admin,
+    Signin,
+    Threads,
+    Register,
+    SigninButton,
+    RegisterButton,
+    ThreadForm,
+    NavigationAuthDropdown,
+    Flash,
+    Thread,
+    Paginator,
+    NotificationDropdown,
+    Profile,
+    Recaptcha,
+    ThreadEditForm,
+    FooterField,
+    NavLink,
+    Blogs,
+    Blog,
+    NavChannels,
+    Puzzle,
+    Search,
+  },
+
+  data: {
+    control: {
+      login: false,
+      register: false,
+    },
+    expand: false,
+    windowWidth: "",
+  },
+
+  //for showing and hide login and register page from anywhere in app
+  methods: {
+    toggle(data) {
+      this.control[data.field] = data.value;
+    },
+  },
+
+  created() {
+    window.events.$on("toggle", (data) => {
+      this.toggle(data);
+    });
+
+    this.windowWidth = window.innerWidth;
+  },
+
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.windowWidth = window.innerWidth;
+    });
+  },
+});
 
 // import NavLink from "./components/shared/NavLink.vue";
 // import Search from "./components/shared/Search.vue";
@@ -148,61 +196,3 @@ const RegisterButton = () =>
 // /* endshared */
 // import Editor from "vue-editor-js";
 // window.Editor = Vue.use(Editor);
-
-const app = new Vue({
-  el: "#app",
-  components: {
-    Signin,
-    Threads,
-    Register,
-    SigninButton,
-    RegisterButton,
-    ThreadForm,
-    NavigationAuthDropdown,
-    Flash,
-    Thread,
-    Paginator,
-    NotificationDropdown,
-    Profile,
-    Recaptcha,
-    ThreadEditForm,
-    Admin,
-    FooterField,
-    NavLink,
-    Blogs,
-    Blog,
-    NavChannels,
-    Puzzle,
-    Search,
-  },
-
-  data: {
-    control: {
-      login: false,
-      register: false,
-    },
-    expand: false,
-    windowWidth: "",
-  },
-
-  //for showing and hide login and register page from anywhere in app
-  methods: {
-    toggle(data) {
-      this.control[data.field] = data.value;
-    },
-  },
-
-  created() {
-    window.events.$on("toggle", (data) => {
-      this.toggle(data);
-    });
-
-    this.windowWidth = window.innerWidth;
-  },
-
-  mounted() {
-    window.addEventListener("resize", () => {
-      this.windowWidth = window.innerWidth;
-    });
-  },
-});

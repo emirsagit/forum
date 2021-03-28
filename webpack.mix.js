@@ -11,15 +11,34 @@ require("laravel-mix-purgecss");
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.webpackConfig({
+  optimization: {
+    concatenateModules: false,
+    providedExports: false,
+    usedExports: false,
+  },
 
-mix.js("resources/js/app.js", "public/js")
-    .postCss("resources/css/app.css", "public/css")
-    .options({
-        postCss: [require("tailwindcss")]
-    })
-    .purgeCss({
-        extend: {
-            whitelist: ['text-teal-700', 'text-base', 'text-blue-600', 'text-gray-700', 'max-content'],
-            whitelistPatterns: [/bg-.+\-(600|700|800|900)/],
-        },
-    });
+  output: {
+    chunkFilename: "[name].[chunkhash].js",
+    path: path.resolve(__dirname, "./public"),
+  },
+});
+
+mix
+  .js("resources/js/app.js", "public/js")
+  .postCss("resources/css/app.css", "public/css")
+  .options({
+    postCss: [require("tailwindcss")],
+  })
+  .purgeCss({
+    extend: {
+      whitelist: [
+        "text-teal-700",
+        "text-base",
+        "text-blue-600",
+        "text-gray-700",
+        "max-content",
+      ],
+      whitelistPatterns: [/bg-.+\-(600|700|800|900)/],
+    },
+  });

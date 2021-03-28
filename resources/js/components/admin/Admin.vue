@@ -2,8 +2,6 @@
 import AdminSidebar from './local/AdminSidebar'
 import Channels from './channels/Channels'
 import AdminThreads from './threads/AdminThreads'
-import AdminPuzzles from './puzzles/AdminPuzzles'
-import AdminLevels from './levels/AdminLevels'
 import AdminBlogs from './blogs/AdminBlogs'
 import AdminUsers from './users/AdminUsers'
 import AdminSettings from './settings/AdminSettings'
@@ -15,8 +13,6 @@ import AdminSettings from './settings/AdminSettings'
             AdminBlogs,
             AdminUsers,
             AdminSettings,
-            AdminPuzzles,
-            AdminLevels
         },
         data() {
             return {
