@@ -29,7 +29,7 @@ class AdminBlogFormRequest extends FormRequest
             'title' => ['required', 'string'],
             'slug' => 'unique:blogs',
             'channel_id' => ['required', 'exists:channels,id'],
-            'image' => 'required|image|max:1999',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'body' => ['required', new EditorJsValidationRules],
         ];
     }

@@ -28,7 +28,7 @@ class AdminBlogUpdateFormRequest extends FormRequest
             'title' => ['required', 'string'],
             'body' => ['required', new EditorJsValidationRules],
             'channel_id' => ['required', 'exists:channels,id'],
-            'image' => 'nullable|image|max:1999',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
