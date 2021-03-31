@@ -200,7 +200,7 @@ class ThreadsController extends Controller
 
         $thread->delete();
 
-        return redirect('/threads')->with('message', 'Konu başarıyla silindi');
+        return redirect('/')->with('message', 'Konu başarıyla silindi');
     }
 
     protected function filterBy($filters)
