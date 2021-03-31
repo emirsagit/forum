@@ -53,7 +53,7 @@ Route::get('/blog/{blog}', [BlogsController::class, 'show'])->name('blogs.show')
 Route::get('/blogs/{channel}', [BlogsController::class, 'channel'])->name('blog.channel.index');
 
 Route::resource('/threads',  ThreadsController::class)->except([
-    'show'
+    'show', 'index'
 ]);
 
 Route::get('/channels', [ChannelController::class, 'index']);

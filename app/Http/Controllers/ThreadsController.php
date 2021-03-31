@@ -105,7 +105,7 @@ class ThreadsController extends Controller
     public function store(Request $request, Recaptcha $recaptcha)
     {
         $this->validate(request(), [
-            'title' => ['required', 'string', 'min:8',  new SpamFree],
+            'title' => ['required', 'string', 'min:4',  new SpamFree],
             'channel_id' => ['required', 'exists:channels,id'],
             'recaptcha' => ['required', $recaptcha],
             'body' => ['required', new EditorJsValidationRules]

@@ -41,4 +41,5 @@ mix
       ],
       whitelistPatterns: [/bg-.+\-(600|700|800|900)/],
     },
-  });
+  })
+  .version();

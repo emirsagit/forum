@@ -2,29 +2,31 @@
   <div class="bg-gray-100 text-gray-700" id="last-published">
     <div class="lg:px-24 p-8 flex lg:flex-row flex-col">
       <div class="lg:w-3/5 w-full">
-        <div class="flex flex-row justify-between">
+        <div class="flex flex-row justify-between pb-4">
           <a
-            class="text-lg font-bold text-white table px-1 rounded-lg cursor-pointer"
+            class="text-sm font-bold text-white table px-1 rounded-lg cursor-pointer"
             :class="'bg-' + blog.channel.color + '-600'"
             :href="'/blogs/channels/'+blog.channel.slug"
           >
             #{{ blog.channel.name }}
           </a>
-          <span class="ml-1 text-gray-500">{{ blog.visits_count + 1 }} Görüntüleme</span>
+          <span class="ml-1 text-gray-500 text-xs">{{ blog.visits_count + 1 }} Görüntüleme</span>
         </div>
-        <h1 class="text-4xl text-teal-700 font-bold pb-4 leading-tight">
+        <h1 class="text-2xl lg:text-3xl text-teal-700 font-bold pb-4 leading-tight">
           {{ blog.title }}
         </h1>
-        <p class="text-2xl pb-8 text-black" v-if="blog.summary">
+        <p class="text-xl pb-8 text-black" v-if="blog.summary">
           {{ blog.summary }}
         </p>
         <img
           :src="'/storage/' + blog.image"
           :alt="blog.title"
-          class="object-cover w-full mb-8 shadow-xl"
+          class="object-cover w-full mb-4 shadow-xl"
+          width="1200"
+          height="675"
         />
         <div
-          class="pb-8 text-xl leading-loose text-justify p-link"
+          class="pb-8 text-lg leading-loose text-justify p-link"
           v-html="blog.body"
         ></div>
       </div>

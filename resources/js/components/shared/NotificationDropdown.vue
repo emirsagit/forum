@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block text-left" v-if="notifications.length">
+  <div class="relative inline-block text-left z-50" v-if="notifications.length">
     <div
       @click="expand = !expand"
       class="block mt-4 lg:inline-block lg:mt-0 mr-4 text-red-600 hover:text-red-800 cursor-pointer"

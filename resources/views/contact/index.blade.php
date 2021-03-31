@@ -4,17 +4,17 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @section('content')
 
-<section class="pb-24 flex flex-col bg-gray-900">
+<section class="pb-12 flex flex-col bg-gray-900">
     <div class="container mx-auto px-4 lg:pt-8 pt-4">
         <div class="flex flex-wrap text-center justify-center">
-            <div class="w-full lg:w-6/12 px-4">
+            <div class="w-full lg:w-6/12 px-4 pb-8">
                 <h2 class="text-4xl font-semibold text-white">İletişim</h2>
                 <p class="text-lg leading-relaxed mt-4 text-gray-500">
-                    Editörlerimiz:
+                    Forum kullanımı, sorunları, hakaret ya da herhangi bir olumsuzluk içerdiğini düşündüğünüz gönderilerle ilgili lütfen aşağıdaki iletişim formunu kullanarak bizimle ya da <a href="/profiles/emirsagit" class="underline text-gray-400 hover:text-gray-600">@emirsagit</a> isimli kullanıcıyla irtibata geçin. Herhangi bir teknik sorununuz, sorularınız varsa bize bildirebilirsiniz. İnceleyip en kısa sürede yanıtlayacağız. Geri bildirimleriniz ve yorumlarınız bizim için çok önemlidir ve her zaman olumlu karşılanacaktır. Teşekkürler... 
                 </p>
             </div>
         </div>
-        <div class="flex flex-wrap mt-4 justify-center mb-8 lg:mb-4">
+        {{-- <div class="flex flex-wrap mt-4 justify-center mb-8 lg:mb-4">
             @foreach ($admins as $admin)
             <div class="w-full lg:w-3/12 px-4 text-center mb-4 lg:mb-0">
                 <div class="bg-white inline-flex items-center justify-center rounded-full">
@@ -34,7 +34,7 @@
                 </h6>
             </div>
             @endforeach
-        </div>
+        </div> --}}
     </div>
     <div class="relative block">
         <div class="container mx-auto px-4 lg:pt-8">
@@ -45,7 +45,7 @@
                         <div class="flex-auto p-5">
                             <h4 class="text-2xl font-semibold">İletişim Formu</h4>
                             <p class="leading-relaxed mt-1 mb-4 text-gray-600">
-                                Formu kullanarak editorlerimizle iletişime geçebilirsiniz.
+                                Formu kullanarak bizimle iletişime geçebilirsiniz.
                             </p>
                             <form method="POST" action="{{ route('contact.store') }}">
                                 @csrf

@@ -10,7 +10,7 @@ class BlogChannelsController extends Controller
     public function index(Channel $channel)
     {
         return view('channels.index', [
-            'channels' => Channel::latest()->get(),
+            'channels' => Channel::orderBy('created_at', 'desc')->get(),
             'channel' => $channel,
             'blogs' => $channel->blogs,
             'threads' => $channel->threads

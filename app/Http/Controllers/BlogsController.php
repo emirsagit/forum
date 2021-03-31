@@ -19,9 +19,11 @@ class BlogsController extends Controller
 
         $blogs = $blogs->take(4);
 
+        $channels = Channel::orderBy('created_at' ,'desc')->get();
+
         $threads = Thread::orderByDesc('updated_at')->take(8)->get();
 
-        return view('blogs.index', ['blogs' => $blogs, 'trendings' => $trendings, 'threads' => $threads]);
+        return view('blogs.index', ['blogs' => $blogs, 'trendings' => $trendings, 'threads' => $threads, 'channels' => $channels]);
     } 
 
     public function channel(Channel $channel)

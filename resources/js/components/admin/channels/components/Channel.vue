@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     update() {
-      this.$emit('update', this.channel)
+      this.$emit("update", this.channel);
     },
     destroy() {
       if (

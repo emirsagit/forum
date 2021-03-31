@@ -1,5 +1,15 @@
 require("./bootstrap");
 
+const SigninButton = () =>
+  import(
+    "./components/auth/SigninButton.vue" /* webpackChunkName: "SigninButton" */
+  );
+
+const RegisterButton = () =>
+  import(
+    "./components/auth/RegisterButton.vue" /* webpackChunkName: "RegisterButton" */
+  );
+
 const Admin = () =>
   import("./components/admin/Admin.vue" /* webpackChunkName: "Admin" */);
 
@@ -71,20 +81,11 @@ const Signin = () =>
 const Register = () =>
   import("./components/auth/Register.vue" /* webpackChunkName: "Register" */);
 
-const SigninButton = () =>
-  import(
-    "./components/auth/SigninButton.vue" /* webpackChunkName: "SigninButton" */
-  );
-
-const RegisterButton = () =>
-  import(
-    "./components/auth/RegisterButton.vue" /* webpackChunkName: "RegisterButton" */
-  );
-
 const ThreadForm = () =>
   import(
     "./components/threads/create/ThreadForm.vue" /* webpackChunkName: "ThreadForm" */
   );
+
 const ThreadEditForm = () =>
   import(
     "./components/threads/edit/ThreadEditForm.vue" /* webpackChunkName: "ThreadEditForm" */

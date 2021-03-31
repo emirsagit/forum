@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex flex-row sticky top-0 lg:justify-center py-4 overflow-x-auto h-16 bg-teal-800 bg-opacity-75 z-40"
+    class="flex flex-row md:sticky md:top-0 lg:justify-center py-1 lg:py-2 overflow-x-auto bg-teal-800 bg-opacity-75 z-40"
   >
     <div class="flex flex-row items-center">
       <a
-        class="text-lg font-semibold px-2 rounded-md mr-4 lg:mr-8 text-white transition duration-500 ease-in-out"
+        class="text-sm text-center font-semibold px-2 rounded-md mx-2 lg:mr-8 text-white transition duration-500 ease-in-out py-1 lg:py-2"
         :href="'/blogs/channels/' + channel.slug"
         :class="
           dataUrl(channel.slug)
@@ -27,11 +27,9 @@ export default {
       channels: "",
     };
   },
-  created() {
-    axios.get("/channels").then((response) => {
-      this.channels = response.data;
-    });
-  },
+
+  props: ["channels"],
+
   methods: {
     dataUrl(slug) {
       var pageURL = window.location.href;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="bg-white flex items-center rounded-full shadow-xl z-30 flex-row absolute lg:static left-0 mt-16 md:mt-0"
+      class="bg-white flex items-center rounded-full shadow-md z-30 flex-row absolute lg:static left-0 mt-16 md:mt-0"
       v-if="showInput || $parent.windowWidth > 1024"
     >
       <input

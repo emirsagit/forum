@@ -26,8 +26,6 @@
             @endif
             <navigation-auth-dropdown :user="{{ $user }}" class="flex text-xl">
             </navigation-auth-dropdown>
-            {{-- <navigation-auth :user="{{ $user }}" class="lg:hidden text-xl">
-            </navigation-auth> --}}
             <notification-dropdown></notification-dropdown>
             @endguest
         </div>

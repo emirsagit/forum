@@ -79,7 +79,7 @@ class Thread extends Model implements Searchable
 
     public function path()
     {
-        return '/threads/' . $this->channel->slug . '/' . $this->slug;
+        return '/' . $this->slug;
     }
 
     public function setSlugAttribute($value)

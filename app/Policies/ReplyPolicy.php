@@ -18,6 +18,7 @@ class ReplyPolicy
 
     public function create(User $user, Reply $reply)
     {
+        return true;
         if (! $lastReply = $user->lastReply) return true;
 
         return $lastReply->wasRecentlyPublished()

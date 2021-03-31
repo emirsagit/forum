@@ -134,6 +134,7 @@ export default {
       window.toggle("login", false);
     },
     registerRequest() {
+      window.toggle("login", false);
       window.toggle("register", true);
     },
     forgatPassword() {

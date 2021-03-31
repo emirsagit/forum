@@ -11,7 +11,7 @@
       stroke="currentColor"
       width="23"
       height="23"
-      class="mt-1 hidden md:flex"
+      class="hidden md:flex"
     >
       <path
         stroke-linecap="round"
