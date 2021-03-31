@@ -9,7 +9,7 @@ class DetectInvalidKeywords
     public function detect($message)
     {
         foreach ($this->spams as $spam) {
-            if (stripos($message, $spam) !== true) {
+            if (stripos($message, $spam) !== false) {
                 throw new \Exception('İçeriğinizde spam olarak algılanan kelime var');
             }
         };
