@@ -17,7 +17,7 @@
 @endslot
 
 @slot('body')
-<p class="text-sm text-gray-700">{!! $activity->subject->body !!}</p>
+
 @endslot
 
 @endcomponent
