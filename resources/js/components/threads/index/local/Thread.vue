@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex flex-1 flex-col lg:flex-row shadow-md p-2 rounded-lg bg-white"
+    class="flex flex-1 flex-col lg:flex-row shadow-md p-2 rounded-lg cursor-pointer hover:bg-gray-100 ease-in-out duration-300 transform bg-white"
+    @click.prevent="href(thread)"
   >
     <div class="flex mr-2 mt-1 justify-between items-center lg:items-start">
       <avatar :item="thread"></avatar>
@@ -82,8 +83,7 @@
       <div class="mt-1 mb-2">
         <p class="text-sm text-gray-500">
           <a
-            :href="'/profiles/' + thread.owner.username"
-            class="text-blue-400 text-sm hover:text-underline hover:text-blue-600"
+            class="text-blue-700 text-sm"
             >{{ thread.owner.username }}</a
           >&nbsp;tarafından oluşturuldu.&nbsp;{{ thread.visits_count }} kez
           görüntülendi.

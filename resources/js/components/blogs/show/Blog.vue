@@ -10,7 +10,7 @@
           >
             #{{ blog.channel.name }}
           </a>
-          <span class="ml-1 text-gray-500 text-xs">{{ blog.visits_count + 1 }} Görüntüleme</span>
+          <span class="ml-1 text-gray-500 text-xs">{{ parseInt(blog.visits_count) + 1 }} Görüntüleme</span>
         </div>
         <h1 class="text-2xl lg:text-3xl text-teal-700 font-bold pb-4 leading-tight">
           {{ blog.title }}

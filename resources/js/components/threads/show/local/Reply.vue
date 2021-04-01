@@ -1,5 +1,5 @@
 <template>
-  <div :id="'reply-' + id" class="flex my-2 pl-2 bg-white rounded-lg mx-1">
+  <div :id="'reply-' + id" class="flex my-3 p-2 shadow-lg bg-white rounded-lg mx-1">
     <avatar :item="reply"></avatar>
     <div class="flex flex-1 mr-2 p-2">
       <div class="flex flex-col w-full">

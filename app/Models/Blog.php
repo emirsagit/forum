@@ -19,7 +19,7 @@ class Blog extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-        $url = route('blogs.show', [$this->channel, $this->slug]);
+        $url = route('blogs.show', $this->slug);
 
         return new SearchResult(
             $this,
@@ -45,7 +45,7 @@ class Blog extends Model implements Searchable
 
     public function path()
     {
-        return '/blogs/' . $this->channel->slug . '/' . $this->slug;
+        return '/blog/' . $this->slug;
     }
 
     public function getRouteKeyName()

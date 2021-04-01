@@ -17,7 +17,7 @@ trait ConvertHtmlBlog
         foreach ($value->blocks as $block)
             switch ($block->type) {
                 case "header":
-                    $body .= "<h{$block->data->level} class='text-teal-700 text-2xl lg:text-3xl font-bold pt-2'>{$block->data->text}</h{$block->data->level}>";
+                    $body .= "<h{$block->data->level} class='text-teal-700 text-2xl lg:text-2xl font-bold pt-4 pb-2 leading-snug'>{$block->data->text}</h{$block->data->level}>";
                     break;
                 case "paragraph":
                     $body .= "<p class='text-lg text-gray-700 pb-2'>{$block->data->text}</p>";

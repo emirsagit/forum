@@ -24,7 +24,7 @@ class Thread extends Model implements Searchable
 
     public function getSearchResult(): SearchResult
      {
-        $url = route('threads.show', [$this->channel, $this->slug]);
+        $url = route('threads.show', $this->slug);
      
          return new SearchResult(
             $this,
