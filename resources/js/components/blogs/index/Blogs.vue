@@ -22,11 +22,12 @@
             >
               #{{ blogs[0].channel.name }}
             </p>
+            <a @click="goto(blogs[0])">
             <h4
               class="font-bold md:text-3xl text-2xl hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer pt-2 leading-tight"
               v-text="blogs[0].title"
-              @click="goto(blogs[0])"
             ></h4>
+            </a>
             <span class="text-gray-600 font-light text-lg">{{ blogs[0].updated_at }}</span>
           </div>
           <div class="md:w-1/2 w-full md:pl-8">
@@ -57,11 +58,12 @@
                 </p>
               </div>
               <div class="w-1/2 px-2 md:pl-4 justify-center flex flex-col" v-if="index !== 0">
+                 <a @click="goto(blog)">
                 <h4
                   class="font-bold md:text-2xl text-xl hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
                   v-text="blog.title"
-                  @click="goto(blog)"
                 ></h4>
+              </a>
                 <span class="text-gray-600 font-light text-sm">{{ blog.updated_at }}</span>
               </div>
             </div>
@@ -97,12 +99,14 @@
                 </p>
               </div>
               <div class="w-1/2 px-2 md:pl-4 justify-center flex flex-col">
+                 <a @click="goto(blog)">
                 <h4
                   class="font-bold md:text-xl text-lg hover:text-gray-800 transition duration-500 ease-in-out cursor-pointer leading-tight"
                   @click="goto(trending)"
                 >
                   {{ trending.title }}
                 </h4>
+              </a>
                 <span class="text-gray-600 font-light text-sm">{{ trending.updated_at }}</span>
               </div>
             </div>

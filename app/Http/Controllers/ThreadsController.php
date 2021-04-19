@@ -107,7 +107,7 @@ class ThreadsController extends Controller
         $this->validate(request(), [
             'title' => ['required', 'string', 'min:4'], //new SpamFree ileride olabilir
             'channel_id' => ['required', 'exists:channels,id'],
-            'recaptcha' => ['required', $recaptcha],
+            //'recaptcha' => ['required', $recaptcha],
             'body' => ['required', new EditorJsValidationRules]
         ]);
         // $editorJsValidation = new EditorJsValidation($request->body);

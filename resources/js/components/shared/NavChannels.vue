@@ -22,12 +22,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      channels: "",
-    };
-  },
-
   props: ["channels"],
 
   methods: {

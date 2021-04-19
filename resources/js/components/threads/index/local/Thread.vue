@@ -1,5 +1,5 @@
 <template>
-  <div
+  <a
     class="flex flex-1 flex-col lg:flex-row shadow-md p-2 rounded-lg cursor-pointer hover:bg-gray-100 ease-in-out duration-300 transform bg-white"
     @click.prevent="href(thread)"
   >
@@ -90,7 +90,7 @@
         </p>
       </div>
     </div>
-  </div>
+  </a>
 </template>
 
 <script>

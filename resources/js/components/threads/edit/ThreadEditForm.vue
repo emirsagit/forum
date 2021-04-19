@@ -88,7 +88,7 @@
               'cursor-not-allowed opacity-50': form.errors.has(),
             }"
           >
-            Gönder
+            Kaydet
           </button>
         </div>
       </form>
@@ -135,10 +135,17 @@ export default {
       await this.editorSave();
       this.form
         .submit("patch", "/threads/" + this.thread.slug)
-        .then((data) => flash("Konu kaydedildi."))
+        .then((data) => {
+          this.submitted();
+        })
         .catch((error) => {
           flash(error.message, "error");
         });
+    },
+
+    submitted() {
+      window.location.href = '/';
+      flash("Konu kaydedildi.");
     },
   },
   mounted() {

@@ -80,9 +80,10 @@
             v-if="form.errors.has('body')"
           ></p>
         </div>
+        <!-- 
         <div class="h-16 mt-2">
-          <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
-        </div>
+         <recaptcha :sitekey="recapthcaSiteKey" @input="change" />
+        </div>  -->
         <p
           class="text-red-500 text-xs italic"
           v-text="form.errors.get('recaptcha')"
@@ -97,7 +98,7 @@
               'cursor-not-allowed opacity-50': form.errors.has(),
             }"
           >
-            Gönder
+            Kaydet
           </button>
           <a
             href="/"
@@ -113,7 +114,7 @@
 
 <script>
 import Form from "../../dependencies/form.js";
-import Recaptcha from "../../shared/Recaptcha.vue";
+/* import Recaptcha from "../../shared/Recaptcha.vue";*/
 import JsEditor from "../../shared/JsEditor.vue";
 import SigninButton from "../../auth/SigninButton.vue";
 import RegisterButton from "../../auth/RegisterButton.vue";
@@ -121,7 +122,7 @@ import RegisterButton from "../../auth/RegisterButton.vue";
 export default {
   props: ["recapthcaSiteKey"],
   components: {
-    Recaptcha,
+   /* Recaptcha, */
     JsEditor,
     RegisterButton,
     SigninButton,
@@ -132,7 +133,7 @@ export default {
         title: "",
         body: "",
         channel_id: "",
-        recaptcha: "",
+       /* recaptcha: "",*/
       }),
       channels: {},
       editor: "",
@@ -161,7 +162,6 @@ export default {
           },
         })
         .then((data) => {
-          console.log('burd');
           this.submitted();
         })
         .catch((error) => {
