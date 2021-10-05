@@ -4,7 +4,7 @@
       {{ item.owner.name }} tarafından yazıldı.
     </p>
     <p class="ml-2 text-md">{{ item.updated_at }} güncellendi</p>
-    <hr class="bg-teal-700 h-2 shadow-lg rounded-lg mt-2 ml-2 hidden lg:flex" />
+    <hr class="bg-gray-700 h-1 shadow-lg rounded-lg mt-2 ml-2 hidden lg:flex" />
   </div>
 </template>
 

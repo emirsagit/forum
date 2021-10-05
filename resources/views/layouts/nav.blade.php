@@ -1,6 +1,6 @@
-<nav class="bg-white text-lg font-semibold flex flex-col tracking-wide">
+<nav class="bg-white text-md flex flex-col tracking-widest">
     @include('nav.topnav')
-    <div class="flex flex-row my-auto justify-center items-center flex-wrap py-4 lg:p-2 lg:px-16 border-t-2 border-b-2 border-teal-900 font-extrabold">
+    <div class="flex flex-row my-auto justify-center items-center flex-wrap py-4 lg:p-2 lg:px-16 border-t-2 border-b-2 border-gray-100">
         <div class="block lg:hidden">
             <button
                 class="flex items-center px-3 py-2 border rounded border-teal-400 hover:text-teal-800 hover:border-teal-600 text-teal-600"
@@ -12,8 +12,8 @@
                 </svg>
             </button>
         </div>
-        <div class="lg:h-8 w-full text-teal-700 flex flex-col items-center relative" :class="{hidden : !expand && windowWidth < 1024}">
-            <nav-link class="lg:flex-row text-xl bg-white"></nav-link>
+        <div class="lg:h-8 w-full text-gray-700 flex flex-col items-center relative" :class="{hidden : !expand && windowWidth < 1024}">
+            <nav-link class="lg:flex-row text-lg bg-white"></nav-link>
         </div>
     </div>
 </nav>

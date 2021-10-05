@@ -35,23 +35,6 @@ class ThreadsController extends Controller
 
         $channels = Channel::orderBy('created_at', 'desc')->get();
 
-        // $trendings = DB::table('threads')
-        // ->select(['threads.*', 'channels.slug as channel.slug'])
-        // ->addSelect(DB::raw('count(visits.visit_id) as visits_count'))
-        // ->from('threads')
-        // ->join('channels', function($join) {
-        // 	$join->on('channels.id', '=', 'threads.channel_id');
-        // 	})
-        // ->join('visits', function($join) {
-        // 	$join->on('threads.id', '=', 'visits.visit_id');
-        // 	})
-        // ->groupBy('visits.visit_id')
-        // ->orderByRaw('visits_count DESC')
-        // ->limit(5)
-        // ->get();
-
-        // dd($trendings);
-
         if (request()->wantsJson()) {
             return $threads;
         }
@@ -62,7 +45,7 @@ class ThreadsController extends Controller
 
     public function channel(Channel $channel, ThreadFilters $filters)
     {
-        if($channel->channel_description && $channel->channel_title) {
+        if ($channel->channel_description && $channel->channel_title) {
             $this->channelSeo($channel);
         }
 
@@ -92,7 +75,7 @@ class ThreadsController extends Controller
     {
         SEOTools::setTitle('Parkinson Hastaları Yardımlaşma ve Dayanışma Formu');
         SEOTools::setDescription('Parkinson hasta ve hasta yakınları forumumuzu kullanarak ücretsiz paylaşım yapabilir, hastalık hakkında detaylı bilgiler alabilirler.');
-        
+
         return view('threads.create');
     }
 

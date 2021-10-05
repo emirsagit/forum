@@ -26,7 +26,7 @@
 </head>
 
 <body class="min-h-screen">
-    <div id="app" class="bg-gray-100 relative">
+    <div id="app" class="bg-gray-100 relative leading-relaxed">
         @include('layouts.nav')
         @yield('content')
         <signin :login="control.login"></signin>

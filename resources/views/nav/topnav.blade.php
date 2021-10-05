@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-between py-4 px-2 lg:p-2 lg:px-16 items-center">
+<div class="flex flex-row justify-between py-4 px-2 lg:p-2 lg:py-8 lg:px-16 items-center">
     <div class="flex flex-row">
         @if($setting)
         <a href="/" class="mr-1">

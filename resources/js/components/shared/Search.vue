@@ -13,7 +13,7 @@
       />
       <div class="p-2">
         <button
-          class="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center"
+          class="bg-gray-600 text-white rounded-full p-2 hover:bg-gray-700 focus:outline-none w-12 h-12 flex items-center justify-center"
           @click.prevent="searchRequest"
           type="submit"
         >
@@ -44,7 +44,7 @@
 
     <div class="p-2 lg:hidden">
       <span
-        class="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-400 focus:outline-none w-12 h-12 flex items-center justify-center cursor-pointer"
+        class="bg-gray-600 text-white rounded-full p-2 hover:bg-gray-700 focus:outline-none w-12 h-12 flex items-center justify-center cursor-pointer"
         @click.prevent="showInput = true"
         v-if="!showInput"
       >

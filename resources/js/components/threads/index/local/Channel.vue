@@ -25,7 +25,7 @@
         "
       >
         <span class="rounded-full mr-2"
-              :class="'bg-'+channel.color+'-600'"
+              :class="'bg-gray-600 hover:bg-'+channel.color+'-600'"
           >
           <svg class="w-4 h-4">
             <circle cx="50" cy="50" r="40" fill="currentColor" />
